@@ -7,8 +7,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Validate environment variables
-const SUPABASE_URL = process.env.https://ztvjekrysqraofwamewf.supabase.co;
-const SUPABASE_KEY = process.env.sb_publishable_Vwr0JQpU657teKIfDbTUrQ_qp_Gb0qa;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
   console.error("❌ Missing SUPABASE_URL or SUPABASE_KEY in .env file");
