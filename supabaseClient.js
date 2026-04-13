@@ -7,15 +7,18 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Validate environment variables
+// Accepts SUPABASE_ANON_KEY (Render/standard) or SUPABASE_KEY (legacy local)
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error("❌ Missing SUPABASE_URL or SUPABASE_KEY in .env file");
+  console.error("❌ Missing required environment variables:");
+  if (!SUPABASE_URL) console.error("   - SUPABASE_URL is not set");
+  if (!SUPABASE_KEY) console.error("   - SUPABASE_ANON_KEY (or SUPABASE_KEY) is not set");
   process.exit(1);
 }
 
-// Create Supabase client with service role key (backend only)
+// Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: {
     autoRefreshToken: false,
