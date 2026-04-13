@@ -18,6 +18,18 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
   process.exit(1);
 }
 
+// Validate that SUPABASE_URL is a proper HTTPS URL before calling createClient.
+// A non-empty placeholder like "your_supabase_project_url_here" passes the
+// truthiness check above but will throw inside createClient, making the root
+// cause harder to diagnose on Render.
+if (!SUPABASE_URL.startsWith("https://")) {
+  console.error(
+    `❌ SUPABASE_URL is not a valid HTTPS URL: "${SUPABASE_URL}"\n` +
+    "   It must start with https:// — e.g. https://<project-id>.supabase.co"
+  );
+  process.exit(1);
+}
+
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: {
