@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — AICraft</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="pages.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
+      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="contact.html" class="nav-link active">Contact</a></li>
+    </ul>
+    <div class="nav-buttons"><button class="btn-outline">Sign In</button><button class="btn-primary">Get Started</button></div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-badge">📬 Contact</div>
+  <h1>Get in <span class="gradient-text">Touch</span></h1>
+  <p>Whether you have a question, a partnership idea, or just want to say hello — we'd love to hear from you.</p>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="contact-layout">
+
+      <!-- CONTACT INFO -->
+      <div class="contact-info">
+        <h2>Let's <span class="gradient-text">Talk</span></h2>
+        <p>Reach out for product demos, enterprise pricing, technical support, or press inquiries. Our team responds within 24 hours.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <h4>Office Address</h4>
+            <p>Kondapur RTO X Road, Hyderabad<br/>Telangana, India — 500049</p>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <h4>Phone</h4>
+            <p>+91 99592 10498</p>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h4>Email</h4>
+            <p>hello@aicraft.co.in<br/>support@aicraft.co.in</p>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <h4>Business Hours</h4>
+            <p>Mon – Fri: 9:00 AM – 6:00 PM IST<br/>Sat: 10:00 AM – 2:00 PM IST</p>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div style="margin-top:32px;">
+          <h4 style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Find us online</h4>
+          <div class="social-links">
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT FORM -->
+      <div class="contact-form-card">
+        <h3>Send Us a Message</h3>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div class="form-group">
+              <label>First Name *</label>
+              <input type="text" placeholder="Anil" required />
+            </div>
+            <div class="form-group">
+              <label>Last Name *</label>
+              <input type="text" placeholder="Chinna" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" placeholder="you@company.com" required />
+          </div>
+          <div class="form-group">
+            <label>Company / Organization</label>
+            <input type="text" placeholder="Your Company Name" />
+          </div>
+          <div class="form-group">
+            <label>Inquiry Type</label>
+            <select>
+              <option>General Inquiry</option>
+              <option>Enterprise / Sales</option>
+              <option>Technical Support</option>
+              <option>Partnership</option>
+              <option>Press / Media</option>
+              <option>Careers</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message *</label>
+            <textarea placeholder="Tell us what you're working on or what you need..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit-contact" id="submitContactBtn">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+          <div id="contactMsg" style="display:none;margin-top:14px;padding:12px 16px;border-radius:var(--radius-sm);font-size:14px;"></div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"><div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div><p>Building AI automation tools for every sector.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a></div></div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
+      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 AICraft. All rights reserved.</p><div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitContactBtn');
+    const msg = document.getElementById('contactMsg');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.disabled = true;
+    setTimeout(() => {
+      msg.style.display = 'block';
+      msg.style.background = 'rgba(0,214,143,0.1)';
+      msg.style.border = '1px solid rgba(0,214,143,0.3)';
+      msg.style.color = 'var(--success)';
+      msg.innerHTML = '✅ Message sent! We\'ll get back to you within 24 hours.';
+      btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+      document.getElementById('contactForm').reset();
+      setTimeout(() => { btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message'; btn.disabled = false; msg.style.display = 'none'; }, 4000);
+    }, 1200);
+  }
+</script>
+</body>
+</html>
