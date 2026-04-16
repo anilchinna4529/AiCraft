@@ -1,0 +1,102 @@
+todo task
+1.dd pitures of the CEO and Cofounder image loc: images folder
+
+ image1 : Jaya Prakash - CEO & Co-Founder
+ image2 : Anil - CTO & Co-Founder
+ image3 : Nithin Reddy - Chief Product Officer
+ image4 : Prem Kumar - Chief Marketing Officer.
+
+Build a secure authentication system for a web application deployed on Render, using Supabase as the backend.
+ 
+Core Requirements
+ 
+1. Authentication Method:
+ 
+- Users must sign up using email and password.
+- After signup, send a one-time verification code (OTP) to the user's email.
+- The user must enter this verification code to verify their email.
+- Only after successful verification, the user account should be considered active.
+ 
+2. Login Flow:
+ 
+- Only verified users should be allowed to log in.
+- If a user tries to log in without verifying email, show an error message: "Please verify your email before logging in."
+ 
+3. Supabase Integration:
+ 
+- Use Supabase Auth for handling:
+  - Email/password authentication
+  - Email OTP verification
+- Store user data in Supabase (PostgreSQL).
+- Use Supabase session management to persist login state.
+ 
+4. Protected Application Access:
+ 
+- The main application (Salesforce DevTool) must be protected.
+- Only authenticated users with a valid session can access it.
+- If an unauthenticated user tries to access the tool, redirect them to the login page.
+ 
+5. Frontend Requirements:
+ 
+- Create the following pages:
+  - Signup Page
+  - Login Page
+  - Email Verification Page (OTP input)
+  - Dashboard (protected page with Salesforce DevTool)
+ 
+6. Signup Flow:
+ 
+- User enters email + password.
+- Call Supabase signup API.
+- Trigger email OTP verification.
+- Redirect user to verification page.
+ 
+7. Verification Flow:
+ 
+- User enters OTP received via email.
+- Verify OTP using Supabase.
+- On success:
+  - Mark user as verified
+  - Redirect to login page or auto-login
+ 
+8. Login Flow:
+ 
+- User enters email + password.
+- Authenticate using Supabase.
+- If successful:
+  - Store session
+  - Redirect to dashboard
+ 
+9. Route Protection:
+ 
+- Implement middleware or frontend guards:
+  - Check if session exists
+  - If not, redirect to login
+ 
+10. Security:
+ 
+- Use HTTPS
+- Never expose service role keys in frontend
+- Use environment variables for Supabase keys
+- Validate all inputs
+ 
+11. Optional Enhancements:
+ 
+- "Resend OTP" button
+- Password reset via email
+- Logout functionality
+- Session expiration handling
+ 
+Tech Stack
+ 
+- Frontend: React / Next.js (preferred)
+- Backend/Auth: Supabase
+- Hosting: Render
+- Database: Supabase PostgreSQL
+ 
+Expected Output
+ 
+- Fully functional authentication system
+- Clean UI for auth pages
+- Secure protected routes
+- Working email OTP verification flow

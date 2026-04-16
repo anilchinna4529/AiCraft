@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — AICraft</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="pages.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    .dashboard-container {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 70px);
+    }
+    .dashboard-sidebar {
+      width: 280px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      position: sticky;
+      top: 70px;
+      max-height: calc(100vh - 70px);
+      overflow-y: auto;
+    }
+    .sidebar-user {
+      padding: 0 20px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .user-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 12px;
+    }
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-menu a:hover,
+    .sidebar-menu a.active {
+      color: var(--primary);
+      background: rgba(108, 99, 255, 0.08);
+      border-left-color: var(--primary);
+    }
+    .dashboard-content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    .dashboard-header {
+      margin-bottom: 40px;
+    }
+    .dashboard-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all 0.3s;
+    }
+    .stat-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-hover);
+    }
+    .stat-card .label {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tool-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    .tool-section h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tool-section p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .tool-modules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    .module-card {
+      background: rgba(108, 99, 255, 0.05);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .module-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(108, 99, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    .module-card i {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .module-card .label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      .dashboard-sidebar {
+        width: 100%;
+        max-height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+        position: static;
+        display: none;
+      }
+      .dashboard-sidebar.mobile-open {
+        display: block;
+      }
+      .dashboard-content {
+        padding: 24px 16px;
+      }
+      .dashboard-header h1 {
+        font-size: 1.8rem;
+      }
+      .dashboard-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
+    </a>
+    <div style="flex:1;"></div>
+    <div class="nav-buttons">
+      <button id="logoutBtn" class="btn-outline" style="cursor:pointer;">
+        <i class="fas fa-sign-out-alt" style="margin-right:6px;"></i>
+        Logout
+      </button>
+    </div>
+    <button class="hamburger" id="hamburger" style="display:none;"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="dashboard-container">
+  <!-- SIDEBAR -->
+  <aside class="dashboard-sidebar" id="sidebar">
+    <div class="sidebar-user">
+      <div class="user-avatar" id="userAvatar">A</div>
+      <div id="userNameDisplay" style="font-weight:600;color:var(--text-primary);margin-bottom:4px;"></div>
+      <div id="userEmailDisplay" style="font-size:12px;color:var(--text-muted);"></div>
+    </div>
+    <div class="sidebar-menu">
+      <a href="#dashboard" class="active" onclick="document.querySelector('.dashboard-content').scrollTo(0,0)">
+        <i class="fas fa-home"></i>
+        Dashboard
+      </a>
+      <a href="#tools">
+        <i class="fas fa-wand-magic-sparkles"></i>
+        AI Tools
+      </a>
+      <a href="#settings">
+        <i class="fas fa-gear"></i>
+        Settings
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="dashboard-content">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <h1>Welcome back! 👋</h1>
+      <p style="color:var(--text-secondary);font-size:14px;">Here's your AICraft workspace and Salesforce DevTool dashboard</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="dashboard-stats">
+      <div class="stat-card">
+        <div class="label">Tools Used</div>
+        <div class="value" id="toolsUsedStat">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">API Calls</div>
+        <div class="value" id="apiCallsStat">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Users</div>
+        <div class="value" id="totalUsersStat">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Account Status</div>
+        <div class="value" style="font-size:1.2rem;color:var(--success);">✅ Verified</div>
+      </div>
+    </div>
+
+    <!-- Salesforce DevTool Section -->
+    <div class="tool-section" id="tools">
+      <h2>
+        <i class="fas fa-salesforce" style="color:var(--primary);"></i>
+        Salesforce DevTool
+      </h2>
+      <p>Access powerful Salesforce automation and development tools. Choose a module to get started.</p>
+
+      <div class="tool-modules">
+        <div class="module-card">
+          <i class="fas fa-database"></i>
+          <div class="label">Data Sync</div>
+        </div>
+        <div class="module-card">
+          <i class="fas fa-code"></i>
+          <div class="label">Code Gen</div>
+        </div>
+        <div class="module-card">
+          <i class="fas fa-cube"></i>
+          <div class="label">Object Config</div>
+        </div>
+        <div class="module-card">
+          <i class="fas fa-flow"></i>
+          <div class="label">Flow Builder</div>
+        </div>
+        <div class="module-card">
+          <i class="fas fa-chart-line"></i>
+          <div class="label">Analytics</div>
+        </div>
+        <div class="module-card">
+          <i class="fas fa-shield"></i>
+          <div class="label">Security</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Tools Section -->
+    <div class="tool-section">
+      <h2>
+        <i class="fas fa-robot"></i>
+        AI Tools Library
+      </h2>
+      <p>Explore and integrate from AICraft's collection of AI automation tools.</p>
+      <a href="/ai-tools.html" class="btn-hero-primary" style="display:inline-flex;">
+        <i class="fas fa-external-link-alt"></i>
+        Browse AI Tools
+      </a>
+    </div>
+
+    <!-- API Documentation -->
+    <div class="tool-section">
+      <h2>
+        <i class="fas fa-code"></i>
+        API Integration
+      </h2>
+      <p>Integrate AICraft AI tools directly into your applications using our REST API.</p>
+      <a href="/api-docs.html" class="btn-hero-primary" style="display:inline-flex;">
+        <i class="fas fa-book"></i>
+        View API Docs
+      </a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { requireAuth, logout, getCurrentUser, getSupabaseClient } from './auth.js'
+
+  // Require authentication
+  let currentUser = await requireAuth()
+
+  // Get Supabase client for stats
+  const supabase = await getSupabaseClient()
+
+  // Display user info
+  if (currentUser) {
+    const userEmail = currentUser.email
+    const fullName = currentUser.user_metadata?.full_name || userEmail.split('@')[0]
+    const initials = fullName
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+
+    document.getElementById('userAvatar').textContent = initials || '👤'
+    document.getElementById('userNameDisplay').textContent = fullName || 'User'
+    document.getElementById('userEmailDisplay').textContent = userEmail
+  }
+
+  // Fetch and display stats
+  async function loadStats() {
+    try {
+      const response = await fetch('/api/stats')
+      const data = await response.json()
+      if (data.success && data.stats) {
+        document.getElementById('toolsUsedStat').textContent = data.stats.total_tools || '0'
+        document.getElementById('apiCallsStat').textContent = data.stats.total_actions || '0'
+        document.getElementById('totalUsersStat').textContent = data.stats.total_users || '0'
+      }
+    } catch (error) {
+      console.error('Failed to load stats:', error)
+    }
+  }
+
+  loadStats()
+
+  // Logout button
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await logout()
+  })
+
+  // Mobile sidebar toggle
+  const hamburger = document.getElementById('hamburger')
+  const sidebar = document.getElementById('sidebar')
+
+  if (window.innerWidth <= 768) {
+    hamburger.style.display = 'block'
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('mobile-open')
+    })
+  }
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50)
+  })
+</script>
+
+</body>
+</html>

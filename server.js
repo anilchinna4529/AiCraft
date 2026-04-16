@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 3000;
 // Enable CORS for all origins
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.SITE_URL,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -421,6 +421,152 @@ app.get("/api/stats", async (req, res) => {
   } catch (error) {
     console.error("❌ Error fetching stats:", error.message);
     res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// AUTH MIDDLEWARE: Validate JWT Bearer token
+// ============================================
+const authMiddleware = async (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ success: false, error: "Unauthorized: Missing token" });
+    }
+
+    const token = authHeader.slice(7); // Remove "Bearer " prefix
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+
+    if (error || !user) {
+      return res.status(401).json({ success: false, error: "Unauthorized: Invalid token" });
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    console.error("❌ Auth middleware error:", error.message);
+    res.status(401).json({ success: false, error: "Unauthorized" });
+  }
+};
+
+// ============================================
+// ROUTE: Get Supabase Config (public)
+// GET /api/config
+// ============================================
+app.get("/api/config", (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    });
+  } catch (error) {
+    console.error("❌ Config error:", error.message);
+    res.status(500).json({ success: false, error: "Failed to fetch config" });
+  }
+});
+
+// ============================================
+// ROUTE: Resend OTP Email
+// POST /api/auth/resend-otp
+// ============================================
+const otpAttempts = new Map(); // Rate limiting: { email: { count, timestamp } }
+app.post("/api/auth/resend-otp", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    // Rate limiting: max 3 attempts per 10 minutes
+    const now = Date.now();
+    const limitWindow = 10 * 60 * 1000; // 10 minutes
+    const entry = otpAttempts.get(email) || { count: 0, timestamp: now };
+
+    if (now - entry.timestamp < limitWindow && entry.count >= 3) {
+      return res.status(429).json({
+        success: false,
+        error: "Too many requests. Please try again later.",
+      });
+    }
+
+    // Reset count if outside window
+    if (now - entry.timestamp >= limitWindow) {
+      entry.count = 0;
+      entry.timestamp = now;
+    }
+
+    entry.count++;
+    otpAttempts.set(email, entry);
+
+    // Resend OTP via Supabase
+    const { data, error } = await supabase.auth.resend({
+      type: "signup",
+      email: email.toLowerCase(),
+    });
+
+    if (error) {
+      console.error("❌ Resend OTP error:", error.message);
+      return res.status(400).json({
+        success: false,
+        error: error.message || "Failed to resend OTP",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "✅ OTP resent successfully",
+    });
+  } catch (error) {
+    console.error("❌ Resend OTP error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to resend OTP",
+      details: error.message,
+    });
+  }
+});
+
+// ============================================
+// ROUTE: Reset Password
+// POST /api/auth/reset-password
+// ============================================
+app.post("/api/auth/reset-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, error: "Email is required" });
+    }
+
+    const siteUrl = process.env.SITE_URL || "http://localhost:3000";
+    const { data, error } = await supabase.auth.resetPasswordForEmail(
+      email.toLowerCase(),
+      {
+        redirectTo: `${siteUrl}/reset-password.html`,
+      }
+    );
+
+    if (error) {
+      console.error("❌ Reset password error:", error.message);
+      return res.status(400).json({
+        success: false,
+        error: error.message || "Failed to send reset email",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "✅ Password reset email sent",
+    });
+  } catch (error) {
+    console.error("❌ Reset password error:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to send reset email",
+      details: error.message,
+    });
   }
 });
 
