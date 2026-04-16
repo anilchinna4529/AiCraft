@@ -24,10 +24,11 @@ const PORT = process.env.PORT || 3000;
 // MIDDLEWARE SETUP
 // ============================================
 
-// Enable CORS for all origins
+// Enable CORS — allow localhost for development, restrict to SITE_URL in production
+const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.SITE_URL : ['http://localhost:3000', 'http://localhost:5173'];
 app.use(
   cors({
-    origin: process.env.SITE_URL,
+    origin: corsOrigin,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
