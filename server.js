@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import supabase from "./supabaseClient.js";
+import { Resend } from "resend";
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +20,9 @@ const __dirname = path.dirname(__filename);
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Initialize Resend for email notifications
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ============================================
 // MIDDLEWARE SETUP
@@ -568,6 +572,535 @@ app.post("/api/auth/reset-password", async (req, res) => {
       error: "Failed to send reset email",
       details: error.message,
     });
+  }
+});
+
+// ============================================
+// ADMIN MIDDLEWARE: Verify user is admin
+// ============================================
+const adminMiddleware = async (req, res, next) => {
+  if (!req.user) return res.status(401).json({ success: false, error: "Unauthorized" });
+
+  // Bootstrap: allow ADMIN_EMAIL env var (first-run only)
+  if (process.env.ADMIN_EMAIL && req.user.email === process.env.ADMIN_EMAIL) {
+    req.isAdmin = true;
+    return next();
+  }
+
+  // Check DB: is_admin = true and status = active
+  const { data, error } = await supabase
+    .from("users")
+    .select("is_admin, status")
+    .eq("id", req.user.id)
+    .single();
+
+  if (error || !data || !data.is_admin || data.status !== "active") {
+    return res.status(403).json({ success: false, error: "Forbidden: Admin access required" });
+  }
+
+  req.isAdmin = true;
+  next();
+};
+
+// ============================================
+// HELPER: Send admin notification emails
+// ============================================
+const sendAdminAlert = async (subject, html, adminEmails = []) => {
+  if (!process.env.RESEND_API_KEY || adminEmails.length === 0) return;
+  try {
+    for (const email of adminEmails) {
+      await resend.emails.send({
+        from: "admin-alerts@aicraft.co",
+        to: email,
+        subject,
+        html,
+      });
+    }
+  } catch (error) {
+    console.error("❌ Failed to send admin alert:", error.message);
+  }
+};
+
+// ============================================
+// HELPER: Get all admin emails
+// ============================================
+const getAdminEmails = async () => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("email")
+    .eq("is_admin", true)
+    .eq("status", "active");
+
+  if (error || !data) return [];
+  return data.map(u => u.email);
+};
+
+// ============================================
+// ROUTE: Log login attempt (PUBLIC)
+// POST /api/auth/login-log
+// ============================================
+app.post("/api/auth/login-log", async (req, res) => {
+  try {
+    const { email, status, failure_reason, user_id } = req.body;
+
+    if (!email || !status) {
+      return res.status(400).json({ success: false, error: "email and status required" });
+    }
+
+    await supabase.from("login_logs").insert([{
+      email: email.toLowerCase().trim(),
+      user_id: user_id || null,
+      status,
+      failure_reason: failure_reason || null,
+      ip_address: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+      user_agent: req.headers["user-agent"] || null,
+      metadata: {},
+    }]);
+
+    // Update user's last login if successful
+    if (status === "success" && user_id) {
+      await supabase
+        .from("users")
+        .update({
+          last_login_at: new Date().toISOString(),
+          login_count: supabase.raw("login_count + 1"),
+        })
+        .eq("id", user_id);
+    }
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("❌ Login log error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Bootstrap admin (one-time setup)
+// POST /api/admin/seed-admin
+// ============================================
+app.post("/api/admin/seed-admin", authMiddleware, async (req, res) => {
+  try {
+    // Only allow via ADMIN_EMAIL env var
+    if (!process.env.ADMIN_EMAIL || req.user.email !== process.env.ADMIN_EMAIL) {
+      return res.status(403).json({ success: false, error: "Forbidden" });
+    }
+
+    // Promote user to admin
+    const { error } = await supabase
+      .from("users")
+      .update({ is_admin: true })
+      .eq("email", req.user.email);
+
+    if (error) throw error;
+
+    res.json({ success: true, message: "Admin account promoted" });
+  } catch (error) {
+    console.error("❌ Seed admin error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Get platform stats
+// GET /api/admin/stats
+// ============================================
+app.get("/api/admin/stats", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const [toolsResult, usersResult, actionsResult] = await Promise.all([
+      supabase.from("ai_tools").select("id", { count: "exact" }),
+      supabase.from("users").select("id", { count: "exact" }),
+      supabase.from("actions").select("id", { count: "exact" }),
+    ]);
+
+    res.json({
+      success: true,
+      stats: {
+        total_tools: toolsResult.count || 0,
+        total_users: usersResult.count || 0,
+        total_actions: actionsResult.count || 0,
+        admin_count: (await supabase.from("users").select("id", { count: "exact" }).eq("is_admin", true)).count || 0,
+      },
+    });
+  } catch (error) {
+    console.error("❌ Stats error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: List all users with pagination
+// GET /api/admin/users?page=1&limit=20&search=&status=active&sector=
+// ============================================
+app.get("/api/admin/users", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { page = 1, limit = 20, search, status, sector } = req.query;
+    const offset = (parseInt(page) - 1) * parseInt(limit);
+
+    let query = supabase
+      .from("users")
+      .select("id,name,email,role,sector,is_admin,status,last_login_at,login_count,created_at", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(offset, offset + parseInt(limit) - 1);
+
+    if (search) query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%`);
+    if (status) query = query.eq("status", status);
+    if (sector) query = query.eq("sector", sector);
+
+    const { data, count, error } = await query;
+    if (error) throw error;
+
+    res.json({
+      success: true,
+      users: data,
+      total: count,
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+  } catch (error) {
+    console.error("❌ List users error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Get single user with login history
+// GET /api/admin/users/:id
+// ============================================
+app.get("/api/admin/users/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data: user, error: userError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (userError || !user) return res.status(404).json({ success: false, error: "User not found" });
+
+    const { data: logins, error: logError } = await supabase
+      .from("login_logs")
+      .select("*")
+      .eq("user_id", id)
+      .order("created_at", { ascending: false })
+      .limit(10);
+
+    if (logError) throw logError;
+
+    res.json({ success: true, user, recentLogins: logins || [] });
+  } catch (error) {
+    console.error("❌ Get user error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Create user (admin-initiated, no OTP)
+// POST /api/admin/users
+// ============================================
+app.post("/api/admin/users", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { name, email, password, role = "user", sector = "General" } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ success: false, error: "name, email, password required" });
+    }
+
+    // Create Supabase auth user with password
+    const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
+      email: email.toLowerCase().trim(),
+      password,
+      email_confirm: true, // Skip OTP
+    });
+
+    if (authError) throw authError;
+
+    // Create user record in DB
+    const { data: dbUser, error: dbError } = await supabase
+      .from("users")
+      .insert([{
+        id: authUser.user.id,
+        name: name.trim(),
+        email: email.toLowerCase().trim(),
+        role,
+        sector,
+        status: "active",
+      }])
+      .select()
+      .single();
+
+    if (dbError) throw dbError;
+
+    // Log to audit trail
+    await supabase.from("admin_audit_log").insert([{
+      admin_id: req.user.id,
+      action: "user.create",
+      target_type: "user",
+      target_id: dbUser.id,
+      details: { name, email, role, sector },
+    }]);
+
+    // Send admin alert
+    const adminEmails = await getAdminEmails();
+    await sendAdminAlert(
+      `✅ New User Created: ${email}`,
+      `<h2>User Created</h2><p><strong>${email}</strong> created by <strong>${req.user.email}</strong><br/>Role: ${role}<br/>Sector: ${sector}</p>`,
+      adminEmails
+    );
+
+    res.status(201).json({ success: true, user: dbUser });
+  } catch (error) {
+    console.error("❌ Create user error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Update user status (active/disabled/frozen)
+// PATCH /api/admin/users/:id/status
+// ============================================
+app.patch("/api/admin/users/:id/status", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!["active", "disabled", "frozen"].includes(status)) {
+      return res.status(400).json({ success: false, error: "Invalid status" });
+    }
+
+    const { data: user, error: fetchError } = await supabase
+      .from("users")
+      .select("email, status")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !user) return res.status(404).json({ success: false, error: "User not found" });
+
+    // Update status
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ status })
+      .eq("id", id);
+
+    if (updateError) throw updateError;
+
+    // Log to audit trail
+    await supabase.from("admin_audit_log").insert([{
+      admin_id: req.user.id,
+      action: "user.status_change",
+      target_type: "user",
+      target_id: id,
+      details: { previous_status: user.status, new_status: status },
+    }]);
+
+    // Send alert email
+    const adminEmails = await getAdminEmails();
+    const statusLabel = { active: "✅ Activated", disabled: "🚫 Disabled", frozen: "❄️ Frozen" }[status];
+    await sendAdminAlert(
+      `${statusLabel}: ${user.email}`,
+      `<h2>User Status Changed</h2><p><strong>${user.email}</strong> is now <strong>${status}</strong> (changed by ${req.user.email})</p>`,
+      adminEmails
+    );
+
+    res.json({ success: true, message: `User status changed to ${status}` });
+  } catch (error) {
+    console.error("❌ Update status error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Toggle admin role
+// PATCH /api/admin/users/:id/role
+// ============================================
+app.patch("/api/admin/users/:id/role", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { is_admin } = req.body;
+
+    const { data: user, error: fetchError } = await supabase
+      .from("users")
+      .select("email, is_admin")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !user) return res.status(404).json({ success: false, error: "User not found" });
+
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({ is_admin })
+      .eq("id", id);
+
+    if (updateError) throw updateError;
+
+    // Log to audit trail
+    await supabase.from("admin_audit_log").insert([{
+      admin_id: req.user.id,
+      action: is_admin ? "user.promote_admin" : "user.demote_admin",
+      target_type: "user",
+      target_id: id,
+      details: { email: user.email },
+    }]);
+
+    // Send alert email
+    const adminEmails = await getAdminEmails();
+    const action = is_admin ? "👑 Promoted to Admin" : "📝 Demoted to User";
+    await sendAdminAlert(
+      `${action}: ${user.email}`,
+      `<h2>Admin Role Changed</h2><p><strong>${user.email}</strong> is now a <strong>${is_admin ? "Admin" : "User"}</strong> (changed by ${req.user.email})</p>`,
+      adminEmails
+    );
+
+    res.json({ success: true, message: is_admin ? "User promoted to admin" : "User demoted to user" });
+  } catch (error) {
+    console.error("❌ Update role error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Delete user
+// DELETE /api/admin/users/:id
+// ============================================
+app.delete("/api/admin/users/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data: user, error: fetchError } = await supabase
+      .from("users")
+      .select("email")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !user) return res.status(404).json({ success: false, error: "User not found" });
+
+    const { error: deleteError } = await supabase.from("users").delete().eq("id", id);
+    if (deleteError) throw deleteError;
+
+    // Log to audit trail
+    await supabase.from("admin_audit_log").insert([{
+      admin_id: req.user.id,
+      action: "user.delete",
+      target_type: "user",
+      target_id: id,
+      details: { email: user.email },
+    }]);
+
+    // Send alert email
+    const adminEmails = await getAdminEmails();
+    await sendAdminAlert(
+      `🗑️ User Deleted: ${user.email}`,
+      `<h2>User Deleted</h2><p><strong>${user.email}</strong> was deleted by ${req.user.email}</p>`,
+      adminEmails
+    );
+
+    res.json({ success: true, message: "User deleted" });
+  } catch (error) {
+    console.error("❌ Delete user error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Get login logs with pagination
+// GET /api/admin/login-logs?page=1&limit=50&email=&status=&days=7
+// ============================================
+app.get("/api/admin/login-logs", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { page = 1, limit = 50, email, status, days = 30 } = req.query;
+    const offset = (parseInt(page) - 1) * parseInt(limit);
+    const since = new Date(Date.now() - parseInt(days) * 24 * 60 * 60 * 1000).toISOString();
+
+    let query = supabase
+      .from("login_logs")
+      .select("*", { count: "exact" })
+      .gte("created_at", since)
+      .order("created_at", { ascending: false })
+      .range(offset, offset + parseInt(limit) - 1);
+
+    if (email) query = query.ilike("email", `%${email}%`);
+    if (status) query = query.eq("status", status);
+
+    const { data, count, error } = await query;
+    if (error) throw error;
+
+    res.json({ success: true, logs: data, total: count, page: parseInt(page), limit: parseInt(limit) });
+  } catch (error) {
+    console.error("❌ Login logs error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Get analytics data
+// GET /api/admin/analytics?days=30
+// ============================================
+app.get("/api/admin/analytics", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { days = 30 } = req.query;
+
+    // Get signup trend
+    const { data: signupTrend, error: signupError } = await supabase.rpc("get_signup_trend", { days_back: parseInt(days) });
+    if (signupError) throw signupError;
+
+    // Get login trend
+    const { data: loginTrend, error: loginError } = await supabase.rpc("get_login_trend", { days_back: parseInt(days) });
+    if (loginError) throw loginError;
+
+    // Get sector distribution
+    const { data: sectors, error: sectorError } = await supabase.rpc("get_sector_distribution");
+    if (sectorError) throw sectorError;
+
+    res.json({
+      success: true,
+      signupTrend: signupTrend || [],
+      loginTrend: loginTrend || [],
+      sectors: sectors || [],
+    });
+  } catch (error) {
+    console.error("❌ Analytics error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Get security alerts
+// GET /api/admin/security/alerts
+// ============================================
+app.get("/api/admin/security/alerts", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { data: suspicious, error } = await supabase.rpc("get_suspicious_logins");
+    if (error) throw error;
+
+    res.json({ success: true, alerts: suspicious || [] });
+  } catch (error) {
+    console.error("❌ Security alerts error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ============================================
+// ROUTE: Get admin audit log
+// GET /api/admin/audit?page=1&limit=50
+// ============================================
+app.get("/api/admin/audit", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { page = 1, limit = 50 } = req.query;
+    const offset = (parseInt(page) - 1) * parseInt(limit);
+
+    const { data, count, error } = await supabase
+      .from("admin_audit_log")
+      .select("*, users(name, email)", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(offset, offset + parseInt(limit) - 1);
+
+    if (error) throw error;
+
+    res.json({ success: true, audit: data, total: count, page: parseInt(page), limit: parseInt(limit) });
+  } catch (error) {
+    console.error("❌ Audit log error:", error.message);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

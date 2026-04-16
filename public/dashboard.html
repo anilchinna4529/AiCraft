@@ -232,6 +232,11 @@
         <i class="fas fa-gear"></i>
         Settings
       </a>
+      <a href="/admin.html" id="adminLink" style="display:none;border-left: 3px solid rgba(108, 99, 255, 0.5);">
+        <i class="fas fa-shield-halved"></i>
+        <span style="flex:1;">Admin Panel</span>
+        <span style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;text-transform:uppercase;white-space:nowrap;">ADMIN</span>
+      </a>
     </div>
   </aside>
 
@@ -350,6 +355,21 @@
     document.getElementById('userAvatar').textContent = initials || '👤'
     document.getElementById('userNameDisplay').textContent = fullName || 'User'
     document.getElementById('userEmailDisplay').textContent = userEmail
+
+    // Check if user is admin and show admin link
+    try {
+      const { data: userData, error } = await supabase
+        .from('users')
+        .select('is_admin')
+        .eq('id', currentUser.id)
+        .single()
+
+      if (userData?.is_admin === true) {
+        document.getElementById('adminLink').style.display = 'flex'
+      }
+    } catch (err) {
+      console.warn('Could not check admin status:', err)
+    }
   }
 
   // Fetch and display stats

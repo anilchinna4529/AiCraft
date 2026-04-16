@@ -62,6 +62,22 @@ export async function getCurrentUser() {
 }
 
 // ============================================
+// HELPER: Log login attempt to backend
+// ============================================
+export async function logLoginAttempt(email, status, failureReason = null, userId = null) {
+  try {
+    // Fire-and-forget: don't wait for response
+    fetch('/api/auth/login-log', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, status, failure_reason: failureReason, user_id: userId })
+    }).catch(err => console.warn('⚠️ Login log submission failed:', err))
+  } catch (error) {
+    console.warn('⚠️ Could not submit login log:', error)
+  }
+}
+
+// ============================================
 // HELPER: Require authentication (redirect if not logged in)
 // ============================================
 export async function requireAuth() {
@@ -72,6 +88,39 @@ export async function requireAuth() {
     return null
   }
   return user
+}
+
+// ============================================
+// HELPER: Require admin role (redirect if not admin)
+// ============================================
+export async function requireAdmin() {
+  const user = await getCurrentUser()
+  if (!user) {
+    console.warn('⚠️ Not authenticated. Redirecting to login...')
+    window.location.href = '/login.html'
+    return null
+  }
+
+  try {
+    const sb = await getSupabaseClient()
+    const { data, error } = await sb
+      .from('users')
+      .select('is_admin')
+      .eq('id', user.id)
+      .single()
+
+    if (error || !data?.is_admin) {
+      console.warn('⚠️ Not an admin. Redirecting to dashboard...')
+      window.location.href = '/dashboard.html'
+      return null
+    }
+
+    return user
+  } catch (error) {
+    console.error('❌ Admin check failed:', error)
+    window.location.href = '/dashboard.html'
+    return null
+  }
 }
 
 // ============================================
@@ -131,6 +180,12 @@ export async function verifyOTP(email, otp) {
 
   sessionStorage.removeItem('pending_email')
   console.log('✅ Email verified successfully.')
+
+  // Log successful verification
+  if (data?.user?.id) {
+    logLoginAttempt(email, 'success', null, data.user.id)
+  }
+
   return data
 }
 
@@ -146,16 +201,25 @@ export async function signIn(email, password) {
 
   if (error) {
     console.error('❌ Login error:', error.message)
-    // Check if email is not confirmed
+    // Log failed login attempt
+    let reason = error.message
     if (error.message.includes('email not confirmed') || error.message.includes('Email not confirmed')) {
+      reason = 'Email not confirmed'
+      logLoginAttempt(email, 'failed', reason)
       const customError = new Error('Email not confirmed')
       customError.code = 'EMAIL_NOT_CONFIRMED'
       throw customError
     }
+    logLoginAttempt(email, 'failed', reason)
     throw error
   }
 
   console.log('✅ Login successful.')
+  // Log successful login
+  if (data?.user?.id) {
+    logLoginAttempt(email, 'success', null, data.user.id)
+  }
+
   return data
 }
 

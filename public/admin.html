@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — AICraft</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-logo">
+        <i class="fas fa-rocket"></i>
+        <span>AICraft Admin</span>
+      </div>
+      <ul class="navbar-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/dashboard.html">Dashboard</a></li>
+        <li id="userProfile" style="cursor:pointer;">
+          <i class="fas fa-user-circle"></i>
+          <span id="userName">Profile</span>
+          <div id="profileDropdown" class="profile-dropdown" style="display:none;">
+            <a href="#" id="logoutBtn">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-menu">
+        <a href="#" class="menu-item active" data-panel="overview">
+          <i class="fas fa-chart-line"></i>
+          Overview
+        </a>
+        <a href="#" class="menu-item" data-panel="users">
+          <i class="fas fa-users"></i>
+          Users
+        </a>
+        <a href="#" class="menu-item" data-panel="login-logs">
+          <i class="fas fa-history"></i>
+          Login Logs
+        </a>
+        <a href="#" class="menu-item" data-panel="analytics">
+          <i class="fas fa-chart-bar"></i>
+          Analytics
+        </a>
+        <a href="#" class="menu-item" data-panel="security">
+          <i class="fas fa-shield-halved"></i>
+          Security
+        </a>
+        <a href="#" class="menu-item" data-panel="audit">
+          <i class="fas fa-clipboard-list"></i>
+          Audit Log
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-content">
+      <!-- PANEL: Overview -->
+      <div id="panel-overview" class="admin-panel active">
+        <h1>Dashboard Overview</h1>
+
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Total Users</h3>
+              <p class="stat-value" id="stat-totalUsers">—</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Active Users</h3>
+              <p class="stat-value" id="stat-activeUsers">—</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+              <i class="fas fa-ban"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Disabled Users</h3>
+              <p class="stat-value" id="stat-disabledUsers">—</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+              <i class="fas fa-snowflake"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Frozen Users</h3>
+              <p class="stat-value" id="stat-frozenUsers">—</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+              <i class="fas fa-crown"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Admin Users</h3>
+              <p class="stat-value" id="stat-adminUsers">—</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Suspicious Logins</h3>
+              <p class="stat-value" id="stat-suspiciousLogins">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+          <h2>Recent Admin Actions</h2>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Admin</th>
+                <th>Action</th>
+                <th>Target</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="recentActivityTable">
+              <tr>
+                <td colspan="4" style="text-align: center; color: #888;">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANEL: Users -->
+      <div id="panel-users" class="admin-panel">
+        <h1>User Management</h1>
+
+        <div class="panel-controls">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="userSearch" placeholder="Search by email or name...">
+          </div>
+          <select id="userStatusFilter">
+            <option value="">All Statuses</option>
+            <option value="active">Active</option>
+            <option value="disabled">Disabled</option>
+            <option value="frozen">Frozen</option>
+          </select>
+          <button class="btn btn-primary" id="createUserBtn">
+            <i class="fas fa-plus"></i> Create User
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Role</th>
+                <th>Logins</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable">
+              <tr>
+                <td colspan="7" style="text-align: center; color: #888;">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button id="usersPrevBtn" class="pagination-btn">← Previous</button>
+          <span id="usersPageInfo">Page 1</span>
+          <button id="usersNextBtn" class="pagination-btn">Next →</button>
+        </div>
+      </div>
+
+      <!-- PANEL: Login Logs -->
+      <div id="panel-login-logs" class="admin-panel">
+        <h1>Login Activity</h1>
+
+        <div class="panel-controls">
+          <input type="text" id="logEmailFilter" placeholder="Filter by email...">
+          <select id="logStatusFilter">
+            <option value="">All Statuses</option>
+            <option value="success">Success</option>
+            <option value="failed">Failed</option>
+            <option value="blocked">Blocked</option>
+          </select>
+          <input type="date" id="logDateFilter">
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Status</th>
+                <th>IP Address</th>
+                <th>Failure Reason</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="loginLogsTable">
+              <tr>
+                <td colspan="5" style="text-align: center; color: #888;">Loading logs...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button id="logsPrevBtn" class="pagination-btn">← Previous</button>
+          <span id="logsPageInfo">Page 1</span>
+          <button id="logsNextBtn" class="pagination-btn">Next →</button>
+        </div>
+      </div>
+
+      <!-- PANEL: Analytics -->
+      <div id="panel-analytics" class="admin-panel">
+        <h1>Platform Analytics</h1>
+
+        <div class="analytics-controls">
+          <label>
+            Days to display:
+            <select id="analyticsDaysSelect">
+              <option value="7">Last 7 Days</option>
+              <option value="14">Last 14 Days</option>
+              <option value="30" selected>Last 30 Days</option>
+              <option value="90">Last 90 Days</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #667eea;">
+              <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="stat-content">
+              <h3>New Signups</h3>
+              <p class="stat-value" id="stat-newSignups">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #f093fb;">
+              <i class="fas fa-check"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Successful Logins</h3>
+              <p class="stat-value" id="stat-successLogins">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #f5576c;">
+              <i class="fas fa-times"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Failed Logins</h3>
+              <p class="stat-value" id="stat-failedLogins">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #4facfe;">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <div class="stat-content">
+              <h3>Top Sector</h3>
+              <p class="stat-value" id="stat-topSector">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+          <div class="chart-wrapper">
+            <h3>Signup Trend</h3>
+            <div class="chart-canvas-wrap">
+              <canvas id="signupChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-wrapper">
+            <h3>Login Activity (Success vs Failed)</h3>
+            <div class="chart-canvas-wrap">
+              <canvas id="loginChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-wrapper">
+            <h3>User Distribution by Sector</h3>
+            <div class="chart-canvas-wrap">
+              <canvas id="sectorChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL: Security -->
+      <div id="panel-security" class="admin-panel">
+        <h1>Security & Alerts</h1>
+
+        <div id="securityAlerts">
+          <!-- Alerts will be populated here -->
+        </div>
+
+        <h2>Disabled Users</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Disabled Since</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="disabledUsersTable">
+            <tr>
+              <td colspan="4" style="text-align: center; color: #888;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 style="margin-top: 3rem;">Frozen Users</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Frozen Since</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="frozenUsersTable">
+            <tr>
+              <td colspan="4" style="text-align: center; color: #888;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PANEL: Audit Log -->
+      <div id="panel-audit" class="admin-panel">
+        <h1>Admin Audit Log</h1>
+
+        <div class="panel-controls">
+          <input type="text" id="auditAdminFilter" placeholder="Filter by admin email...">
+          <input type="text" id="auditActionFilter" placeholder="Filter by action...">
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Admin</th>
+                <th>Action</th>
+                <th>Target Type</th>
+                <th>Details</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="auditTable">
+              <tr>
+                <td colspan="5" style="text-align: center; color: #888;">Loading audit log...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button id="auditPrevBtn" class="pagination-btn">← Previous</button>
+          <span id="auditPageInfo">Page 1</span>
+          <button id="auditNextBtn" class="pagination-btn">Next →</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: Create User -->
+  <div id="modal-create-user" class="modal-backdrop" style="display: none;">
+    <div class="modal-box">
+      <h2>Create New User</h2>
+      <form id="createUserForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="newUserName" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="newUserEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="newUserPassword" required>
+        </div>
+        <div class="form-group">
+          <label>Sector</label>
+          <input type="text" id="newUserSector" placeholder="e.g., Healthcare, Finance">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="newUserIsAdmin">
+            Make Admin
+          </label>
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary" id="closeCreateUserModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Confirm Action -->
+  <div id="modal-confirm" class="modal-backdrop" style="display: none;">
+    <div class="modal-box">
+      <h2 id="confirmTitle">Confirm Action</h2>
+      <p id="confirmMessage"></p>
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <button type="button" class="btn btn-secondary" id="confirmCancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmSubmit">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: User Details -->
+  <div id="modal-user-detail" class="modal-backdrop" style="display: none;">
+    <div class="modal-box">
+      <h2>User Details</h2>
+      <div id="userDetailContent"></div>
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <button type="button" class="btn btn-secondary" id="closeUserDetailModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAdmin, getCurrentUser, logout, getSupabaseClient } from './auth.js'
+
+    let currentUser = null
+    let supabase = null
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    async function init() {
+      // Check admin access
+      currentUser = await requireAdmin()
+      if (!currentUser) return
+
+      supabase = await getSupabaseClient()
+
+      // Setup UI
+      setupUI()
+      setupEventListeners()
+
+      // Load data
+      await loadOverviewStats()
+      await loadUsers()
+      await loadLoginLogs()
+      await loadAnalytics()
+      await loadSecurity()
+      await loadAuditLog()
+    }
+
+    // ============================================
+    // UI SETUP
+    // ============================================
+    function setupUI() {
+      document.getElementById('userName').textContent = currentUser.email || 'Admin'
+    }
+
+    function setupEventListeners() {
+      // Profile dropdown
+      document.getElementById('userProfile').addEventListener('click', (e) => {
+        e.stopPropagation()
+        const dropdown = document.getElementById('profileDropdown')
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none'
+      })
+
+      // Logout
+      document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault()
+        await logout()
+      })
+
+      // Panel switching
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          const panelName = item.dataset.panel
+          switchPanel(panelName)
+        })
+      })
+
+      // Overview panel
+      // (no additional listeners needed)
+
+      // Users panel
+      document.getElementById('createUserBtn').addEventListener('click', () => {
+        document.getElementById('modal-create-user').style.display = 'flex'
+      })
+      document.getElementById('closeCreateUserModal').addEventListener('click', () => {
+        document.getElementById('modal-create-user').style.display = 'none'
+      })
+      document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        await handleCreateUser()
+      })
+      document.getElementById('userSearch').addEventListener('input', () => loadUsers(1))
+      document.getElementById('userStatusFilter').addEventListener('change', () => loadUsers(1))
+      document.getElementById('usersPrevBtn').addEventListener('click', () => loadUsers(userPage - 1))
+      document.getElementById('usersNextBtn').addEventListener('click', () => loadUsers(userPage + 1))
+
+      // Login logs panel
+      document.getElementById('logEmailFilter').addEventListener('input', () => loadLoginLogs(1))
+      document.getElementById('logStatusFilter').addEventListener('change', () => loadLoginLogs(1))
+      document.getElementById('logDateFilter').addEventListener('change', () => loadLoginLogs(1))
+      document.getElementById('logsPrevBtn').addEventListener('click', () => loadLoginLogs(logPage - 1))
+      document.getElementById('logsNextBtn').addEventListener('click', () => loadLoginLogs(logPage + 1))
+
+      // Analytics panel
+      document.getElementById('analyticsDaysSelect').addEventListener('change', async () => {
+        await loadAnalytics()
+      })
+
+      // Security panel
+      document.getElementById('closeUserDetailModal').addEventListener('click', () => {
+        document.getElementById('modal-user-detail').style.display = 'none'
+      })
+
+      // Audit panel
+      document.getElementById('auditAdminFilter').addEventListener('input', () => loadAuditLog(1))
+      document.getElementById('auditActionFilter').addEventListener('input', () => loadAuditLog(1))
+      document.getElementById('auditPrevBtn').addEventListener('click', () => loadAuditLog(auditPage - 1))
+      document.getElementById('auditNextBtn').addEventListener('click', () => loadAuditLog(auditPage + 1))
+
+      // Modal close outside
+      document.querySelectorAll('.modal-backdrop').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.style.display = 'none'
+        })
+      })
+    }
+
+    function switchPanel(panelName) {
+      // Hide all panels
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'))
+      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'))
+
+      // Show selected panel
+      document.getElementById(`panel-${panelName}`).classList.add('active')
+      document.querySelector(`[data-panel="${panelName}"]`).classList.add('active')
+    }
+
+    // ============================================
+    // DATA LOADING FUNCTIONS
+    // ============================================
+    async function loadOverviewStats() {
+      try {
+        const { data: users, error: usersError } = await supabase
+          .from('users')
+          .select('id, status, is_admin')
+
+        if (usersError) throw usersError
+
+        const stats = {
+          total: users.length,
+          active: users.filter(u => u.status === 'active').length,
+          disabled: users.filter(u => u.status === 'disabled').length,
+          frozen: users.filter(u => u.status === 'frozen').length,
+          admin: users.filter(u => u.is_admin).length,
+        }
+
+        document.getElementById('stat-totalUsers').textContent = stats.total
+        document.getElementById('stat-activeUsers').textContent = stats.active
+        document.getElementById('stat-disabledUsers').textContent = stats.disabled
+        document.getElementById('stat-frozenUsers').textContent = stats.frozen
+        document.getElementById('stat-adminUsers').textContent = stats.admin
+
+        // Load suspicious logins
+        const { data: suspiciousLogins, error: suspError } = await supabase.rpc('get_suspicious_logins')
+        if (!suspError) {
+          document.getElementById('stat-suspiciousLogins').textContent = suspiciousLogins?.length || 0
+        }
+
+        // Load recent audit log
+        const { data: auditLogs, error: auditError } = await supabase
+          .from('admin_audit_log')
+          .select('id, admin_id, action, target_type, created_at, users(email)')
+          .order('created_at', { ascending: false })
+          .limit(10)
+
+        if (!auditError && auditLogs) {
+          const tbody = document.getElementById('recentActivityTable')
+          tbody.innerHTML = auditLogs.map(log => `
+            <tr>
+              <td>${log.users?.email || 'Unknown'}</td>
+              <td>${log.action}</td>
+              <td>${log.target_type || '—'}</td>
+              <td>${new Date(log.created_at).toLocaleString()}</td>
+            </tr>
+          `).join('') || '<tr><td colspan="4" style="text-align:center;color:#888;">No recent activity</td></tr>'
+        }
+      } catch (error) {
+        console.error('❌ Failed to load overview stats:', error)
+      }
+    }
+
+    let userPage = 1
+    async function loadUsers(page = 1) {
+      try {
+        userPage = page
+        const pageSize = 10
+        const from = (page - 1) * pageSize
+        const to = from + pageSize - 1
+
+        let query = supabase.from('users').select('*', { count: 'exact' })
+
+        // Apply filters
+        const search = document.getElementById('userSearch').value
+        const status = document.getElementById('userStatusFilter').value
+        if (search) {
+          query = query.or(`email.ilike.%${search}%,raw_user_meta_data->>'full_name'.ilike.%${search}%`)
+        }
+        if (status) {
+          query = query.eq('status', status)
+        }
+
+        const { data, count, error } = await query
+          .order('created_at', { ascending: false })
+          .range(from, to)
+
+        if (error) throw error
+
+        const tbody = document.getElementById('usersTable')
+        tbody.innerHTML = (data || []).map(user => {
+          const fullName = user.raw_user_meta_data?.full_name || 'N/A'
+          const statusBadgeClass = `user-status-badge ${user.status}`
+          return `
+            <tr>
+              <td><strong>${user.email}</strong></td>
+              <td>${fullName}</td>
+              <td><span class="${statusBadgeClass}">${user.status}</span></td>
+              <td>${user.is_admin ? '👑 Admin' : 'User'}</td>
+              <td>${user.login_count || 0}</td>
+              <td>${new Date(user.created_at).toLocaleDateString()}</td>
+              <td class="action-cell">
+                <button class="btn btn-sm" onclick="editUser('${user.id}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteUser('${user.id}')">Delete</button>
+              </td>
+            </tr>
+          `
+        }).join('') || '<tr><td colspan="7" style="text-align:center;color:#888;">No users found</td></tr>'
+
+        // Update pagination
+        const totalPages = Math.ceil(count / pageSize)
+        document.getElementById('usersPageInfo').textContent = `Page ${page} of ${totalPages}`
+        document.getElementById('usersPrevBtn').disabled = page <= 1
+        document.getElementById('usersNextBtn').disabled = page >= totalPages
+      } catch (error) {
+        console.error('❌ Failed to load users:', error)
+      }
+    }
+
+    async function handleCreateUser() {
+      try {
+        const name = document.getElementById('newUserName').value
+        const email = document.getElementById('newUserEmail').value
+        const password = document.getElementById('newUserPassword').value
+        const sector = document.getElementById('newUserSector').value
+        const isAdmin = document.getElementById('newUserIsAdmin').checked
+
+        const response = await fetch('/api/admin/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentUser.user_metadata?.access_token || (await getAuthToken())}`,
+          },
+          body: JSON.stringify({ email, password, full_name: name, sector, is_admin: isAdmin }),
+        })
+
+        if (!response.ok) {
+          const error = await response.json()
+          throw new Error(error.error || 'Failed to create user')
+        }
+
+        alert('✅ User created successfully!')
+        document.getElementById('modal-create-user').style.display = 'none'
+        document.getElementById('createUserForm').reset()
+        await loadUsers(1)
+      } catch (error) {
+        console.error('❌ Error creating user:', error)
+        alert(`Error: ${error.message}`)
+      }
+    }
+
+    window.editUser = async function(userId) {
+      try {
+        const token = await getAuthToken()
+        const { data, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', userId)
+          .single()
+
+        if (error) throw error
+
+        const fullName = data.raw_user_meta_data?.full_name || 'N/A'
+        const html = `
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Name:</strong> ${fullName}</p>
+          <p><strong>Status:</strong>
+            <select id="detailStatusSelect">
+              <option value="active" ${data.status === 'active' ? 'selected' : ''}>Active</option>
+              <option value="disabled" ${data.status === 'disabled' ? 'selected' : ''}>Disabled</option>
+              <option value="frozen" ${data.status === 'frozen' ? 'selected' : ''}>Frozen</option>
+            </select>
+          </p>
+          <p><strong>Admin:</strong>
+            <input type="checkbox" id="detailAdminCheck" ${data.is_admin ? 'checked' : ''}>
+          </p>
+          <button class="btn btn-primary" onclick="saveUserChanges('${userId}')">Save Changes</button>
+        `
+        document.getElementById('userDetailContent').innerHTML = html
+        document.getElementById('modal-user-detail').style.display = 'flex'
+      } catch (error) {
+        console.error('❌ Error loading user details:', error)
+      }
+    }
+
+    window.saveUserChanges = async function(userId) {
+      try {
+        const token = await getAuthToken()
+        const status = document.getElementById('detailStatusSelect').value
+        const isAdmin = document.getElementById('detailAdminCheck').checked
+
+        const response = await fetch(`/api/admin/users/${userId}/status`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status }),
+        })
+
+        if (!response.ok) throw new Error('Failed to update status')
+
+        if (isAdmin) {
+          const roleResponse = await fetch(`/api/admin/users/${userId}/role`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ is_admin: isAdmin }),
+          })
+          if (!roleResponse.ok) throw new Error('Failed to update role')
+        }
+
+        alert('✅ User updated successfully!')
+        document.getElementById('modal-user-detail').style.display = 'none'
+        await loadUsers(userPage)
+      } catch (error) {
+        console.error('❌ Error saving user changes:', error)
+        alert(`Error: ${error.message}`)
+      }
+    }
+
+    window.deleteUser = async function(userId) {
+      if (!confirm('⚠️ Are you sure? This cannot be undone.')) return
+
+      try {
+        const token = await getAuthToken()
+        const response = await fetch(`/api/admin/users/${userId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        })
+
+        if (!response.ok) throw new Error('Failed to delete user')
+
+        alert('✅ User deleted successfully!')
+        await loadUsers(userPage)
+      } catch (error) {
+        console.error('❌ Error deleting user:', error)
+        alert(`Error: ${error.message}`)
+      }
+    }
+
+    let logPage = 1
+    async function loadLoginLogs(page = 1) {
+      try {
+        logPage = page
+        const pageSize = 15
+        const from = (page - 1) * pageSize
+        const to = from + pageSize - 1
+
+        let query = supabase.from('login_logs').select('*', { count: 'exact' })
+
+        // Apply filters
+        const email = document.getElementById('logEmailFilter').value
+        const status = document.getElementById('logStatusFilter').value
+        const date = document.getElementById('logDateFilter').value
+
+        if (email) query = query.ilike('email', `%${email}%`)
+        if (status) query = query.eq('status', status)
+        if (date) {
+          const nextDay = new Date(date)
+          nextDay.setDate(nextDay.getDate() + 1)
+          query = query.gte('created_at', `${date}T00:00:00`)
+          query = query.lt('created_at', nextDay.toISOString())
+        }
+
+        const { data, count, error } = await query
+          .order('created_at', { ascending: false })
+          .range(from, to)
+
+        if (error) throw error
+
+        const tbody = document.getElementById('loginLogsTable')
+        tbody.innerHTML = (data || []).map(log => {
+          const statusBadgeClass = `log-status-badge ${log.status}`
+          return `
+            <tr>
+              <td>${log.email}</td>
+              <td><span class="${statusBadgeClass}">${log.status}</span></td>
+              <td>${log.ip_address || '—'}</td>
+              <td>${log.failure_reason || '—'}</td>
+              <td>${new Date(log.created_at).toLocaleString()}</td>
+            </tr>
+          `
+        }).join('') || '<tr><td colspan="5" style="text-align:center;color:#888;">No logs found</td></tr>'
+
+        // Update pagination
+        const totalPages = Math.ceil(count / pageSize)
+        document.getElementById('logsPageInfo').textContent = `Page ${page} of ${totalPages}`
+        document.getElementById('logsPrevBtn').disabled = page <= 1
+        document.getElementById('logsNextBtn').disabled = page >= totalPages
+      } catch (error) {
+        console.error('❌ Failed to load login logs:', error)
+      }
+    }
+
+    let charts = {}
+    async function loadAnalytics() {
+      try {
+        const days = parseInt(document.getElementById('analyticsDaysSelect').value)
+
+        // Fetch analytics data via RPC
+        const { data: signupTrend, error: signupError } = await supabase.rpc('get_signup_trend', { days_back: days })
+        const { data: loginTrend, error: loginError } = await supabase.rpc('get_login_trend', { days_back: days })
+        const { data: sectorDist, error: sectorError } = await supabase.rpc('get_sector_distribution')
+
+        if (signupError) console.error('Signup error:', signupError)
+        if (loginError) console.error('Login error:', loginError)
+        if (sectorError) console.error('Sector error:', sectorError)
+
+        // Update quick stats
+        if (signupTrend && signupTrend.length > 0) {
+          const totalNewSignups = signupTrend.reduce((sum, d) => sum + d.count, 0)
+          document.getElementById('stat-newSignups').textContent = totalNewSignups
+        }
+
+        if (loginTrend && loginTrend.length > 0) {
+          const totalSuccess = loginTrend.reduce((sum, d) => sum + d.success_count, 0)
+          const totalFailed = loginTrend.reduce((sum, d) => sum + d.failed_count, 0)
+          document.getElementById('stat-successLogins').textContent = totalSuccess
+          document.getElementById('stat-failedLogins').textContent = totalFailed
+        }
+
+        if (sectorDist && sectorDist.length > 0) {
+          const topSector = sectorDist[0]
+          document.getElementById('stat-topSector').textContent = topSector.sector
+        }
+
+        // Render charts
+        renderSignupChart(signupTrend)
+        renderLoginChart(loginTrend)
+        renderSectorChart(sectorDist)
+      } catch (error) {
+        console.error('❌ Failed to load analytics:', error)
+      }
+    }
+
+    function renderSignupChart(data) {
+      const ctx = document.getElementById('signupChart')
+      if (charts.signup) charts.signup.destroy()
+
+      charts.signup = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: (data || []).map(d => d.day),
+          datasets: [{
+            label: 'New Signups',
+            data: (data || []).map(d => d.count),
+            borderColor: '#667eea',
+            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+            tension: 0.4,
+            fill: true,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { display: true } },
+          scales: { y: { beginAtZero: true } },
+        },
+      })
+    }
+
+    function renderLoginChart(data) {
+      const ctx = document.getElementById('loginChart')
+      if (charts.login) charts.login.destroy()
+
+      charts.login = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: (data || []).map(d => d.day),
+          datasets: [
+            {
+              label: 'Successful Logins',
+              data: (data || []).map(d => d.success_count),
+              backgroundColor: '#4facfe',
+            },
+            {
+              label: 'Failed Logins',
+              data: (data || []).map(d => d.failed_count),
+              backgroundColor: '#f5576c',
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { display: true } },
+          scales: { y: { beginAtZero: true } },
+        },
+      })
+    }
+
+    function renderSectorChart(data) {
+      const ctx = document.getElementById('sectorChart')
+      if (charts.sector) charts.sector.destroy()
+
+      const colors = ['#667eea', '#f093fb', '#4facfe', '#fa709a', '#f5576c', '#ffa502']
+
+      charts.sector = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: (data || []).map(d => d.sector),
+          datasets: [{
+            data: (data || []).map(d => d.count),
+            backgroundColor: colors.slice(0, data?.length || 0),
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { display: true, position: 'bottom' } },
+        },
+      })
+    }
+
+    async function loadSecurity() {
+      try {
+        const { data: suspiciousLogins, error: suspError } = await supabase.rpc('get_suspicious_logins')
+
+        const alertsDiv = document.getElementById('securityAlerts')
+        if (suspiciousLogins && suspiciousLogins.length > 0) {
+          alertsDiv.innerHTML = `
+            <div class="security-alert-banner">
+              <i class="fas fa-exclamation-triangle"></i>
+              <strong>${suspiciousLogins.length} suspicious login attempt(s) detected in the last 24 hours!</strong>
+            </div>
+            ${suspiciousLogins.map(log => `
+              <div class="alert-item">
+                <p><strong>${log.email}</strong> — ${log.fail_count} failed attempts</p>
+                <p class="text-small">Last attempt: ${new Date(log.last_attempt).toLocaleString()}</p>
+              </div>
+            `).join('')}
+          `
+        } else {
+          alertsDiv.innerHTML = '<p style="color:#4facfe;">✅ No security alerts at this time.</p>'
+        }
+
+        // Load disabled users
+        const { data: disabledUsers, error: disError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('status', 'disabled')
+          .order('updated_at', { ascending: false })
+
+        const disabledTbody = document.getElementById('disabledUsersTable')
+        if (disabledUsers && disabledUsers.length > 0) {
+          disabledTbody.innerHTML = disabledUsers.map(user => {
+            const name = user.raw_user_meta_data?.full_name || 'N/A'
+            return `
+              <tr>
+                <td>${user.email}</td>
+                <td>${name}</td>
+                <td>${new Date(user.updated_at).toLocaleDateString()}</td>
+                <td><button class="btn btn-sm" onclick="enableUser('${user.id}')">Re-enable</button></td>
+              </tr>
+            `
+          }).join('')
+        } else {
+          disabledTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#888;">No disabled users</td></tr>'
+        }
+
+        // Load frozen users
+        const { data: frozenUsers, error: frozError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('status', 'frozen')
+          .order('updated_at', { ascending: false })
+
+        const frozenTbody = document.getElementById('frozenUsersTable')
+        if (frozenUsers && frozenUsers.length > 0) {
+          frozenTbody.innerHTML = frozenUsers.map(user => {
+            const name = user.raw_user_meta_data?.full_name || 'N/A'
+            return `
+              <tr>
+                <td>${user.email}</td>
+                <td>${name}</td>
+                <td>${new Date(user.updated_at).toLocaleDateString()}</td>
+                <td><button class="btn btn-sm" onclick="unfreezeUser('${user.id}')">Unfreeze</button></td>
+              </tr>
+            `
+          }).join('')
+        } else {
+          frozenTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#888;">No frozen users</td></tr>'
+        }
+      } catch (error) {
+        console.error('❌ Failed to load security data:', error)
+      }
+    }
+
+    window.enableUser = async function(userId) {
+      try {
+        const token = await getAuthToken()
+        const response = await fetch(`/api/admin/users/${userId}/status`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: 'active' }),
+        })
+
+        if (!response.ok) throw new Error('Failed to enable user')
+        alert('✅ User re-enabled!')
+        await loadSecurity()
+      } catch (error) {
+        alert(`Error: ${error.message}`)
+      }
+    }
+
+    window.unfreezeUser = async function(userId) {
+      try {
+        const token = await getAuthToken()
+        const response = await fetch(`/api/admin/users/${userId}/status`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: 'active' }),
+        })
+
+        if (!response.ok) throw new Error('Failed to unfreeze user')
+        alert('✅ User unfrozen!')
+        await loadSecurity()
+      } catch (error) {
+        alert(`Error: ${error.message}`)
+      }
+    }
+
+    let auditPage = 1
+    async function loadAuditLog(page = 1) {
+      try {
+        auditPage = page
+        const pageSize = 20
+        const from = (page - 1) * pageSize
+        const to = from + pageSize - 1
+
+        let query = supabase
+          .from('admin_audit_log')
+          .select('id, admin_id, action, target_type, details, created_at, users(email)', { count: 'exact' })
+
+        // Apply filters
+        const adminFilter = document.getElementById('auditAdminFilter').value
+        const actionFilter = document.getElementById('auditActionFilter').value
+
+        if (adminFilter) {
+          query = query.ilike('users.email', `%${adminFilter}%`)
+        }
+        if (actionFilter) {
+          query = query.ilike('action', `%${actionFilter}%`)
+        }
+
+        const { data, count, error } = await query
+          .order('created_at', { ascending: false })
+          .range(from, to)
+
+        if (error) throw error
+
+        const tbody = document.getElementById('auditTable')
+        tbody.innerHTML = (data || []).map(log => `
+          <tr>
+            <td>${log.users?.email || 'Unknown'}</td>
+            <td>${log.action}</td>
+            <td>${log.target_type || '—'}</td>
+            <td><code style="font-size: 0.85em;">${JSON.stringify(log.details).substring(0, 50)}...</code></td>
+            <td>${new Date(log.created_at).toLocaleString()}</td>
+          </tr>
+        `).join('') || '<tr><td colspan="5" style="text-align:center;color:#888;">No audit logs found</td></tr>'
+
+        // Update pagination
+        const totalPages = Math.ceil(count / pageSize)
+        document.getElementById('auditPageInfo').textContent = `Page ${page} of ${totalPages}`
+        document.getElementById('auditPrevBtn').disabled = page <= 1
+        document.getElementById('auditNextBtn').disabled = page >= totalPages
+      } catch (error) {
+        console.error('❌ Failed to load audit log:', error)
+      }
+    }
+
+    // ============================================
+    // HELPERS
+    // ============================================
+    async function getAuthToken() {
+      const session = await supabase.auth.getSession()
+      return session.data.session?.access_token
+    }
+
+    // Initialize app on load
+    window.addEventListener('DOMContentLoaded', init)
+  </script>
+</body>
+</html>
