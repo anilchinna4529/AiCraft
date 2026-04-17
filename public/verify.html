@@ -47,7 +47,7 @@
 
     <form id="verifyForm" class="tool-form">
       <!-- OTP Input (6 digits) -->
-      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px;">
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-bottom:32px;">
         <input type="text" maxlength="1" class="otp-digit" inputmode="numeric" data-index="0" />
         <input type="text" maxlength="1" class="otp-digit" inputmode="numeric" data-index="1" />
         <input type="text" maxlength="1" class="otp-digit" inputmode="numeric" data-index="2" />
@@ -60,22 +60,26 @@
         .otp-digit {
           background: var(--bg-input);
           border: 2px solid var(--border);
-          border-radius: var(--radius-sm);
-          padding: 16px !important;
+          border-radius: var(--radius-md);
+          padding: 24px 12px !important;
+          min-height: 72px;
           text-align: center;
-          font-size: 24px;
+          font-size: 32px;
           font-weight: 700;
           color: var(--text-primary);
           font-family: monospace;
           transition: all 0.3s;
+          cursor: text;
         }
         .otp-digit:focus {
           border-color: var(--primary);
-          box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+          box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
           outline: none;
+          transform: scale(1.05);
         }
         .otp-digit.filled {
           border-color: var(--primary);
+          background: rgba(108, 99, 255, 0.05);
         }
       </style>
 
@@ -125,7 +129,7 @@
       <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
 </footer>
 
 <script type="module">

@@ -663,7 +663,6 @@ app.post("/api/auth/login-log", async (req, res) => {
         .from("users")
         .update({
           last_login_at: new Date().toISOString(),
-          login_count: supabase.raw("login_count + 1"),
         })
         .eq("id", user_id);
     }

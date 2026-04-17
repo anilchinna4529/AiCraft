@@ -24,7 +24,7 @@
       <li><a href="blog.html" class="nav-link active">Blog</a></li>
       <li><a href="contact.html" class="nav-link">Contact</a></li>
     </ul>
-    <div class="nav-buttons"><button class="btn-outline">Sign In</button><button class="btn-primary">Get Started</button></div>
+    <div class="nav-buttons" id="navButtons"><a href="login.html" class="btn-outline">Sign In</a><a href="signup.html" class="btn-primary">Get Started</a></div>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -114,10 +114,25 @@
       <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2025 AICraft. All rights reserved. Built with ❤️ and AI.</p><div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© 2025 AICraft. All rights reserved. Built with ❤️ and AI.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
 </footer>
 
-<script>
+<script type="module">
+  import { getCurrentUser, logout } from './auth.js';
+
+  async function updateNavbar() {
+    const user = await getCurrentUser();
+    const navButtons = document.getElementById('navButtons');
+    if (user) {
+      navButtons.innerHTML = `
+        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
+        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
+      `;
+      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
+    }
+  }
+  updateNavbar();
+
   window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
   document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
 </script>

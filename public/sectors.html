@@ -27,9 +27,9 @@
       <li><a href="blog.html" class="nav-link">Blog</a></li>
       <li><a href="contact.html" class="nav-link">Contact</a></li>
     </ul>
-    <div class="nav-buttons">
-      <button class="btn-outline">Sign In</button>
-      <button class="btn-primary">Get Started</button>
+    <div class="nav-buttons" id="navButtons">
+      <a href="login.html" class="btn-outline">Sign In</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
     </div>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </div>
@@ -184,11 +184,40 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 AICraft. All rights reserved. Built with ❤️ and AI.</p>
-    <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+    <div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
   </div>
 </footer>
 
-<script>
+<script type="module">
+  import { getCurrentUser, logout } from './auth.js';
+
+  // Update navbar based on auth state
+  async function updateNavbar() {
+    const user = await getCurrentUser();
+    const navButtons = document.getElementById('navButtons');
+
+    if (user) {
+      // User is logged in - show Dashboard and Logout
+      navButtons.innerHTML = `
+        <a href="dashboard.html" class="btn-outline">
+          <i class="fas fa-undo" style="margin-right: 6px;"></i>
+          Back to Dashboard
+        </a>
+        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;">
+          <i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>
+          Logout
+        </button>
+      `;
+
+      // Add logout click handler
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await logout();
+      });
+    }
+  }
+
+  updateNavbar();
+
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
   });
