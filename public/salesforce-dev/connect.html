@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Salesforce Connection — AICraft</title>
+<link rel="stylesheet" href="/style.css" />
+<link rel="stylesheet" href="./sf.css" />
+</head>
+<body>
+<main class="sf-shell" style="grid-template-columns: 1fr;">
+  <section class="sf-main" style="max-width: 640px; margin: 0 auto;">
+    <div class="sf-module-body">
+      <h1 id="title">Salesforce connection</h1>
+      <p id="msg" class="sf-muted">Processing…</p>
+      <div class="sf-row" style="margin-top: 16px;">
+        <a class="btn btn-primary" href="/salesforce-dev/">Back to toolkit</a>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+  const qs = new URLSearchParams(location.search);
+  const err = qs.get("error");
+  document.getElementById("title").textContent = err ? "Connection failed" : "Connection succeeded";
+  document.getElementById("msg").textContent = err
+    ? "Salesforce returned: " + err
+    : "You can close this tab and return to the toolkit.";
+</script>
+</body>
+</html>

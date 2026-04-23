@@ -76,6 +76,7 @@ Open Supabase Studio → **SQL Editor** and execute the files in order:
 1. `migrations/001_initial_schema.sql` (if present)
 2. `migrations/002_premium_features.sql` — adds `favorites`, `reviews`, profile fields, and the `tool_ratings` view
 3. `migrations/003_admin_moderation.sql` — adds `status`, `rejection_reason`, `featured` to `ai_tools` for the approval workflow
+4. `migrations/004_salesforce_webapp.sql` — adds the Salesforce Developer Toolkit tables (tokens, org info, OAuth states, API logs, metadata cache)
 
 ### 4. Start the server
 ```bash
@@ -165,6 +166,63 @@ Authorization: Bearer <access-token>
 5. Open `https://your-app.onrender.com/api` — you should see a JSON health check.
 
 The server already includes: `trust proxy`, `0.0.0.0` binding, graceful `SIGTERM` shutdown, CORS whitelist, rate-limit bucket pruning, and a JSON 404 handler for unknown API routes.
+
+---
+
+## ⚡ Salesforce Developer Toolkit
+
+AiCraft ships with a browser-based Salesforce developer workspace at **`/salesforce-dev/`**, backed by API routes under **`/api/salesforce/*`**. Sixteen modules — Query Runner, SOQL Builder, Metadata Explorer, Schema Viewer, Org Manager, Org Comparator, Data Loader, Bulk Manager, sMock-it, Apex Debug, Log Debugger, Package.xml, Reports & Insights, Event Monitor, AI Assistant, and Tool Suite — let a logged-in AiCraft user connect one or more Salesforce orgs and work with them without installing a Chrome extension.
+
+### How it works
+- **Auth:** OAuth 2.0 Authorization Code flow with PKCE. The server stores access/refresh tokens encrypted with AES-256-GCM (key = `SF_ENCRYPTION_KEY`). Every API call is scoped by `(user_id, org_id)` so multi-tenancy is enforced at the DB layer.
+- **Reuse:** The existing Supabase `authMiddleware` and `rateLimit` gate every Salesforce endpoint — no new auth stack.
+- **No new dependencies:** Uses the built-in `node:crypto` and global `fetch`. Zero additions to `package.json`.
+
+### Setup
+1. In Salesforce, create a **Connected App** (Setup → App Manager → New Connected App):
+   - Enable OAuth Settings
+   - Callback URL: `${SITE_URL}/api/salesforce/auth/callback`
+   - Selected OAuth Scopes: **Manage user data via APIs (`api`)**, **Perform requests at any time (`refresh_token`, `offline_access`)**, **Access the identity URL (`id`, `profile`, `email`, `address`, `phone`)**
+   - PKCE: set "Require Proof Key for Code Exchange" → **Require**
+2. Fill the new env vars in your `.env` (see [`.env.example`](.env.example)):
+   ```bash
+   SALESFORCE_CLIENT_ID=
+   SALESFORCE_CLIENT_SECRET=
+   SALESFORCE_LOGIN_URL=https://login.salesforce.com
+   SALESFORCE_SCOPES=api refresh_token offline_access id
+   SF_API_VERSION=v62.0
+   SF_ENCRYPTION_KEY=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+   ```
+3. Run migration `004_salesforce_webapp.sql` in Supabase Studio.
+4. Start the server and visit `/salesforce-dev/` while logged in.
+
+Verify the configuration quickly:
+```bash
+# Public readiness (no auth required)
+curl http://localhost:3000/api/salesforce/status
+
+# Full diagnostic (requires a Supabase JWT from localStorage.aicraft_token)
+npm run smoke:sf -- --base http://localhost:3000 --token <jwt>
+```
+The smoke test checks `/status`, `/health` (env + crypto + DB reachability), `/orgs`,
+and if any org is connected, also `/limits` and a `SELECT Id, Name FROM Account LIMIT 1`.
+
+### Key files
+| Path | Purpose |
+|------|---------|
+| [`salesforce/routes.js`](salesforce/routes.js) | Express router mounted at `/api/salesforce` |
+| [`salesforce/salesforceClient.js`](salesforce/salesforceClient.js) | REST / Tooling client with auto-refresh on 401 |
+| [`salesforce/oauth.js`](salesforce/oauth.js) | PKCE helpers + authorization-URL / callback handlers |
+| [`salesforce/crypto.js`](salesforce/crypto.js) | AES-256-GCM token encryption + PKCE verifier/challenge helpers |
+| [`salesforce/tokenStore.js`](salesforce/tokenStore.js) | Supabase-backed persistence for tokens, org info, OAuth state, audit log |
+| [`salesforce/metadataCache.js`](salesforce/metadataCache.js) | Per-user, per-org describe cache |
+| [`public/salesforce-dev/`](public/salesforce-dev/) | Vanilla ES-module UI shell + 16 module files |
+
+### Security notes
+- **SOQL allow-list.** `assertSafeSoql` rejects anything other than `SELECT`/`FIND` and caps length at 20,000 chars.
+- **No token leakage.** The audit log (`salesforce_api_logs`) stores only endpoint/method/status/duration — never tokens or response bodies.
+- **Open-redirect safe.** `oauth.js` only accepts `login.salesforce.com`, `test.salesforce.com`, and `*.my.salesforce.com` as authorization hosts.
+- **Per-user isolation.** Every DB query is filtered by `user_id`; every Salesforce client is built via `getClient(userId, orgId)`.
 
 ---
 

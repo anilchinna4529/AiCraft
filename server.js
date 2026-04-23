@@ -9,6 +9,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import supabase from "./supabaseClient.js";
 import { Resend } from "resend";
+import { buildSalesforceRouter } from "./salesforce/routes.js";
 
 // Load environment variables
 dotenv.config();
@@ -1592,6 +1593,16 @@ app.post("/api/checkout/session", authMiddleware, async (req, res) => {
   // TODO: implement Stripe checkout session creation
   return res.status(501).json({ success: false, error: "Not implemented" });
 });
+
+// ============================================
+// SALESFORCE DEVELOPER TOOLKIT
+// Mount before catch-all. Routes exposed at /api/salesforce/*
+// Uses the same Supabase authMiddleware + per-user rateLimit.
+// ============================================
+app.use(
+  "/api/salesforce",
+  buildSalesforceRouter({ authMiddleware, rateLimit })
+);
 
 // ============================================
 // CATCH ALL

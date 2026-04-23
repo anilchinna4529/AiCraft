@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Salesforce Developer Toolkit — AICraft</title>
+<meta name="description" content="16 Salesforce developer modules: SOQL runner, metadata explorer, data loader, and more — integrated with AICraft." />
+<meta name="theme-color" content="#0a0a0f" />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/style.css" />
+<link rel="stylesheet" href="/pages.css" />
+<link rel="stylesheet" href="./sf.css" />
+</head>
+<body>
+
+<nav class="navbar" data-navbar>
+  <div class="nav-container">
+    <a href="/index.html" class="nav-logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="/ai-tools.html" class="nav-link">Tools</a>
+      <a href="/dashboard.html" class="nav-link">Dashboard</a>
+      <a href="/salesforce-dev/" class="nav-link active">Salesforce Dev</a>
+    </div>
+    <div class="nav-buttons">
+      <span class="sf-org-chip" id="sfOrgChip" hidden></span>
+      <button class="btn btn-outline" id="sfDisconnectBtn" hidden>Disconnect</button>
+      <button class="btn btn-outline" id="sfLogoutBtn">Sign Out</button>
+    </div>
+  </div>
+</nav>
+
+<main class="sf-shell">
+  <aside class="sf-sidebar" id="sfSidebar" aria-label="Module navigation">
+    <div class="sf-sidebar-header">
+      <div class="sf-title">Salesforce Dev</div>
+      <div class="sf-subtitle">
+        <span id="sfHealthDot" class="sf-health-dot" title="Checking backend health…" aria-label="Backend health"></span>
+        <span id="sfHealthLabel">17 modules</span>
+      </div>
+    </div>
+
+    <div class="sf-org-selector">
+      <label for="sfOrgSelect">Active Org</label>
+      <select id="sfOrgSelect" aria-label="Active Salesforce org"></select>
+      <button class="btn btn-sm btn-primary" id="sfConnectBtn">+ Connect Org</button>
+    </div>
+
+    <nav class="sf-nav" id="sfNav"><!-- populated by app.js --></nav>
+  </aside>
+
+  <section class="sf-main">
+    <header class="sf-module-header">
+      <h1 id="sfModuleTitle">Welcome</h1>
+      <p id="sfModuleSub">Pick a module from the left to get started.</p>
+    </header>
+
+    <div class="sf-module-body" id="sfModuleBody">
+      <!-- Default welcome panel -->
+      <div class="sf-welcome">
+        <div class="sf-banner">
+          <h2>Salesforce Developer Toolkit</h2>
+          <p>16 focused developer modules — SOQL, metadata, bulk loader, debug log analysis, AI assistance and more.</p>
+          <div class="sf-banner-actions">
+            <button class="btn btn-primary" id="sfConnectBtnHero">Connect Salesforce Org</button>
+            <a class="btn btn-ghost" href="/ai-tools.html">← Back to marketplace</a>
+          </div>
+        </div>
+        <div class="sf-module-grid" id="sfModuleGrid"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="sf-toast" id="sfToast" hidden></div>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
