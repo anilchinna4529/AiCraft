@@ -528,10 +528,19 @@ const authMiddleware = async (req, res, next) => {
 // ============================================
 app.get("/api/config", (req, res) => {
   try {
+    const url = process.env.SUPABASE_URL;
+    const anon = process.env.SUPABASE_ANON_KEY;
+    if (!url || !anon) {
+      console.error("❌ /api/config: SUPABASE_URL or SUPABASE_ANON_KEY missing on the server.");
+      return res.status(500).json({
+        success: false,
+        error: "Server is missing Supabase configuration (SUPABASE_URL / SUPABASE_ANON_KEY).",
+      });
+    }
     res.status(200).json({
       success: true,
-      supabaseUrl: process.env.SUPABASE_URL,
-      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+      supabaseUrl: url,
+      supabaseAnonKey: anon,
     });
   } catch (error) {
     console.error("❌ Config error:", error.message);
@@ -1641,13 +1650,22 @@ app.use((err, req, res, next) => {
 // ============================================
 // Bind to 0.0.0.0 so Render / Docker / any PaaS can route traffic in.
 const server = app.listen(PORT, "0.0.0.0", () => {
+  const sbUrlOk = !!process.env.SUPABASE_URL;
+  const sbAnonOk = !!process.env.SUPABASE_ANON_KEY;
+  const sbSvcOk = !!process.env.SUPABASE_SERVICE_ROLE_KEY;
   console.log("\n╔════════════════════════════════════════╗");
   console.log("║     🤖 AICraft Server Started          ║");
   console.log("╠════════════════════════════════════════╣");
   console.log(`║  🌐 Port:  ${String(PORT).padEnd(28)}║`);
   console.log(`║  📦 Mode:  ${String(process.env.NODE_ENV || "development").padEnd(28)}║`);
   console.log(`║  ✉️  Email: ${String(resend ? "enabled" : "disabled").padEnd(28)}║`);
+  console.log(`║  🔑 Supabase URL: ${(sbUrlOk ? "ok" : "MISSING").padEnd(21)}║`);
+  console.log(`║  🔑 Anon key:     ${(sbAnonOk ? "ok" : "MISSING").padEnd(21)}║`);
+  console.log(`║  🔑 Service key:  ${(sbSvcOk ? "ok" : "MISSING").padEnd(21)}║`);
   console.log("╚════════════════════════════════════════╝\n");
+  if (!sbUrlOk || !sbAnonOk) {
+    console.error("⚠️  Signup/login will FAIL until SUPABASE_URL and SUPABASE_ANON_KEY are set in .env");
+  }
 });
 
 // Graceful shutdown for PaaS signals

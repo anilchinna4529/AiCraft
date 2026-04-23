@@ -150,16 +150,23 @@
       setTimeout(() => { window.location.href = 'verify.html'; }, 500);
     } catch (err) {
       submitBtn.disabled = false; submitBtn.textContent = 'Create account';
+      console.error('Signup failed:', err);
       const raw = (err.message || 'Signup failed. Please try again.').toLowerCase();
-      let msg = err.message;
+      let msg = err.message || 'Signup failed. Please try again.';
       if (raw.includes('sending confirmation email') || raw.includes('error sending')) {
         msg = 'We couldn\u2019t send the verification email right now. Please wait a minute and try again, or contact support.';
       } else if (raw.includes('rate limit') || raw.includes('too many')) {
         msg = 'Too many signup attempts. Please wait a few minutes and try again.';
       } else if (raw.includes('already registered') || raw.includes('already exists') || raw.includes('user already')) {
         msg = 'An account with this email already exists. Try signing in instead.';
-      } else if (raw.includes('invalid email')) {
+      } else if (raw.includes('invalid email') || raw.includes('email address') && raw.includes('invalid')) {
         msg = 'Please enter a valid email address.';
+      } else if (raw.includes('password should be') || raw.includes('weak password') || raw.includes('password is too')) {
+        msg = 'Password is too weak. Use at least 8 characters with a mix of letters, numbers and symbols.';
+      } else if (raw.includes('signup is disabled') || raw.includes('signups not allowed')) {
+        msg = 'Signups are currently disabled on this server. Contact support.';
+      } else if (raw.includes('supabase') || raw.includes('authentication is not configured')) {
+        msg = err.message; // surface config errors verbatim
       }
       showErr(msg);
     }

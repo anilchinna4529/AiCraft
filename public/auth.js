@@ -11,16 +11,24 @@ let supabaseAnonKey = ''
 // Initialize on first call
 async function initSupabase() {
   if (!supabaseUrl || !supabaseAnonKey) {
+    let response
     try {
-      const response = await fetch('/api/config')
-      const config = await response.json()
-      supabaseUrl = config.supabaseUrl
-      supabaseAnonKey = config.supabaseAnonKey
+      response = await fetch('/api/config')
     } catch (error) {
-      console.error('❌ Failed to fetch Supabase config:', error)
-      // Fallback (should not happen in production)
-      throw new Error('Could not initialize Supabase client')
+      console.error('❌ Network error fetching /api/config:', error)
+      throw new Error('Cannot reach the AICraft server. Check your internet connection and try again.')
     }
+    let config = {}
+    try { config = await response.json() } catch { /* non-JSON */ }
+    if (!response.ok || !config.supabaseUrl || !config.supabaseAnonKey) {
+      console.error('❌ /api/config returned invalid payload:', response.status, config)
+      throw new Error(
+        config.error ||
+        'Authentication is not configured on the server. Please contact support (SUPABASE_URL / SUPABASE_ANON_KEY missing).'
+      )
+    }
+    supabaseUrl = config.supabaseUrl
+    supabaseAnonKey = config.supabaseAnonKey
   }
 }
 
@@ -33,6 +41,11 @@ async function getSupabaseClient() {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
+        // Required for password-reset / email-confirmation links — Supabase
+        // puts the recovery token either in the URL hash (#access_token=…)
+        // or in a ?code=… query param (PKCE flow). Both need auto-detect.
+        detectSessionInUrl: true,
+        flowType: 'pkce',
       },
     })
     // Sync the access token into localStorage under a stable key so the

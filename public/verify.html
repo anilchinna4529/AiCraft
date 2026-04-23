@@ -116,6 +116,11 @@
       if (!/^\d?$/.test(v)) { e.target.value = ''; return; }
       if (v && i < digits.length - 1) digits[i + 1].focus();
       updateStyles();
+      // Auto-submit when all 6 digits are present.
+      const joined = Array.from(digits).map(d => d.value).join('');
+      if (joined.length === 6 && !submitBtn.disabled) {
+        form.dispatchEvent(new Event('submit'));
+      }
     });
     digit.addEventListener('keydown', (e) => {
       if (e.key === 'Backspace' && !e.target.value && i > 0) digits[i - 1].focus();
@@ -156,8 +161,18 @@
         }
       }, 1000);
     } catch (err) {
+      console.error('Resend OTP failed:', err);
       resendBtn.disabled = false;
-      errBox.textContent = '❌ ' + (err.message || 'Could not resend code.');
+      const raw = (err.message || '').toLowerCase();
+      let msg = err.message || 'Could not resend code.';
+      if (raw.includes('rate limit') || raw.includes('too many') || raw.includes('for security')) {
+        msg = 'Please wait a minute before requesting another code.';
+      } else if (raw.includes('already confirmed') || raw.includes('already verified')) {
+        msg = 'This email is already verified. You can sign in now.';
+      } else if (raw.includes('user not found') || raw.includes('no user')) {
+        msg = 'No pending signup for that email. Please sign up first.';
+      }
+      errBox.textContent = '❌ ' + msg;
       errBox.hidden = false;
     }
   });
@@ -180,8 +195,21 @@
       window.AICraft?.toast?.('Email verified!', 'success');
       setTimeout(() => location.href = 'login.html?verified=1', 500);
     } catch (err) {
+      console.error('OTP verification failed:', err);
       submitBtn.disabled = false; submitBtn.textContent = 'Verify Email';
-      errBox.textContent = '❌ ' + (err.message || 'Invalid code. Please try again.');
+      const raw = (err.message || '').toLowerCase();
+      let msg = err.message || 'Invalid code. Please try again.';
+      if (raw.includes('token has expired') || raw.includes('otp expired') || raw.includes('expired')) {
+        msg = 'This code has expired. Click "Resend" to get a new one.';
+      } else if (raw.includes('invalid') && (raw.includes('token') || raw.includes('otp') || raw.includes('code'))) {
+        msg = 'Incorrect code. Double-check the 6 digits in your email and try again.';
+      } else if (raw.includes('rate limit') || raw.includes('too many')) {
+        msg = 'Too many attempts. Please wait a minute before trying again.';
+      } else if (raw.includes('user already') || raw.includes('already confirmed') || raw.includes('already verified')) {
+        msg = 'This email is already verified. You can sign in now.';
+        setTimeout(() => location.href = 'login.html?verified=1', 1500);
+      }
+      errBox.textContent = '❌ ' + msg;
       errBox.hidden = false;
       digits.forEach(d => d.value = '');
       updateStyles();

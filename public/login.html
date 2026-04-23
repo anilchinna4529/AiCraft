@@ -50,6 +50,11 @@
       ✅ Email verified! You can now sign in.
     </div>
 
+    <!-- Success banner (password just reset) -->
+    <div id="resetBanner" class="form-msg success" style="margin-bottom: 20px;" hidden>
+      ✅ Password updated! Sign in with your new password.
+    </div>
+
     <form id="loginForm" novalidate>
       <div class="form-group">
         <label for="email">Email</label>
@@ -131,6 +136,9 @@
   // ?verified=1 success banner
   const params = new URLSearchParams(location.search);
   if (params.get('verified') === '1') verifiedBanner.hidden = false;
+  // ?reset=1 — arrived from reset-password.html after a successful update.
+  const resetBanner = document.getElementById('resetBanner');
+  if (params.get('reset') === '1' && resetBanner) resetBanner.hidden = false;
 
   // Support ?next=URL redirect after login
   const next = params.get('next') || '/dashboard.html';
@@ -144,13 +152,38 @@
     e.preventDefault();
     resetErr.hidden = true; resetOk.hidden = true;
     const email = document.getElementById('resetEmail').value.trim().toLowerCase();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      resetErr.textContent = '❌ Please enter a valid email address.';
+      resetErr.hidden = false;
+      return;
+    }
+    const submitResetBtn = forgotForm.querySelector('button[type="submit"]');
+    const originalText = submitResetBtn.textContent;
+    submitResetBtn.disabled = true; submitResetBtn.textContent = 'Sending…';
     try {
       await resetPassword(email);
-      resetOk.textContent = '✅ Reset link sent. Check your inbox.';
+      // Note: Supabase intentionally returns success even when the email isn't
+      // registered (to prevent user enumeration). The message reflects that.
+      resetOk.textContent = '✅ If an account exists for that email, a reset link is on its way.';
       resetOk.hidden = false;
-      setTimeout(() => { forgotModal.style.display = 'none'; resetOk.hidden = true; }, 2000);
+      setTimeout(() => {
+        forgotModal.style.display = 'none';
+        resetOk.hidden = true;
+        submitResetBtn.disabled = false; submitResetBtn.textContent = originalText;
+      }, 3000);
     } catch (err) {
-      resetErr.textContent = '❌ ' + (err.message || 'Could not send reset link.');
+      console.error('Forgot-password failed:', err);
+      submitResetBtn.disabled = false; submitResetBtn.textContent = originalText;
+      const raw = (err.message || '').toLowerCase();
+      let msg = err.message || 'Could not send reset link.';
+      if (raw.includes('rate limit') || raw.includes('too many') || raw.includes('for security')) {
+        msg = 'Too many reset attempts. Please wait a few minutes and try again.';
+      } else if (raw.includes('email') && raw.includes('invalid')) {
+        msg = 'Please enter a valid email address.';
+      } else if (raw.includes('supabase') || raw.includes('authentication is not configured')) {
+        msg = err.message;
+      }
+      resetErr.textContent = '❌ ' + msg;
       resetErr.hidden = false;
     }
   });
