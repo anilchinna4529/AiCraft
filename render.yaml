@@ -1,0 +1,32 @@
+# Render blueprint for AICraft
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: aicraft
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    healthCheckPath: /api
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SITE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: FROM_EMAIL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false

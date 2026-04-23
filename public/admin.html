@@ -61,6 +61,14 @@
           <i class="fas fa-clipboard-list"></i>
           Audit Log
         </a>
+        <a href="#" class="menu-item" data-panel="moderation">
+          <i class="fas fa-comments"></i>
+          Review Moderation
+        </a>
+        <a href="#" class="menu-item" data-panel="tool-approvals">
+          <i class="fas fa-check-double"></i>
+          Tool Approvals
+        </a>
       </div>
     </aside>
 
@@ -404,6 +412,61 @@
           <button id="auditNextBtn" class="pagination-btn">Next →</button>
         </div>
       </div>
+
+      <!-- PANEL: Review Moderation -->
+      <div id="panel-moderation" class="admin-panel">
+        <h1>Review Moderation</h1>
+        <p style="color:#888;margin-bottom:1rem;">Delete reviews that violate community guidelines. Deletion is permanent.</p>
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>User</th>
+                <th>Posted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="moderationTable">
+              <tr><td colspan="6" style="text-align:center;color:#888;">Loading reviews…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANEL: Tool Approvals -->
+      <div id="panel-tool-approvals" class="admin-panel">
+        <h1>Tool Approvals</h1>
+        <p style="color:#888;margin-bottom:1rem;">Approve or reject tools submitted by users. Only approved tools are shown publicly.</p>
+        <div class="panel-controls">
+          <select id="toolStatusFilter">
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Sector</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Featured</th>
+                <th>Submitted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="toolApprovalsTable">
+              <tr><td colspan="7" style="text-align:center;color:#888;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
   </div>
 
@@ -582,7 +645,113 @@
       // Show selected panel
       document.getElementById(`panel-${panelName}`).classList.add('active')
       document.querySelector(`[data-panel="${panelName}"]`).classList.add('active')
+
+      // Lazy-load the new admin panels the first time they are opened
+      if (panelName === 'moderation') loadReviewModeration()
+      if (panelName === 'tool-approvals') loadToolApprovals()
     }
+
+    // ============================================
+    // REVIEW MODERATION
+    // ============================================
+    async function adminFetch(url, options = {}) {
+      const token = localStorage.getItem('aicraft_token')
+      const res = await fetch(url, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {}),
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      })
+      let data = null
+      try { data = await res.json() } catch {}
+      if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`)
+      return data
+    }
+
+    async function loadReviewModeration() {
+      const tbody = document.getElementById('moderationTable')
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#888;">Loading…</td></tr>'
+      try {
+        const data = await adminFetch('/api/admin/reviews?limit=100')
+        const rows = (data.reviews || []).map((r) => {
+          const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating)
+          const comment = (r.comment || '').replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]))
+          const posted = new Date(r.created_at).toLocaleString()
+          return `<tr>
+            <td>${r.tool_name || '—'}</td>
+            <td style="color:#f5b50a;">${stars}</td>
+            <td style="max-width:360px;">${comment || '<i style="color:#666;">no comment</i>'}</td>
+            <td>${r.user_email || r.user_name || '—'}</td>
+            <td>${posted}</td>
+            <td><button class="pagination-btn" data-del-review="${r.id}">Delete</button></td>
+          </tr>`
+        })
+        tbody.innerHTML = rows.join('') || '<tr><td colspan="6" style="text-align:center;color:#888;">No reviews yet.</td></tr>'
+        tbody.querySelectorAll('[data-del-review]').forEach((btn) => {
+          btn.addEventListener('click', async () => {
+            if (!confirm('Delete this review permanently?')) return
+            try {
+              await adminFetch(`/api/admin/reviews/${btn.dataset.delReview}`, { method: 'DELETE' })
+              loadReviewModeration()
+            } catch (err) { alert(err.message) }
+          })
+        })
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#c33;">${err.message}</td></tr>`
+      }
+    }
+
+    // ============================================
+    // TOOL APPROVALS
+    // ============================================
+    async function loadToolApprovals() {
+      const status = document.getElementById('toolStatusFilter').value
+      const tbody = document.getElementById('toolApprovalsTable')
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">Loading…</td></tr>'
+      try {
+        const qs = status ? `?status=${encodeURIComponent(status)}` : ''
+        const data = await adminFetch(`/api/admin/tools${qs}`)
+        const rows = (data.tools || []).map((t) => {
+          const submitted = new Date(t.created_at).toLocaleDateString()
+          const price = t.price || '—'
+          return `<tr>
+            <td><strong>${t.name}</strong></td>
+            <td>${t.sector || '—'}</td>
+            <td>${price}</td>
+            <td><span class="status-pill status-${t.status || 'approved'}">${t.status || 'approved'}</span></td>
+            <td>${t.featured ? '★' : '—'}</td>
+            <td>${submitted}</td>
+            <td style="white-space:nowrap;">
+              <button class="pagination-btn" data-approve="${t.id}">Approve</button>
+              <button class="pagination-btn" data-reject="${t.id}">Reject</button>
+              <button class="pagination-btn" data-feature="${t.id}" data-on="${!t.featured}">${t.featured ? 'Unfeature' : 'Feature'}</button>
+            </td>
+          </tr>`
+        })
+        tbody.innerHTML = rows.join('') || '<tr><td colspan="7" style="text-align:center;color:#888;">Nothing here.</td></tr>'
+        const call = async (id, body) => {
+          try {
+            await adminFetch(`/api/admin/tools/${id}`, { method: 'PUT', body: JSON.stringify(body) })
+            loadToolApprovals()
+          } catch (err) { alert(err.message) }
+        }
+        tbody.querySelectorAll('[data-approve]').forEach((b) => b.addEventListener('click', () => call(b.dataset.approve, { status: 'approved' })))
+        tbody.querySelectorAll('[data-reject]').forEach((b) => b.addEventListener('click', () => {
+          const reason = prompt('Reason for rejection (optional):') || ''
+          call(b.dataset.reject, { status: 'rejected', rejection_reason: reason })
+        }))
+        tbody.querySelectorAll('[data-feature]').forEach((b) => b.addEventListener('click', () => call(b.dataset.feature, { featured: b.dataset.on === 'true' })))
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#c33;">${err.message}</td></tr>`
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const filter = document.getElementById('toolStatusFilter')
+      if (filter) filter.addEventListener('change', loadToolApprovals)
+    })
 
     // ============================================
     // DATA LOADING FUNCTIONS

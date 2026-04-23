@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page not found — AICraft</title>
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
+<style>
+  .err-wrap { min-height: 100vh; display: grid; place-items: center; padding: var(--s-8); text-align: center; }
+  .err-code {
+    font-size: clamp(6rem, 18vw, 14rem); font-weight: 800; line-height: 1;
+    background: var(--gradient-brand); -webkit-background-clip: text;
+    background-clip: text; color: transparent; letter-spacing: -0.04em;
+  }
+  .err-title { font-size: clamp(1.5rem, 3vw, 2.25rem); margin-top: var(--s-4); }
+  .err-sub { color: var(--text-muted); max-width: 520px; margin: var(--s-4) auto var(--s-8); }
+  .err-actions { display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<nav class="navbar" data-navbar>
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="support.html" class="nav-link">Support</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+    </div>
+  </div>
+</nav>
+
+<main class="err-wrap">
+  <div>
+    <div class="err-code">404</div>
+    <h1 class="err-title">This page drifted into the void</h1>
+    <p class="err-sub">The page you're looking for doesn't exist, or it moved. Let's get you back to something useful.</p>
+    <div class="err-actions">
+      <a href="index.html" class="btn btn-primary">Go home</a>
+      <a href="ai-tools.html" class="btn btn-outline">Browse tools</a>
+    </div>
+  </div>
+</main>
+
+<script src="site.js" defer></script>
+</body>
+</html>

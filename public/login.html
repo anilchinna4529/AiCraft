@@ -1,237 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In — AICraft</title>
+<meta name="description" content="Sign in to AICraft — your premium directory of AI tools across every industry." />
+<meta name="theme-color" content="#0a0a0f" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<!-- Navbar -->
+<nav class="navbar" data-navbar>
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
-      <span class="logo-icon">⚡</span>
+      <span class="logo-icon">✦</span>
       <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
     </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons">
-      <a href="login.html" class="btn-outline">Sign In</a>
-      <a href="signup.html" class="btn-primary">Get Started</a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="sectors.html" class="nav-link">Sectors</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="about.html" class="nav-link">About</a>
     </div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
   </div>
 </nav>
 
-<!-- AUTH FORM -->
-<section style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;background:var(--bg-primary);">
-  <div class="form-card" style="max-width:500px;">
-    <div class="form-header" style="text-align:center;margin-bottom:32px;">
-      <h1 style="font-size:2rem;font-weight:800;color:var(--text-primary);margin-bottom:8px;">Welcome Back</h1>
-      <p style="color:var(--text-secondary);font-size:14px;">Sign in to access your AICraft dashboard</p>
+<!-- Auth shell -->
+<main class="auth-shell">
+  <div class="form-card reveal">
+    <div style="text-align: center; margin-bottom: var(--s-6);">
+      <h1 style="font-size: 1.875rem; letter-spacing: -0.02em; margin-bottom: 8px;">Welcome back</h1>
+      <p style="color: var(--text-muted); font-size: 0.9375rem;">Sign in to continue exploring AI tools.</p>
     </div>
 
-    <!-- Success Toast -->
-    <div id="successToast" style="display:none;background:rgba(0,214,143,0.1);border:1px solid var(--success);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:24px;font-size:14px;color:var(--success);display:flex;align-items:center;gap:8px;">
-      <i class="fas fa-check-circle"></i>
-      <span>Email verified! You can now log in.</span>
+    <!-- Success banner (email verified) -->
+    <div id="verifiedBanner" class="form-msg success" style="margin-bottom: 20px;" hidden>
+      ✅ Email verified! You can now sign in.
     </div>
 
-    <form id="loginForm" class="tool-form">
-      <!-- Email -->
+    <form id="loginForm" novalidate>
       <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
       </div>
 
-      <!-- Password -->
-      <div class="form-group" style="margin-bottom:8px;">
+      <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Your password" required />
+        <input type="password" id="password" name="password" placeholder="Your password" autocomplete="current-password" required />
+        <div style="text-align: right; margin-top: 8px;">
+          <button type="button" id="forgotBtn" class="text-link" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 0.85rem; font-weight: 600;">Forgot password?</button>
+        </div>
       </div>
 
-      <!-- Forgot Password Link -->
-      <div style="text-align:right;margin-bottom:24px;">
-        <button type="button" id="forgotPasswordBtn" style="background:none;border:none;color:var(--primary);cursor:pointer;font-size:13px;font-weight:500;padding:0;text-decoration:underline;">Forgot password?</button>
-      </div>
+      <div id="loginErr" class="form-msg error" hidden></div>
 
-      <!-- Error Message -->
-      <div id="errorMessage" class="form-message error hidden" style="margin-bottom:16px;"></div>
-
-      <!-- Submit Button -->
-      <button type="submit" class="btn-submit">
-        <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>
-        Sign In
-      </button>
+      <button type="submit" class="btn btn-primary" style="width: 100%;" id="loginSubmit">Sign In</button>
     </form>
 
-    <!-- Sign Up Link -->
-    <div style="text-align:center;margin-top:24px;color:var(--text-secondary);font-size:14px;">
+    <p style="text-align: center; margin-top: var(--s-5); color: var(--text-muted); font-size: 0.9rem;">
       Don't have an account?
-      <a href="signup.html" style="color:var(--primary);text-decoration:none;font-weight:600;">Create one</a>
-    </div>
+      <a href="signup.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Create one</a>
+    </p>
   </div>
-</section>
+</main>
 
 <!-- Forgot Password Modal -->
-<div id="forgotPasswordModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;padding:20px;">
-  <div class="form-card" style="max-width:400px;">
-    <h2 style="font-size:1.5rem;font-weight:800;color:var(--text-primary);margin-bottom:16px;">Reset Password</h2>
-    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:24px;">Enter your email address and we'll send you a link to reset your password.</p>
-    <form id="forgotPasswordForm" class="tool-form">
+<div id="forgotModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+  <div class="form-card" style="max-width: 420px;">
+    <h2 style="font-size: 1.375rem; margin-bottom: 8px;">Reset Password</h2>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--s-4);">Enter your email and we'll send you a reset link.</p>
+    <form id="forgotForm">
       <div class="form-group">
-        <label for="resetEmail">Email Address</label>
-        <input type="email" id="resetEmail" name="resetEmail" placeholder="you@example.com" required />
+        <label for="resetEmail">Email</label>
+        <input type="email" id="resetEmail" placeholder="you@example.com" autocomplete="email" required />
       </div>
-      <div id="resetErrorMessage" class="form-message error hidden" style="margin-bottom:16px;"></div>
-      <div id="resetSuccessMessage" class="form-message success hidden" style="margin-bottom:16px;"></div>
-      <button type="submit" class="btn-submit" style="margin-bottom:12px;">Send Reset Link</button>
-      <button type="button" id="closeModalBtn" style="width:100%;padding:12px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);border-radius:var(--radius-sm);cursor:pointer;font-weight:600;">Cancel</button>
+      <div id="resetErr" class="form-msg error" hidden></div>
+      <div id="resetOk" class="form-msg success" hidden></div>
+      <div style="display: flex; gap: var(--s-2); margin-top: var(--s-3);">
+        <button type="submit" class="btn btn-primary" style="flex: 1;">Send link</button>
+        <button type="button" id="closeForgot" class="btn btn-ghost">Cancel</button>
+      </div>
     </form>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
-      <div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div>
-      <p>Building AI automation tools for every sector.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-discord"></i></a>
-      </div>
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
     </div>
     <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+      <div><h4>Product</h4><a href="ai-tools.html">Tools</a><a href="pricing.html">Pricing</a></div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
+<script src="site.js" defer></script>
 <script type="module">
-  import { signIn, resetPassword, redirectIfAuthed } from './auth.js'
+  import { signIn, resetPassword, redirectIfAuthed } from './auth.js';
 
-  // Redirect if already logged in
-  redirectIfAuthed()
+  redirectIfAuthed();
 
-  const form = document.getElementById('loginForm')
-  const emailInput = document.getElementById('email')
-  const passwordInput = document.getElementById('password')
-  const errorMessage = document.getElementById('errorMessage')
-  const forgotPasswordBtn = document.getElementById('forgotPasswordBtn')
-  const forgotPasswordModal = document.getElementById('forgotPasswordModal')
-  const forgotPasswordForm = document.getElementById('forgotPasswordForm')
-  const closeModalBtn = document.getElementById('closeModalBtn')
-  const resetErrorMessage = document.getElementById('resetErrorMessage')
-  const resetSuccessMessage = document.getElementById('resetSuccessMessage')
-  const successToast = document.getElementById('successToast')
+  const form = document.getElementById('loginForm');
+  const errBox = document.getElementById('loginErr');
+  const submitBtn = document.getElementById('loginSubmit');
+  const verifiedBanner = document.getElementById('verifiedBanner');
+  const forgotBtn = document.getElementById('forgotBtn');
+  const forgotModal = document.getElementById('forgotModal');
+  const closeForgot = document.getElementById('closeForgot');
+  const forgotForm = document.getElementById('forgotForm');
+  const resetErr = document.getElementById('resetErr');
+  const resetOk = document.getElementById('resetOk');
 
-  // Check for verified parameter
-  const params = new URLSearchParams(window.location.search)
-  if (params.get('verified') === '1') {
-    successToast.style.display = 'flex'
-  }
+  // ?verified=1 success banner
+  const params = new URLSearchParams(location.search);
+  if (params.get('verified') === '1') verifiedBanner.hidden = false;
 
-  // Forgot password modal
-  forgotPasswordBtn.addEventListener('click', (e) => {
-    e.preventDefault()
-    forgotPasswordModal.style.display = 'flex'
-  })
+  // Support ?next=URL redirect after login
+  const next = params.get('next') || '/dashboard.html';
 
-  closeModalBtn.addEventListener('click', () => {
-    forgotPasswordModal.style.display = 'none'
-  })
+  // Forgot password modal handlers
+  forgotBtn.addEventListener('click', () => { forgotModal.style.display = 'flex'; });
+  closeForgot.addEventListener('click', () => { forgotModal.style.display = 'none'; });
+  forgotModal.addEventListener('click', (e) => { if (e.target === forgotModal) forgotModal.style.display = 'none'; });
 
-  forgotPasswordModal.addEventListener('click', (e) => {
-    if (e.target === forgotPasswordModal) {
-      forgotPasswordModal.style.display = 'none'
-    }
-  })
-
-  // Forgot password form submission
-  forgotPasswordForm.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    resetErrorMessage.classList.add('hidden')
-    resetSuccessMessage.classList.add('hidden')
-
-    const email = document.getElementById('resetEmail').value.trim().toLowerCase()
-
+  forgotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    resetErr.hidden = true; resetOk.hidden = true;
+    const email = document.getElementById('resetEmail').value.trim().toLowerCase();
     try {
-      await resetPassword(email)
-      resetSuccessMessage.textContent = '✅ Password reset link sent to your email'
-      resetSuccessMessage.classList.remove('hidden')
-      document.getElementById('resetEmail').value = ''
-      setTimeout(() => {
-        forgotPasswordModal.style.display = 'none'
-      }, 2000)
-    } catch (error) {
-      console.error('Password reset error:', error)
-      resetErrorMessage.textContent = `❌ ${error.message || 'Failed to send reset link'}`
-      resetErrorMessage.classList.remove('hidden')
+      await resetPassword(email);
+      resetOk.textContent = '✅ Reset link sent. Check your inbox.';
+      resetOk.hidden = false;
+      setTimeout(() => { forgotModal.style.display = 'none'; resetOk.hidden = true; }, 2000);
+    } catch (err) {
+      resetErr.textContent = '❌ ' + (err.message || 'Could not send reset link.');
+      resetErr.hidden = false;
     }
-  })
+  });
 
-  // Login form submission
+  // Login submit
   form.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    errorMessage.classList.add('hidden')
-
-    const email = emailInput.value.trim().toLowerCase()
-    const password = passwordInput.value
+    e.preventDefault();
+    errBox.hidden = true;
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
 
     if (!email || !password) {
-      errorMessage.textContent = '❌ Please enter both email and password'
-      errorMessage.classList.remove('hidden')
-      return
+      errBox.textContent = '❌ Please enter both email and password.';
+      errBox.hidden = false;
+      return;
     }
 
+    submitBtn.disabled = true; submitBtn.textContent = 'Signing in…';
     try {
-      form.style.opacity = '0.6'
-      form.style.pointerEvents = 'none'
-      await signIn(email, password)
-      // Redirect to dashboard
-      window.location.href = '/dashboard.html'
-    } catch (error) {
-      form.style.opacity = '1'
-      form.style.pointerEvents = 'auto'
-      console.error('Login error:', error)
-
-      if (error.code === 'EMAIL_NOT_CONFIRMED') {
-        errorMessage.innerHTML = `❌ Please verify your email before logging in.<br/><a href="/verify.html" style="color:var(--primary);text-decoration:underline;">Go to verification page</a>`
+      await signIn(email, password);
+      window.AICraft?.toast?.('Welcome back!', 'success');
+      window.location.href = next;
+    } catch (err) {
+      submitBtn.disabled = false; submitBtn.textContent = 'Sign In';
+      if (err.code === 'EMAIL_NOT_CONFIRMED') {
+        errBox.innerHTML = '❌ Please verify your email first. <a href="verify.html" style="color: var(--primary); text-decoration: underline;">Go to verification</a>';
       } else {
-        errorMessage.textContent = `❌ ${error.message || 'Login failed. Please check your credentials.'}`
+        errBox.textContent = '❌ ' + (err.message || 'Login failed. Check your credentials.');
       }
-      errorMessage.classList.remove('hidden')
+      errBox.hidden = false;
     }
-  })
-
-  // Navbar scroll effect
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50)
-  })
-
-  // Mobile menu
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('mobile-open')
-  })
+  });
 </script>
-
 </body>
 </html>

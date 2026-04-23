@@ -1,192 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pricing — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pricing — AICraft</title>
+<meta name="description" content="Simple, transparent pricing — start free and scale as you grow." />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
-    <a href="index.html" class="nav-logo">
-      <span class="logo-icon">⚡</span>
-      <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link active">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons" id="navButtons">
-      <a href="login.html" class="btn-outline">Sign In</a>
-      <a href="signup.html" class="btn-primary">Get Started</a>
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="sectors.html" class="nav-link">Sectors</a>
+      <a href="pricing.html" class="nav-link active">Pricing</a>
+      <a href="about.html" class="nav-link">About</a>
     </div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
   </div>
 </nav>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="page-hero-badge">💳 Pricing</div>
-  <h1>Simple, <span class="gradient-text">Transparent</span> Pricing</h1>
-  <p>Start for free and scale as you grow. No hidden fees, no surprises — just powerful AI tools at the right price.</p>
-</section>
+<header class="page-hero">
+  <span class="section-badge">Pricing</span>
+  <h1>Simple, honest pricing</h1>
+  <p>Start free. Upgrade when you need more. Cancel anytime.</p>
+</header>
 
-<!-- PRICING -->
-<section>
-  <div class="section-container">
-    <div class="pricing-grid">
+<main class="page-wrap">
+  <div class="pricing-grid reveal">
 
-      <!-- BASIC -->
-      <div class="pricing-card">
-        <h3>Basic</h3>
-        <p style="color:var(--text-secondary);font-size:14px;">Perfect for individuals and hobbyists exploring AI automation.</p>
-        <div class="price">₹0 <span>/ month</span></div>
-        <p class="price-desc">Free forever. No credit card required.</p>
-        <ul class="pricing-features">
-          <li><i class="fas fa-check"></i> Access to 3 AI Tools</li>
-          <li><i class="fas fa-check"></i> 100 API requests / month</li>
-          <li><i class="fas fa-check"></i> Community support</li>
-          <li><i class="fas fa-check"></i> Basic analytics dashboard</li>
-          <li class="disabled"><i class="fas fa-times"></i> API Access</li>
-          <li class="disabled"><i class="fas fa-times"></i> Custom integrations</li>
-          <li class="disabled"><i class="fas fa-times"></i> Priority support</li>
-          <li class="disabled"><i class="fas fa-times"></i> Dedicated AI models</li>
-        </ul>
-        <button class="btn-pricing outline">Get Started Free</button>
-      </div>
+    <article class="pricing-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount">$0</div>
+      <div class="price-period">Free forever</div>
+      <ul class="price-features">
+        <li>✓ Browse 500+ AI tools</li>
+        <li>✓ Save up to 20 favorites</li>
+        <li>✓ Read community reviews</li>
+        <li>✓ Basic search & filters</li>
+        <li class="unavailable">— Priority support</li>
+      </ul>
+      <a href="signup.html" class="btn btn-outline" style="width:100%;">Get Started</a>
+    </article>
 
-      <!-- PRO -->
-      <div class="pricing-card featured">
-        <div class="pricing-popular-badge">⭐ Most Popular</div>
-        <h3>Pro</h3>
-        <p style="color:var(--text-secondary);font-size:14px;">For professionals and growing teams that need more power.</p>
-        <div class="price">₹999 <span>/ month</span></div>
-        <p class="price-desc">Billed monthly. Cancel anytime.</p>
-        <ul class="pricing-features">
-          <li><i class="fas fa-check"></i> Access to ALL AI Tools</li>
-          <li><i class="fas fa-check"></i> 10,000 API requests / month</li>
-          <li><i class="fas fa-check"></i> Full API access</li>
-          <li><i class="fas fa-check"></i> Email & chat support</li>
-          <li><i class="fas fa-check"></i> Advanced analytics</li>
-          <li><i class="fas fa-check"></i> Webhook integrations</li>
-          <li><i class="fas fa-check"></i> Export data (CSV / JSON)</li>
-          <li class="disabled"><i class="fas fa-times"></i> Dedicated AI models</li>
-        </ul>
-        <button class="btn-pricing primary">Start Pro Plan</button>
-      </div>
+    <article class="pricing-card featured">
+      <div class="price-name">Pro</div>
+      <div class="price-amount">$12</div>
+      <div class="price-period">per month, billed annually</div>
+      <ul class="price-features">
+        <li>✓ Everything in Starter</li>
+        <li>✓ Unlimited favorites &amp; lists</li>
+        <li>✓ Submit tools for publication</li>
+        <li>✓ Advanced analytics</li>
+        <li>✓ Priority support</li>
+        <li>✓ Early access to new features</li>
+      </ul>
+      <a href="signup.html?plan=pro" class="btn btn-primary" style="width:100%;">Start Free Trial</a>
+    </article>
 
-      <!-- ENTERPRISE -->
-      <div class="pricing-card">
-        <h3>Enterprise</h3>
-        <p style="color:var(--text-secondary);font-size:14px;">For large teams and organizations with custom requirements.</p>
-        <div class="price" style="font-size:2rem;">Custom</div>
-        <p class="price-desc">Tailored to your business needs.</p>
-        <ul class="pricing-features">
-          <li><i class="fas fa-check"></i> Everything in Pro</li>
-          <li><i class="fas fa-check"></i> Unlimited API requests</li>
-          <li><i class="fas fa-check"></i> Dedicated AI models</li>
-          <li><i class="fas fa-check"></i> SLA guarantee (99.9% uptime)</li>
-          <li><i class="fas fa-check"></i> Custom integrations</li>
-          <li><i class="fas fa-check"></i> Dedicated account manager</li>
-          <li><i class="fas fa-check"></i> On-premise deployment</li>
-          <li><i class="fas fa-check"></i> SSO / SAML support</li>
-        </ul>
-        <a href="contact.html"><button class="btn-pricing outline" style="width:100%;">Contact Sales</button></a>
-      </div>
-
-    </div>
-
-    <!-- FAQ -->
-    <div style="margin-top:80px;">
-      <div class="section-header">
-        <span class="section-badge">FAQ</span>
-        <h2 class="section-title">Pricing <span class="gradient-text">Questions</span></h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">Can I switch plans at any time? <i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately and billing is prorated.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">Is there a free trial for Pro? <i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Yes! All new users get a 14-day free trial of the Pro plan with full access — no credit card needed to start.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">What payment methods do you accept? <i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer"><div class="faq-answer-inner">We accept all major credit/debit cards, UPI, net banking, and wallet payments via Razorpay.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" onclick="toggleFaq(this)">What happens if I exceed API limits? <i class="fas fa-chevron-down"></i></button>
-          <div class="faq-answer"><div class="faq-answer-inner">You'll receive a notification at 80% usage. After the limit, API calls will be paused until the next billing cycle or you upgrade your plan.</div></div>
-        </div>
-      </div>
-    </div>
+    <article class="pricing-card">
+      <div class="price-name">Team</div>
+      <div class="price-amount">$39</div>
+      <div class="price-period">per seat / month</div>
+      <ul class="price-features">
+        <li>✓ Everything in Pro</li>
+        <li>✓ Shared workspaces</li>
+        <li>✓ SSO &amp; SAML</li>
+        <li>✓ Admin dashboard</li>
+        <li>✓ Usage reports</li>
+        <li>✓ Dedicated success manager</li>
+      </ul>
+      <a href="contact.html" class="btn btn-outline" style="width:100%;">Contact Sales</a>
+    </article>
 
   </div>
-</section>
 
-<!-- FOOTER -->
+  <section class="reveal" style="margin-top: var(--s-20); text-align:center;">
+    <h2 style="font-size: 1.75rem; margin-bottom: var(--s-3);">Frequently asked</h2>
+    <div class="rich-content" style="max-width: 720px; margin: 0 auto; text-align:left;">
+      <h3>Can I change plans later?</h3>
+      <p>Yes — upgrade or downgrade anytime. Changes are prorated.</p>
+      <h3>Do you offer annual discounts?</h3>
+      <p>Yes. Annual plans save you 20% compared to monthly billing.</p>
+      <h3>What payment methods do you accept?</h3>
+      <p>All major credit cards. Enterprise customers can pay by invoice.</p>
+      <h3>Is there a free trial?</h3>
+      <p>Every paid plan comes with a 14-day free trial — no card required.</p>
+    </div>
+  </section>
+</main>
+
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
-      <div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div>
-      <p>Building AI automation tools for every sector. The future of work is automated.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a>
-      </div>
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
     </div>
     <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+      <div><h4>Product</h4><a href="ai-tools.html">Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a></div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2026 AICraft. All rights reserved. Built with ❤️ and AI.</p>
-    <div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
-  </div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
-<script type="module">
-  import { getCurrentUser, logout } from './auth.js';
-
-  async function updateNavbar() {
-    const user = await getCurrentUser();
-    const navButtons = document.getElementById('navButtons');
-    if (user) {
-      navButtons.innerHTML = `
-        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
-        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
-      `;
-      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
-    }
-  }
-  updateNavbar();
-
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-  });
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('mobile-open');
-  });
-  function toggleFaq(btn) {
-    const answer = btn.nextElementSibling;
-    const icon = btn.querySelector('i');
-    answer.classList.toggle('open');
-    icon.style.transform = answer.classList.contains('open') ? 'rotate(180deg)' : '';
-  }
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>

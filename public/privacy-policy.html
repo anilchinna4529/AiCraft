@@ -1,165 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — AICraft</title>
+<meta name="description" content="How AICraft collects, uses and protects your personal data." />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
-    <a href="index.html" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons" id="navButtons"><a href="login.html" class="btn-outline">Sign In</a><a href="signup.html" class="btn-primary">Get Started</a></div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+    </div>
   </div>
 </nav>
 
-<section class="page-hero">
-  <div class="page-hero-badge">🔒 Privacy</div>
-  <h1>Privacy <span class="gradient-text">Policy</span></h1>
-  <p>How we collect, use, and protect your personal information.</p>
-</section>
+<header class="page-hero">
+  <span class="section-badge">Legal</span>
+  <h1>Privacy Policy</h1>
+  <p>Last updated: January 2025</p>
+</header>
 
-<section>
-  <div class="section-container" style="max-width:900px;">
+<main class="page-wrap narrow rich-content reveal">
+  <p>AICraft ("we", "us") respects your privacy. This policy explains what data we collect, how we use it, and the rights you have over it.</p>
 
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;margin-bottom:40px;">
-      <p style="color:var(--text-secondary);margin-bottom:24px;"><strong>Last updated: April 17, 2026</strong></p>
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Account data:</strong> email, name, and (optionally) profile bio/website.</li>
+    <li><strong>Usage data:</strong> tools you view, favorite, and review.</li>
+    <li><strong>Technical data:</strong> IP address, browser, device (for security &amp; fraud prevention).</li>
+    <li><strong>Payment data:</strong> handled entirely by our payment processor — we never store card numbers.</li>
+  </ul>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">1. Introduction</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">AICraft ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, use our services, and interact with our API.</p>
+  <h2>How we use it</h2>
+  <ul>
+    <li>To operate and improve the service.</li>
+    <li>To send transactional emails (verification, password reset, receipts).</li>
+    <li>To prevent abuse and comply with legal obligations.</li>
+  </ul>
+  <p>We do <strong>not</strong> sell your personal data to anyone. Ever.</p>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">2. Information We Collect</h2>
-      <h3 style="font-weight:600;margin-top:20px;margin-bottom:12px;">Personal Information</h3>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:16px;">When you sign up for an AICraft account, we collect:</p>
-      <ul style="color:var(--text-secondary);line-height:1.8;margin-left:20px;margin-bottom:24px;">
-        <li>Full name</li>
-        <li>Email address</li>
-        <li>Company/Organization name</li>
-        <li>Industry sector</li>
-        <li>Password (encrypted)</li>
-      </ul>
+  <h2>Cookies</h2>
+  <p>We use essential cookies to keep you signed in and remember your theme preference. We don't use advertising trackers.</p>
 
-      <h3 style="font-weight:600;margin-top:20px;margin-bottom:12px;">Usage Data</h3>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:16px;">We automatically collect information about your interactions with AICraft:</p>
-      <ul style="color:var(--text-secondary);line-height:1.8;margin-left:20px;margin-bottom:24px;">
-        <li>API calls and requests</li>
-        <li>Tokens used and consumption patterns</li>
-        <li>Tools accessed and features used</li>
-        <li>Login times and device information</li>
-        <li>IP addresses and user agent data</li>
-      </ul>
+  <h2>Third parties</h2>
+  <p>We use:</p>
+  <ul>
+    <li><strong>Supabase</strong> — authentication and database.</li>
+    <li><strong>Resend</strong> — transactional email delivery.</li>
+    <li><strong>Vercel / Railway</strong> — application hosting.</li>
+  </ul>
 
-      <h3 style="font-weight:600;margin-top:20px;margin-bottom:12px;">Content You Provide</h3>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">When you use our AI tools, we process the text, data, and prompts you submit to generate outputs. This content is used to provide the service and improve model accuracy.</p>
+  <h2>Your rights</h2>
+  <p>You can request a copy of your data or its deletion at any time by emailing <a href="mailto:privacy@aicraft.co">privacy@aicraft.co</a>. We respond within 30 days as required by GDPR and CCPA.</p>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">3. How We Use Your Information</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:16px;">We use the information we collect to:</p>
-      <ul style="color:var(--text-secondary);line-height:1.8;margin-left:20px;margin-bottom:24px;">
-        <li>Provide, maintain, and improve our services</li>
-        <li>Process API requests and authenticate users</li>
-        <li>Monitor and prevent fraud, abuse, and security incidents</li>
-        <li>Send transactional emails (receipts, password resets, announcements)</li>
-        <li>Analyze usage patterns to optimize platform performance</li>
-        <li>Comply with legal and regulatory obligations</li>
-        <li>Respond to support requests and inquiries</li>
-      </ul>
+  <h2>Data retention</h2>
+  <p>We keep your account data as long as your account is active. Deleted accounts are purged within 30 days.</p>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">4. Data Security</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">We implement industry-leading security measures to protect your data:</p>
-      <ul style="color:var(--text-secondary);line-height:1.8;margin-left:20px;margin-bottom:24px;">
-        <li><strong>Encryption in Transit:</strong> All communication is protected with TLS 1.3</li>
-        <li><strong>Encryption at Rest:</strong> Sensitive data is encrypted with AES-256</li>
-        <li><strong>Access Controls:</strong> Role-based access control and least-privilege policies</li>
-        <li><strong>Regular Audits:</strong> Security assessments and penetration testing</li>
-        <li><strong>Incident Response:</strong> 24/7 monitoring and rapid response protocols</li>
-      </ul>
+  <h2>Security</h2>
+  <p>All data is encrypted in transit (TLS) and at rest. Passwords are hashed with bcrypt. We enforce strict access controls internally.</p>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">5. Data Retention</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">We retain your personal information for as long as your account is active. Account data can be deleted upon request. Login logs are retained for 90 days. API usage data is retained for 12 months for billing and analytics purposes.</p>
+  <h2>Changes</h2>
+  <p>We'll announce material changes to this policy via email and a banner on the site.</p>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">6. Third-Party Sharing</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;"><strong>We do not sell your data.</strong> We may share information with:</p>
-      <ul style="color:var(--text-secondary);line-height:1.8;margin-left:20px;margin-bottom:24px;">
-        <li><strong>Service Providers:</strong> Payment processors (Stripe), email service (Resend), hosting (Render)</li>
-        <li><strong>Legal Requirements:</strong> When required by law, court order, or government request</li>
-        <li><strong>Business Transfers:</strong> In the event of merger, acquisition, or asset sale</li>
-      </ul>
+  <h2>Contact</h2>
+  <p>Questions? Email <a href="mailto:privacy@aicraft.co">privacy@aicraft.co</a>.</p>
+</main>
 
-      <h2 style="margin-top:40px;margin-bottom:16px;">7. User Rights</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">Depending on your location, you may have rights including:</p>
-      <ul style="color:var(--text-secondary);line-height:1.8;margin-left:20px;margin-bottom:24px;">
-        <li><strong>Access:</strong> Request a copy of your personal data</li>
-        <li><strong>Correction:</strong> Update inaccurate information</li>
-        <li><strong>Deletion:</strong> Request deletion of your account and data</li>
-        <li><strong>Portability:</strong> Export your data in a machine-readable format</li>
-        <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications</li>
-      </ul>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">To exercise these rights, contact us at <strong>privacy@aicraft.co.in</strong>.</p>
-
-      <h2 style="margin-top:40px;margin-bottom:16px;">8. Cookies & Tracking</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">We use cookies to maintain user sessions and store authentication tokens in browser localStorage. We do not use third-party tracking or analytics cookies for marketing purposes.</p>
-
-      <h2 style="margin-top:40px;margin-bottom:16px;">9. Data Processing Agreement</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;">Enterprise customers can request a Data Processing Agreement (DPA) outlining how we process data on their behalf. Contact <strong>legal@aicraft.co.in</strong> for details.</p>
-
-      <h2 style="margin-top:40px;margin-bottom:16px;">10. Contact Us</h2>
-      <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:12px;">If you have questions about this Privacy Policy or our data practices, contact us at:</p>
-      <div style="background:var(--bg-secondary);border-left:4px solid var(--primary);padding:20px;border-radius:var(--radius-sm);margin-top:16px;">
-        <p style="color:var(--text-primary);margin:8px 0;"><strong>Privacy Team</strong><br/>AICraft<br/>Kondapur RTO X Road, Hyderabad<br/>Telangana, India 500049<br/><br/><strong>Email:</strong> privacy@aicraft.co.in<br/><strong>Phone:</strong> +91 99592 10498</p>
-      </div>
-
-      <p style="color:var(--text-secondary);margin-top:40px;font-size:13px;">This policy is effective as of April 17, 2026 and may be updated periodically. We will notify you of material changes by email.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-brand"><div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div><p>Building AI automation tools for every sector.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a></div></div>
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
+    </div>
     <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
-<script type="module">
-  import { getCurrentUser, logout } from './auth.js';
-
-  async function updateNavbar() {
-    const user = await getCurrentUser();
-    const navButtons = document.getElementById('navButtons');
-    if (user) {
-      navButtons.innerHTML = `
-        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
-        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
-      `;
-      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
-    }
-  }
-  updateNavbar();
-
-  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
-  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>

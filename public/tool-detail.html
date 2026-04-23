@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="pageTitle">Tool Detail — AICraft</title>
+<meta name="description" id="pageDesc" content="Discover this AI tool on AICraft — features, reviews, ratings, and more." />
+<meta name="theme-color" content="#0a0a0f" />
+<meta property="og:type" content="article" />
+<meta property="og:title" id="ogTitle" content="Tool Detail — AICraft" />
+<meta property="og:description" id="ogDesc" content="AI tool on AICraft." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" data-navbar>
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
+    </a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link active">Tools</a>
+      <a href="sectors.html" class="nav-link">Sectors</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="about.html" class="nav-link">About</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Tool Detail -->
+<main class="tool-detail-hero">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="margin-bottom: var(--s-6); font-size: 0.875rem; color: var(--text-muted);">
+      <a href="index.html" style="color: var(--text-muted);">Home</a> /
+      <a href="ai-tools.html" style="color: var(--text-muted);">Tools</a> /
+      <span id="crumbName" style="color: var(--text);">…</span>
+    </nav>
+
+    <div id="toolDetailContainer">
+      <!-- Skeleton while loading -->
+      <div class="tool-detail-grid">
+        <div class="skeleton-card" style="height: 420px;"></div>
+        <div>
+          <div class="skeleton-card" style="height: 48px; margin-bottom: 16px;"></div>
+          <div class="skeleton-card" style="height: 24px; margin-bottom: 12px; width: 60%;"></div>
+          <div class="skeleton-card" style="height: 120px; margin-bottom: 16px;"></div>
+          <div class="skeleton-card" style="height: 48px; width: 40%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Reviews -->
+<section class="section section-alt">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: var(--s-8);">
+      <div>
+        <h2 style="margin: 0;">Reviews</h2>
+        <p style="color: var(--text-muted); margin-top: 6px;" id="reviewsSummary">Loading reviews…</p>
+      </div>
+    </div>
+
+    <!-- Write a review -->
+    <div id="writeReviewWrap" class="form-card reveal" style="max-width: 720px; margin: 0 auto var(--s-10);">
+      <h3 style="margin-bottom: var(--s-3);">Share your experience</h3>
+      <form id="reviewForm">
+        <label style="display: block; margin-bottom: var(--s-2); font-weight: 600;">Your rating</label>
+        <div class="star-rating-input" id="starInput" role="radiogroup" aria-label="Rating">
+          <span class="star" data-star="1" role="radio" aria-checked="false" tabindex="0">★</span>
+          <span class="star" data-star="2" role="radio" aria-checked="false" tabindex="0">★</span>
+          <span class="star" data-star="3" role="radio" aria-checked="false" tabindex="0">★</span>
+          <span class="star" data-star="4" role="radio" aria-checked="false" tabindex="0">★</span>
+          <span class="star" data-star="5" role="radio" aria-checked="false" tabindex="0">★</span>
+        </div>
+        <div class="form-group" style="margin-top: var(--s-4);">
+          <label for="reviewComment">Your review <span style="color: var(--text-dim); font-weight: 400;">(optional)</span></label>
+          <textarea id="reviewComment" rows="4" maxlength="2000" placeholder="What did you like or dislike?"></textarea>
+        </div>
+        <div style="display: flex; gap: var(--s-3); align-items: center; margin-top: var(--s-4);">
+          <button type="submit" class="btn btn-primary" id="reviewSubmit">Post review</button>
+          <button type="button" class="btn btn-ghost" id="reviewDelete" hidden>Delete my review</button>
+        </div>
+        <p id="reviewMsg" class="form-msg" style="margin-top: 12px;"></p>
+      </form>
+    </div>
+
+    <!-- Login to review prompt -->
+    <div id="loginPrompt" class="empty-state reveal" hidden>
+      <div class="empty-state-icon">🔒</div>
+      <h3>Sign in to leave a review</h3>
+      <p style="margin-bottom: 16px;">Join the community to share your experience with this tool.</p>
+      <a class="btn btn-primary" id="loginPromptLink" href="login.html">Sign In</a>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools across every industry.</p>
+    </div>
+    <div class="footer-links">
+      <div><h4>Product</h4><a href="ai-tools.html">Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a></div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="careers.html">Careers</a><a href="blog.html">Blog</a></div>
+      <div><h4>Support</h4><a href="support.html">Help</a><a href="contact.html">Contact</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span data-year>2025</span> AICraft. Crafted with care.</p>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  const toolId = params.get('id');
+  const container = document.getElementById('toolDetailContainer');
+  const reviewList = document.getElementById('reviewList');
+  const reviewsSummary = document.getElementById('reviewsSummary');
+  const writeReviewWrap = document.getElementById('writeReviewWrap');
+  const loginPrompt = document.getElementById('loginPrompt');
+  const loginPromptLink = document.getElementById('loginPromptLink');
+  const reviewForm = document.getElementById('reviewForm');
+  const starInput = document.getElementById('starInput');
+  const reviewComment = document.getElementById('reviewComment');
+  const reviewSubmit = document.getElementById('reviewSubmit');
+  const reviewDelete = document.getElementById('reviewDelete');
+  const reviewMsg = document.getElementById('reviewMsg');
+
+  const token = localStorage.getItem('aicraft_token');
+  let currentTool = null;
+  let currentUserId = null;
+  let myRating = 0;
+
+  if (!toolId) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">❓</div><h3>Tool not found</h3><p>Missing tool id. <a href="ai-tools.html">Browse all tools</a>.</p></div>`;
+    reviewsSummary.textContent = '';
+    writeReviewWrap.hidden = true;
+    return;
+  }
+
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function initials(name) {
+    if (!name) return '?';
+    return name.trim().split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase();
+  }
+  function starsHtml(rating, outOf = 5) {
+    const r = Math.round(Number(rating) || 0);
+    let s = '';
+    for (let i = 1; i <= outOf; i++) s += `<span class="${i <= r ? '' : 'muted'}">★</span>`;
+    return `<span class="star-rating">${s}</span>`;
+  }
+
+  async function loadTool() {
+    try {
+      const res = await fetch(`/api/tools/${encodeURIComponent(toolId)}`);
+      if (!res.ok) throw new Error('not found');
+      const data = await res.json();
+      currentTool = data.tool;
+      renderTool(currentTool);
+    } catch (e) {
+      container.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Tool not found</h3><p>This tool may have been removed. <a href="ai-tools.html">Browse all tools</a>.</p></div>`;
+    }
+  }
+
+  function renderTool(t) {
+    // Update SEO
+    const title = `${t.name} — AICraft`;
+    document.getElementById('pageTitle').textContent = title;
+    document.getElementById('ogTitle').setAttribute('content', title);
+    document.getElementById('pageDesc').setAttribute('content', (t.description || '').slice(0, 155));
+    document.getElementById('ogDesc').setAttribute('content', (t.description || '').slice(0, 155));
+    document.getElementById('crumbName').textContent = t.name;
+
+    const priceRaw = (t.price || '').toString();
+    const isFree = !priceRaw || priceRaw.toLowerCase() === 'free' || priceRaw === '0' || priceRaw === '$0';
+    const priceClass = isFree ? 'price-free' : 'price-paid';
+    const priceLabel = isFree ? 'Free' : priceRaw;
+    const avg = Number(t.avg_rating || 0);
+    const count = Number(t.review_count || 0);
+
+    const imgHtml = t.image_url
+      ? `<img src="${escapeHtml(t.image_url)}" alt="${escapeHtml(t.name)}" />`
+      : `<div class="tool-image-placeholder" style="font-size: 4rem;">🤖</div>`;
+
+    container.innerHTML = `
+      <div class="tool-detail-grid">
+        <div class="tool-detail-media">${imgHtml}</div>
+        <div class="tool-detail-info">
+          <h1>${escapeHtml(t.name)}</h1>
+          <div class="tool-detail-meta">
+            ${t.sector ? `<span class="tool-sector-badge" style="position: static;">${escapeHtml(t.sector)}</span>` : ''}
+            ${t.category ? `<span class="tool-category">${escapeHtml(t.category)}</span>` : ''}
+            <span class="tool-price ${priceClass}">${escapeHtml(priceLabel)}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: var(--s-4);">
+            ${starsHtml(avg)}
+            <span style="color: var(--text-muted); font-size: 0.9rem;">${avg ? avg.toFixed(1) : '—'} ${count ? `(${count} review${count === 1 ? '' : 's'})` : '(No reviews yet)'}</span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.65; margin-bottom: var(--s-5);">${escapeHtml(t.description || '')}</p>
+          <div style="display: flex; gap: var(--s-3); flex-wrap: wrap;">
+            ${t.tool_link ? `<a href="${escapeHtml(t.tool_link)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Try Tool ↗</a>` : ''}
+            <button type="button" class="btn btn-outline favorite-btn-big" id="favToggle">
+              <span id="favIcon">♥</span> <span id="favLabel">Add to favorites</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Wire favorite toggle
+    loadFavoriteState();
+    document.getElementById('favToggle').addEventListener('click', toggleFavorite);
+  }
+
+  async function loadFavoriteState() {
+    if (!token) return;
+    try {
+      const res = await fetch('/api/favorites', { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      const data = await res.json();
+      const favs = data.favorites || [];
+      const isFav = favs.some(f => String(f.tool_id) === String(toolId));
+      updateFavUI(isFav);
+    } catch (_) {}
+  }
+
+  function updateFavUI(isFav) {
+    const btn = document.getElementById('favToggle');
+    if (!btn) return;
+    btn.dataset.fav = isFav ? '1' : '0';
+    document.getElementById('favLabel').textContent = isFav ? 'Favorited' : 'Add to favorites';
+    btn.style.color = isFav ? '#ff4d6d' : '';
+    btn.style.borderColor = isFav ? '#ff4d6d' : '';
+  }
+
+  async function toggleFavorite() {
+    if (!token) {
+      window.AICraft?.toast?.('Sign in to save favorites', 'info');
+      setTimeout(() => location.href = `login.html?next=${encodeURIComponent(location.pathname + location.search)}`, 800);
+      return;
+    }
+    const btn = document.getElementById('favToggle');
+    const isFav = btn.dataset.fav === '1';
+    try {
+      if (isFav) {
+        await fetch(`/api/favorites/${encodeURIComponent(toolId)}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+        updateFavUI(false);
+        window.AICraft?.toast?.('Removed from favorites', 'info');
+      } else {
+        await fetch('/api/favorites', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tool_id: toolId })
+        });
+        updateFavUI(true);
+        window.AICraft?.toast?.('Added to favorites', 'success');
+      }
+    } catch (err) {
+      window.AICraft?.toast?.('Something went wrong', 'error');
+    }
+  }
+
+  // ---- Reviews ----
+  async function loadReviews() {
+    try {
+      const res = await fetch(`/api/tools/${encodeURIComponent(toolId)}/reviews`);
+      const data = await res.json();
+      const reviews = data.reviews || [];
+      reviewsSummary.textContent = reviews.length === 0
+        ? 'No reviews yet — be the first to share your experience.'
+        : `${reviews.length} review${reviews.length === 1 ? '' : 's'} from the community.`;
+
+      // If logged in, find user's own review
+      if (currentUserId) {
+        const mine = reviews.find(r => r.user_id === currentUserId);
+        if (mine) {
+          myRating = mine.rating;
+          reviewComment.value = mine.comment || '';
+          setStars(mine.rating);
+          reviewDelete.hidden = false;
+          reviewSubmit.textContent = 'Update review';
+        }
+      }
+
+      reviewList.innerHTML = reviews.map(renderReview).join('');
+    } catch (e) {
+      reviewsSummary.textContent = 'Could not load reviews.';
+    }
+  }
+
+  function renderReview(r) {
+    const name = r.users?.name || 'Anonymous';
+    const avatar = r.users?.avatar_url;
+    const avatarHtml = avatar
+      ? `<img src="${escapeHtml(avatar)}" alt="" class="avatar-lg" style="width: 40px; height: 40px;">`
+      : `<div class="avatar-lg" style="width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: var(--gradient-brand); color: #fff; font-weight: 700; border-radius: 50%;">${escapeHtml(initials(name))}</div>`;
+    const date = r.created_at ? new Date(r.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+    return `
+      <div class="review-item">
+        <div class="review-header">
+          <div class="review-author">
+            ${avatarHtml}
+            <div>
+              <div class="name">${escapeHtml(name)}</div>
+              <div class="date">${escapeHtml(date)}</div>
+            </div>
+          </div>
+          ${starsHtml(r.rating)}
+        </div>
+        ${r.comment ? `<p class="review-body">${escapeHtml(r.comment)}</p>` : ''}
+      </div>`;
+  }
+
+  // Star input interaction
+  function setStars(value) {
+    myRating = value;
+    starInput.querySelectorAll('.star').forEach(s => {
+      const v = parseInt(s.dataset.star, 10);
+      s.classList.toggle('active', v <= value);
+      s.setAttribute('aria-checked', v === value ? 'true' : 'false');
+    });
+  }
+  starInput.addEventListener('click', e => {
+    const s = e.target.closest('.star'); if (!s) return;
+    setStars(parseInt(s.dataset.star, 10));
+  });
+  starInput.addEventListener('keydown', e => {
+    const s = e.target.closest('.star'); if (!s) return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStars(parseInt(s.dataset.star, 10)); }
+    if (e.key === 'ArrowRight') setStars(Math.min(5, myRating + 1));
+    if (e.key === 'ArrowLeft') setStars(Math.max(1, myRating - 1));
+  });
+
+  // Submit review
+  reviewForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!token) return;
+    if (!myRating) { reviewMsg.textContent = 'Please select a rating.'; reviewMsg.className = 'form-msg error'; return; }
+    reviewSubmit.disabled = true; reviewMsg.textContent = 'Saving…'; reviewMsg.className = 'form-msg';
+    try {
+      const res = await fetch(`/api/tools/${encodeURIComponent(toolId)}/reviews`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: myRating, comment: reviewComment.value.trim() || null })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+      reviewMsg.textContent = 'Thanks! Your review was saved.';
+      reviewMsg.className = 'form-msg success';
+      reviewDelete.hidden = false;
+      reviewSubmit.textContent = 'Update review';
+      window.AICraft?.toast?.('Review saved', 'success');
+      await loadReviews();
+      await loadTool(); // refresh avg
+    } catch (err) {
+      reviewMsg.textContent = err.message || 'Could not save review.';
+      reviewMsg.className = 'form-msg error';
+    } finally {
+      reviewSubmit.disabled = false;
+    }
+  });
+
+  // Delete review
+  reviewDelete.addEventListener('click', async () => {
+    if (!token) return;
+    if (!confirm('Delete your review?')) return;
+    try {
+      await fetch(`/api/tools/${encodeURIComponent(toolId)}/reviews`, {
+        method: 'DELETE', headers: { Authorization: `Bearer ${token}` }
+      });
+      myRating = 0; setStars(0); reviewComment.value = '';
+      reviewDelete.hidden = true; reviewSubmit.textContent = 'Post review';
+      reviewMsg.textContent = 'Review deleted.'; reviewMsg.className = 'form-msg';
+      window.AICraft?.toast?.('Review deleted', 'info');
+      await loadReviews();
+      await loadTool();
+    } catch (err) {
+      window.AICraft?.toast?.('Could not delete review', 'error');
+    }
+  });
+
+  // ---- Get current user (via /api/profile) ----
+  async function loadMe() {
+    if (!token) {
+      writeReviewWrap.hidden = true;
+      loginPrompt.hidden = false;
+      loginPromptLink.href = `login.html?next=${encodeURIComponent(location.pathname + location.search)}`;
+      return;
+    }
+    try {
+      const res = await fetch('/api/profile', { headers: { Authorization: `Bearer ${token}` } });
+      if (res.ok) {
+        const data = await res.json();
+        currentUserId = data.profile?.id || null;
+      }
+    } catch (_) {}
+  }
+
+  // ---- Init ----
+  (async () => {
+    await loadMe();
+    await loadTool();
+    await loadReviews();
+  })();
+})();
+</script>
+</body>
+</html>

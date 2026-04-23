@@ -1,234 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign Up — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Account — AICraft</title>
+<meta name="description" content="Create your AICraft account and start exploring curated AI tools across every industry." />
+<meta name="theme-color" content="#0a0a0f" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
-      <span class="logo-icon">⚡</span>
+      <span class="logo-icon">✦</span>
       <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
     </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons">
-      <a href="login.html" class="btn-outline">Sign In</a>
-      <a href="signup.html" class="btn-primary">Get Started</a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="sectors.html" class="nav-link">Sectors</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="about.html" class="nav-link">About</a>
     </div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+    </div>
   </div>
 </nav>
 
-<!-- AUTH FORM -->
-<section style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;background:var(--bg-primary);">
-  <div class="form-card" style="max-width:500px;">
-    <div class="form-header" style="text-align:center;margin-bottom:32px;">
-      <h1 style="font-size:2rem;font-weight:800;color:var(--text-primary);margin-bottom:8px;">Create Account</h1>
-      <p style="color:var(--text-secondary);font-size:14px;">Join AICraft and unlock powerful AI automation tools</p>
+<main class="auth-shell">
+  <div class="form-card reveal">
+    <div style="text-align: center; margin-bottom: var(--s-6);">
+      <h1 style="font-size: 1.875rem; letter-spacing: -0.02em; margin-bottom: 8px;">Create your account</h1>
+      <p style="color: var(--text-muted); font-size: 0.9375rem;">Join AICraft and unlock the best of AI.</p>
     </div>
 
-    <form id="signupForm" class="tool-form">
-      <!-- Full Name -->
+    <form id="signupForm" novalidate>
       <div class="form-group">
-        <label for="fullName">Full Name</label>
-        <input type="text" id="fullName" name="fullName" placeholder="Your full name" required />
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" placeholder="Your full name" autocomplete="name" required />
       </div>
 
-      <!-- Email -->
       <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required />
       </div>
 
-      <!-- Password -->
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Min. 8 characters" required minlength="8" />
-        <div style="margin-top:8px;height:4px;background:var(--bg-secondary);border-radius:2px;overflow:hidden;">
-          <div id="passwordStrength" style="height:100%;width:0%;background:var(--accent);transition:width 0.3s;"></div>
+        <input type="password" id="password" placeholder="Min. 8 characters" autocomplete="new-password" minlength="8" required />
+        <div style="margin-top: 8px; height: 4px; background: var(--surface-strong); border-radius: 2px; overflow: hidden;">
+          <div id="pwStrength" style="height: 100%; width: 0%; background: var(--danger); transition: width 0.3s, background 0.3s;"></div>
         </div>
-        <div id="passwordHint" style="font-size:12px;color:var(--text-muted);margin-top:4px;"></div>
+        <div id="pwHint" style="font-size: 0.75rem; color: var(--text-dim); margin-top: 6px;">At least 8 characters. Use letters, numbers, and symbols.</div>
       </div>
 
-      <!-- Confirm Password -->
       <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required />
+        <label for="confirmPassword">Confirm password</label>
+        <input type="password" id="confirmPassword" placeholder="Re-enter password" autocomplete="new-password" required />
       </div>
 
-      <!-- Error Message -->
-      <div id="errorMessage" class="form-message error hidden" style="margin-bottom:16px;"></div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: var(--s-4);">
+        By creating an account, you agree to our
+        <a href="terms-of-service.html" style="color: var(--primary);">Terms</a> and
+        <a href="privacy-policy.html" style="color: var(--primary);">Privacy Policy</a>.
+      </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="btn-submit">
-        <i class="fas fa-user-plus" style="margin-right:8px;"></i>
-        Create Account
-      </button>
+      <div id="signupErr" class="form-msg error" hidden></div>
+
+      <button type="submit" class="btn btn-primary" id="signupSubmit" style="width: 100%;">Create account</button>
     </form>
 
-    <!-- Sign In Link -->
-    <div style="text-align:center;margin-top:24px;color:var(--text-secondary);font-size:14px;">
+    <p style="text-align: center; margin-top: var(--s-5); color: var(--text-muted); font-size: 0.9rem;">
       Already have an account?
-      <a href="login.html" style="color:var(--primary);text-decoration:none;font-weight:600;">Sign In</a>
-    </div>
+      <a href="login.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Sign in</a>
+    </p>
   </div>
-</section>
+</main>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
-      <div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div>
-      <p>Building AI automation tools for every sector.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-discord"></i></a>
-      </div>
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
     </div>
     <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+      <div><h4>Product</h4><a href="ai-tools.html">Tools</a><a href="pricing.html">Pricing</a></div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
+<script src="site.js" defer></script>
 <script type="module">
-  import { signUp, redirectIfAuthed } from './auth.js'
+  import { signUp, redirectIfAuthed } from './auth.js';
 
-  // Redirect if already logged in
-  redirectIfAuthed()
+  redirectIfAuthed();
 
-  const form = document.getElementById('signupForm')
-  const passwordInput = document.getElementById('password')
-  const confirmPasswordInput = document.getElementById('confirmPassword')
-  const passwordStrengthBar = document.getElementById('passwordStrength')
-  const passwordHint = document.getElementById('passwordHint')
-  const errorMessage = document.getElementById('errorMessage')
+  const form = document.getElementById('signupForm');
+  const errBox = document.getElementById('signupErr');
+  const submitBtn = document.getElementById('signupSubmit');
+  const passwordInput = document.getElementById('password');
+  const pwStrength = document.getElementById('pwStrength');
 
-  // Password strength indicator
-  passwordInput.addEventListener('input', (e) => {
-    const password = e.target.value
-    let strength = 0
-    let hint = ''
+  // Password strength bar
+  passwordInput.addEventListener('input', () => {
+    const p = passwordInput.value;
+    let score = 0;
+    if (p.length >= 8) score++;
+    if (/[A-Z]/.test(p)) score++;
+    if (/[0-9]/.test(p)) score++;
+    if (/[^A-Za-z0-9]/.test(p)) score++;
+    const pct = (score / 4) * 100;
+    pwStrength.style.width = pct + '%';
+    pwStrength.style.background = score <= 1 ? 'var(--danger)' : score === 2 ? 'var(--warning)' : 'var(--success)';
+  });
 
-    if (password.length < 8) {
-      strength = 20
-      hint = '❌ Too short (min. 8 characters)'
-    } else if (password.length < 12) {
-      strength = 40
-      hint = '⚠️ Weak'
-    } else if (/[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
-      strength = 100
-      hint = '✅ Strong'
-    } else if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
-      strength = 80
-      hint = '✅ Good'
-    } else {
-      strength = 60
-      hint = '⚠️ Medium'
-    }
-
-    passwordStrengthBar.style.width = strength + '%'
-    passwordStrengthBar.style.background = strength < 60 ? 'var(--accent)' : strength < 100 ? 'var(--warning)' : 'var(--success)'
-    passwordHint.textContent = hint
-  })
-
-  // Form submission
   form.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    errorMessage.classList.add('hidden')
+    e.preventDefault();
+    errBox.hidden = true;
 
-    const fullName = document.getElementById('fullName').value.trim()
-    const email = document.getElementById('email').value.trim().toLowerCase()
-    const password = document.getElementById('password').value
-    const confirmPassword = document.getElementById('confirmPassword').value
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = passwordInput.value;
+    const confirm = document.getElementById('confirmPassword').value;
 
-    // Validation
-    if (!fullName) {
-      errorMessage.textContent = '❌ Full name is required'
-      errorMessage.classList.remove('hidden')
-      return
-    }
+    if (!fullName) return showErr('Please enter your full name.');
+    if (!email) return showErr('Please enter a valid email.');
+    if (password.length < 8) return showErr('Password must be at least 8 characters.');
+    if (password !== confirm) return showErr('Passwords do not match.');
 
-    if (!email) {
-      errorMessage.textContent = '❌ Email is required'
-      errorMessage.classList.remove('hidden')
-      return
-    }
-
-    if (password !== confirmPassword) {
-      errorMessage.textContent = '❌ Passwords do not match'
-      errorMessage.classList.remove('hidden')
-      return
-    }
-
-    if (password.length < 8) {
-      errorMessage.textContent = '❌ Password must be at least 8 characters'
-      errorMessage.classList.remove('hidden')
-      return
-    }
-
+    submitBtn.disabled = true; submitBtn.textContent = 'Creating account…';
     try {
-      form.style.opacity = '0.6'
-      form.style.pointerEvents = 'none'
-      await signUp(email, password, fullName)
-      // Redirect to verify page
-      window.location.href = '/verify.html'
-    } catch (error) {
-      form.style.opacity = '1'
-      form.style.pointerEvents = 'auto'
-      console.error('Signup error:', error)
-
-      let msg = error.message || 'Signup failed. Please try again.'
-      const lower = msg.toLowerCase()
-
-      if (lower.includes('sending confirmation email') || lower.includes('error sending')) {
-        msg = 'We couldn’t send the verification email right now. Please wait a minute and try again, or contact support if the problem persists.'
-      } else if (lower.includes('rate limit') || lower.includes('too many')) {
-        msg = 'Too many signup attempts. Please wait a few minutes before trying again.'
-      } else if (lower.includes('already registered') || lower.includes('already exists') || lower.includes('user already')) {
-        msg = 'An account with this email already exists. Try signing in instead.'
-      } else if (lower.includes('invalid email')) {
-        msg = 'Please enter a valid email address.'
-      } else if (lower.includes('password')) {
-        msg = msg // keep password-related messages as-is
+      await signUp(email, password, fullName);
+      // Persist email for verify.html
+      sessionStorage.setItem('pending_email', email);
+      // Fire-and-forget welcome email (we have no token yet — skip until after verification)
+      window.AICraft?.toast?.('Account created! Check your email for the code.', 'success');
+      setTimeout(() => { window.location.href = 'verify.html'; }, 500);
+    } catch (err) {
+      submitBtn.disabled = false; submitBtn.textContent = 'Create account';
+      const raw = (err.message || 'Signup failed. Please try again.').toLowerCase();
+      let msg = err.message;
+      if (raw.includes('sending confirmation email') || raw.includes('error sending')) {
+        msg = 'We couldn\u2019t send the verification email right now. Please wait a minute and try again, or contact support.';
+      } else if (raw.includes('rate limit') || raw.includes('too many')) {
+        msg = 'Too many signup attempts. Please wait a few minutes and try again.';
+      } else if (raw.includes('already registered') || raw.includes('already exists') || raw.includes('user already')) {
+        msg = 'An account with this email already exists. Try signing in instead.';
+      } else if (raw.includes('invalid email')) {
+        msg = 'Please enter a valid email address.';
       }
-
-      errorMessage.textContent = `❌ ${msg}`
-      errorMessage.classList.remove('hidden')
+      showErr(msg);
     }
-  })
+  });
 
-  // Navbar scroll effect
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50)
-  })
-
-  // Mobile menu
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('mobile-open')
-  })
+  function showErr(msg) {
+    errBox.textContent = '❌ ' + msg;
+    errBox.hidden = false;
+  }
 </script>
-
 </body>
 </html>

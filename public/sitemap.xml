@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://aicraft.co/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://aicraft.co/ai-tools.html</loc><changefreq>daily</changefreq><priority>0.95</priority></url>
+  <url><loc>https://aicraft.co/sectors.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://aicraft.co/pricing.html</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://aicraft.co/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://aicraft.co/contact.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://aicraft.co/blog.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://aicraft.co/careers.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://aicraft.co/community.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://aicraft.co/press.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://aicraft.co/support.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://aicraft.co/api-docs.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://aicraft.co/status.html</loc><changefreq>hourly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://aicraft.co/login.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://aicraft.co/signup.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://aicraft.co/privacy-policy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://aicraft.co/terms-of-service.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>

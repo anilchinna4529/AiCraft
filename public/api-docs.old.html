@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Documentation — AICraft</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="pages.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
+      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-buttons" id="navButtons">
+      <a href="login.html" class="btn-outline">Sign In</a>
+      <a href="signup.html" class="btn-primary">Get Started</a>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-badge">⚙️ Developer</div>
+  <h1><span class="gradient-text">API</span> Documentation</h1>
+  <p>Everything you need to integrate AICraft's AI tools into your applications. Simple, RESTful, and powerful.</p>
+</section>
+
+<!-- API DOCS LAYOUT -->
+<div class="api-docs-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="api-sidebar">
+    <h4>Getting Started</h4>
+    <a href="#introduction" class="active">Introduction</a>
+    <a href="#authentication">Authentication</a>
+    <a href="#base-url">Base URL</a>
+    <a href="#rate-limits">Rate Limits</a>
+
+    <h4>Endpoints</h4>
+    <a href="#generate-text">/generate-text</a>
+    <a href="#analyze-data">/analyze-data</a>
+    <a href="#chatbot">/chatbot</a>
+    <a href="#tools">/tools</a>
+    <a href="#sectors">/sectors</a>
+
+    <h4>Reference</h4>
+    <a href="#errors">Error Handling</a>
+    <a href="#models">AI Models</a>
+    <a href="#sdks">SDKs & Libraries</a>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="api-content">
+
+    <h2 id="introduction">Introduction</h2>
+    <p>The AICraft API is a RESTful interface that allows you to integrate AI automation capabilities directly into your applications. All responses are returned in JSON format.</p>
+    <p>The API provides access to text generation, data analysis, conversational AI, and the full AICraft tools marketplace. Whether you're building an internal tool or a customer-facing product, the API makes integration seamless.</p>
+
+    <h2 id="authentication">Authentication</h2>
+    <p>All API requests require authentication via an API key. Include your key in the <code style="background:var(--bg-card);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">Authorization</code> header:</p>
+    <div class="code-block">
+      <pre>Authorization: Bearer YOUR_API_KEY</pre>
+    </div>
+    <p>You can generate and manage API keys from your <a href="#" style="color:var(--primary)">dashboard → API Keys</a>. Keep your API key secure and never expose it in client-side code.</p>
+
+    <div class="code-block">
+      <pre>curl -X GET https://api.aicraft.co.in/v1/tools \
+  -H "Authorization: Bearer ac_live_xxxxxxxxxxxxxxxx" \
+  -H "Content-Type: application/json"</pre>
+    </div>
+
+    <h2 id="base-url">Base URL</h2>
+    <p>All API endpoints are relative to the following base URL:</p>
+    <div class="code-block">
+      <pre>https://api.aicraft.co.in/v1</pre>
+    </div>
+
+    <h2 id="rate-limits">Rate Limits</h2>
+    <p>API rate limits are applied per API key based on your plan:</p>
+    <table class="error-table">
+      <thead><tr><th>Plan</th><th>Requests / Minute</th><th>Requests / Month</th></tr></thead>
+      <tbody>
+        <tr><td>Basic (Free)</td><td>10</td><td>100</td></tr>
+        <tr><td>Pro</td><td>60</td><td>10,000</td></tr>
+        <tr><td>Enterprise</td><td>Unlimited</td><td>Unlimited</td></tr>
+      </tbody>
+    </table>
+    <p>Rate limit headers are included in every response: <code style="background:var(--bg-card);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">X-RateLimit-Remaining</code> and <code style="background:var(--bg-card);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">X-RateLimit-Reset</code>.</p>
+
+    <h2 id="generate-text">POST /generate-text</h2>
+    <p>Generate high-quality AI text content for any purpose — emails, reports, product descriptions, summaries, and more.</p>
+
+    <div class="endpoint-badge">
+      <span class="method-badge method-post">POST</span>
+      /v1/generate-text
+    </div>
+
+    <h3>Request Body</h3>
+    <div class="code-block"><pre>{
+  <span class="key">"prompt"</span>: <span class="string">"Write a professional email introducing our AI product to potential clients"</span>,
+  <span class="key">"model"</span>: <span class="string">"aicraft-pro-v2"</span>,
+  <span class="key">"max_tokens"</span>: <span class="number">500</span>,
+  <span class="key">"temperature"</span>: <span class="number">0.7</span>,
+  <span class="key">"sector"</span>: <span class="string">"Marketing"</span>
+}</pre></div>
+
+    <h3>Response</h3>
+    <div class="code-block"><pre>{
+  <span class="key">"success"</span>: <span class="number">true</span>,
+  <span class="key">"id"</span>: <span class="string">"gen_01H9XK2M3P"</span>,
+  <span class="key">"model"</span>: <span class="string">"aicraft-pro-v2"</span>,
+  <span class="key">"text"</span>: <span class="string">"Dear [Name],\n\nI hope this message finds you well..."</span>,
+  <span class="key">"tokens_used"</span>: <span class="number">142</span>,
+  <span class="key">"finish_reason"</span>: <span class="string">"stop"</span>
+}</pre></div>
+
+    <h2 id="analyze-data">POST /analyze-data</h2>
+    <p>Submit structured data and receive intelligent analysis, trend detection, anomaly identification, and actionable insights.</p>
+
+    <div class="endpoint-badge">
+      <span class="method-badge method-post">POST</span>
+      /v1/analyze-data
+    </div>
+
+    <h3>Request Body</h3>
+    <div class="code-block"><pre>{
+  <span class="key">"data"</span>: [
+    { <span class="key">"month"</span>: <span class="string">"Jan"</span>, <span class="key">"revenue"</span>: <span class="number">120000</span> },
+    { <span class="key">"month"</span>: <span class="string">"Feb"</span>, <span class="key">"revenue"</span>: <span class="number">138000</span> },
+    { <span class="key">"month"</span>: <span class="string">"Mar"</span>, <span class="key">"revenue"</span>: <span class="number">95000</span> }
+  ],
+  <span class="key">"analysis_type"</span>: <span class="string">"trend"</span>,
+  <span class="key">"sector"</span>: <span class="string">"Finance"</span>
+}</pre></div>
+
+    <h3>Response</h3>
+    <div class="code-block"><pre>{
+  <span class="key">"success"</span>: <span class="number">true</span>,
+  <span class="key">"insights"</span>: {
+    <span class="key">"trend"</span>: <span class="string">"downward in March (-31%)"</span>,
+    <span class="key">"anomaly"</span>: <span class="string">"March revenue significantly below baseline"</span>,
+    <span class="key">"recommendation"</span>: <span class="string">"Investigate Q1 close factors in March"</span>
+  },
+  <span class="key">"confidence"</span>: <span class="number">0.91</span>
+}</pre></div>
+
+    <h2 id="chatbot">POST /chatbot</h2>
+    <p>Create context-aware conversational experiences with persistent message history and domain-specific AI personas.</p>
+
+    <div class="endpoint-badge">
+      <span class="method-badge method-post">POST</span>
+      /v1/chatbot
+    </div>
+
+    <h3>Request Body</h3>
+    <div class="code-block"><pre>{
+  <span class="key">"session_id"</span>: <span class="string">"sess_abc123"</span>,
+  <span class="key">"message"</span>: <span class="string">"What are the best AI tools for healthcare?"</span>,
+  <span class="key">"system_prompt"</span>: <span class="string">"You are an expert AI consultant for the healthcare sector."</span>,
+  <span class="key">"history"</span>: []
+}</pre></div>
+
+    <h3>Response</h3>
+    <div class="code-block"><pre>{
+  <span class="key">"success"</span>: <span class="number">true</span>,
+  <span class="key">"session_id"</span>: <span class="string">"sess_abc123"</span>,
+  <span class="key">"reply"</span>: <span class="string">"For healthcare, the top AI tools include diagnostic imaging AI, clinical NLP for notes..."</span>,
+  <span class="key">"tokens_used"</span>: <span class="number">89</span>
+}</pre></div>
+
+    <h2 id="tools">GET /tools</h2>
+    <p>Retrieve all available AI tools in the AICraft marketplace with optional filtering.</p>
+    <div class="endpoint-badge"><span class="method-badge method-get">GET</span> /v1/tools?sector=Healthcare&limit=10</div>
+
+    <h2 id="sectors">GET /sectors</h2>
+    <p>List all industry sectors supported by the AICraft platform.</p>
+    <div class="endpoint-badge"><span class="method-badge method-get">GET</span> /v1/sectors</div>
+
+    <h2 id="errors">Error Handling</h2>
+    <p>The API uses standard HTTP status codes. All errors include a JSON body with a machine-readable <code style="background:var(--bg-card);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">code</code> and human-readable <code style="background:var(--bg-card);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;">message</code>.</p>
+    <table class="error-table">
+      <thead><tr><th>Status</th><th>Code</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>400</td><td>bad_request</td><td>Missing or invalid parameters</td></tr>
+        <tr><td>401</td><td>unauthorized</td><td>Invalid or missing API key</td></tr>
+        <tr><td>403</td><td>forbidden</td><td>Feature not available on your plan</td></tr>
+        <tr><td>429</td><td>rate_limited</td><td>Too many requests — slow down</td></tr>
+        <tr><td>500</td><td>server_error</td><td>Internal error — try again shortly</td></tr>
+      </tbody>
+    </table>
+    <div class="code-block"><pre>{
+  <span class="key">"success"</span>: <span class="number">false</span>,
+  <span class="key">"error"</span>: {
+    <span class="key">"code"</span>: <span class="string">"rate_limited"</span>,
+    <span class="key">"message"</span>: <span class="string">"You have exceeded your monthly request limit."</span>,
+    <span class="key">"docs"</span>: <span class="string">"https://docs.aicraft.co.in/errors"</span>
+  }
+}</pre></div>
+
+    <h2 id="models">AI Models</h2>
+    <p>AICraft offers multiple model tiers optimized for different use cases:</p>
+    <ul>
+      <li><strong>aicraft-lite-v1</strong> — Fast, efficient model for simple tasks (Basic plan)</li>
+      <li><strong>aicraft-pro-v2</strong> — Balanced performance & quality (Pro plan)</li>
+      <li><strong>aicraft-ultra-v3</strong> — Highest accuracy, domain-specialized (Enterprise)</li>
+    </ul>
+
+    <h2 id="sdks">SDKs & Libraries</h2>
+    <p>Official client libraries are available for popular languages:</p>
+    <div class="code-block"><pre><span class="string"># Python</span>
+pip install aicraft-sdk
+
+<span class="string"># Node.js</span>
+npm install @aicraft/sdk
+
+<span class="string"># Go</span>
+go get github.com/aicraft/go-sdk</pre></div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div>
+      <p>Building AI automation tools for every sector. The future of work is automated.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
+      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 AICraft. All rights reserved. Built with ❤️ and AI.</p>
+    <div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
+  </div>
+</footer>
+
+<script type="module">
+  import { getCurrentUser, logout } from './auth.js';
+
+  async function updateNavbar() {
+    const user = await getCurrentUser();
+    const navButtons = document.getElementById('navButtons');
+    if (user) {
+      navButtons.innerHTML = `
+        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
+        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
+      `;
+      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
+    }
+  }
+  updateNavbar();
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('mobile-open');
+  });
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('[id]');
+  const sidebarLinks = document.querySelectorAll('.api-sidebar a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    sidebarLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>

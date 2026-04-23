@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support & Docs — AICraft</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="pages.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
+      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-buttons" id="navButtons"><a href="login.html" class="btn-outline">Sign In</a><a href="signup.html" class="btn-primary">Get Started</a></div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-badge">🛟 Support</div>
+  <h1>How Can We <span class="gradient-text">Help You?</span></h1>
+  <p>Find guides, documentation, FAQs, and troubleshooting resources to get the most out of AICraft.</p>
+  <div style="margin-top:24px;max-width:480px;margin-left:auto;margin-right:auto;display:flex;gap:10px;">
+    <input type="text" placeholder="Search documentation..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 16px;color:var(--text-primary);font-size:14px;outline:none;font-family:var(--font);" />
+    <button class="btn-primary" style="padding:12px 20px;border-radius:var(--radius-md);"><i class="fas fa-search"></i></button>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+
+    <!-- QUICK LINKS -->
+    <div class="section-header"><span class="section-badge">Resources</span><h2 class="section-title">Browse <span class="gradient-text">Documentation</span></h2></div>
+    <div class="support-grid">
+      <a href="#installation" class="support-card">
+        <span class="support-icon">⚡</span>
+        <h3>Quick Start</h3>
+        <p>Get AICraft up and running in under 5 minutes with our step-by-step installation guide.</p>
+      </a>
+      <a href="api-docs.html" class="support-card">
+        <span class="support-icon">📡</span>
+        <h3>API Reference</h3>
+        <p>Complete documentation for all API endpoints, request formats, and response schemas.</p>
+      </a>
+      <a href="#user-guides" class="support-card">
+        <span class="support-icon">📘</span>
+        <h3>User Guides</h3>
+        <p>In-depth guides for using each AI tool — with real-world examples and best practices.</p>
+      </a>
+      <a href="#troubleshooting" class="support-card">
+        <span class="support-icon">🔧</span>
+        <h3>Troubleshooting</h3>
+        <p>Common issues and step-by-step solutions to get you back on track quickly.</p>
+      </a>
+      <a href="community.html" class="support-card">
+        <span class="support-icon">💬</span>
+        <h3>Community Forum</h3>
+        <p>Ask questions, share tips, and get answers from thousands of AICraft users worldwide.</p>
+      </a>
+      <a href="contact.html" class="support-card">
+        <span class="support-icon">📧</span>
+        <h3>Contact Support</h3>
+        <p>Reach our expert support team by email or live chat (Pro & Enterprise plans).</p>
+      </a>
+    </div>
+
+    <!-- INSTALLATION GUIDE -->
+    <div id="installation" class="section-header" style="margin-top:40px;"><span class="section-badge">Setup</span><h2 class="section-title">Installation <span class="gradient-text">Guide</span></h2></div>
+    <div style="max-width:780px;margin:0 auto;">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;">
+        <h3 style="font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;"><span style="background:var(--gradient-primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">1</span> Create Your Account</h3>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.7;">Visit <strong style="color:var(--primary)">aicraft.co.in</strong> and sign up for a free account. No credit card required for the Basic plan.</p>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;">
+        <h3 style="font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;"><span style="background:var(--gradient-primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">2</span> Get Your API Key</h3>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.7;margin-bottom:12px;">Navigate to <strong>Dashboard → API Keys → Generate New Key</strong>. Copy and store it securely.</p>
+        <div style="background:#0d0d1a;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:monospace;font-size:13px;color:#a9b7c6;">ac_live_xxxxxxxxxxxxxxxxxxxxxxxx</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;">
+        <h3 style="font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;"><span style="background:var(--gradient-primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">3</span> Install the SDK</h3>
+        <div style="background:#0d0d1a;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:monospace;font-size:13px;color:#a9b7c6;">npm install @aicraft/sdk</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;">
+        <h3 style="font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;"><span style="background:var(--gradient-primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">4</span> Make Your First API Call</h3>
+        <div style="background:#0d0d1a;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-family:monospace;font-size:13px;color:#a9b7c6;overflow-x:auto;">
+          <pre>import AICraft from '@aicraft/sdk';
+
+const client = new AICraft({ apiKey: 'YOUR_API_KEY' });
+
+const result = await client.generateText({
+  prompt: 'Write a product description for an AI tool',
+  sector: 'Marketing'
+});
+
+console.log(result.text);</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div id="troubleshooting" class="section-header" style="margin-top:60px;"><span class="section-badge">FAQ</span><h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Why is my API key returning a 401 error? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">A 401 error means the API key is missing, invalid, or expired. Double-check that you're passing the key as <code>Authorization: Bearer YOUR_KEY</code> and that the key hasn't been revoked in your dashboard.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How do I reset my password? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Click "Forgot Password" on the login page. A reset link will be sent to your registered email address. The link expires after 30 minutes.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Can I use AICraft tools in my mobile app? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes, the REST API works from any platform. However, never embed your API key directly in a mobile app. Use a backend proxy to make API calls securely.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How do I upgrade my plan? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Go to Dashboard → Billing → Change Plan. Upgrades take effect immediately, and you'll be charged the prorated difference for the current billing period.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">Is my data secure? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. All data is encrypted in transit (TLS 1.3) and at rest (AES-256). We do not use your data to train our models. Enterprise customers can request a Data Processing Agreement (DPA).</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">How do I submit an AI tool to the marketplace? <i class="fas fa-chevron-down"></i></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Use the Submit Tool form on the homepage, or make a <code>POST /api/tools</code> API call with your tool details. All submissions are reviewed before going live.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand"><div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div><p>Building AI automation tools for every sector.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a></div></div>
+    <div class="footer-links">
+      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
+      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+</footer>
+
+<script type="module">
+  import { getCurrentUser, logout } from './auth.js';
+
+  async function updateNavbar() {
+    const user = await getCurrentUser();
+    const navButtons = document.getElementById('navButtons');
+    if (user) {
+      navButtons.innerHTML = `
+        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
+        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
+      `;
+      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
+    }
+  }
+  updateNavbar();
+
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    answer.classList.toggle('open');
+    btn.querySelector('i').style.transform = answer.classList.contains('open') ? 'rotate(180deg)' : '';
+  }
+</script>
+</body>
+</html>

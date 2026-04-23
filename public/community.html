@@ -1,166 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Community — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Community — AICraft</title>
+<meta name="description" content="Join the AICraft community — share finds, ask questions, and help each other ship." />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
-    <a href="index.html" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons" id="navButtons"><a href="login.html" class="btn-outline">Sign In</a><a href="signup.html" class="btn-primary">Get Started</a></div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="community.html" class="nav-link active">Community</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
   </div>
 </nav>
 
-<section class="page-hero">
-  <div class="page-hero-badge">🌐 Community</div>
-  <h1>Join the <span class="gradient-text">AICraft Community</span></h1>
-  <p>Connect with AI builders, share what you've created, get help, and shape the future of AICraft together.</p>
-</section>
+<header class="page-hero">
+  <span class="section-badge">Community</span>
+  <h1>Find your people</h1>
+  <p>Thousands of builders, operators and curious minds — all exploring AI together.</p>
+</header>
 
-<section>
-  <div class="section-container">
-
-    <!-- COMMUNITY CHANNELS -->
-    <div class="section-header"><span class="section-badge">Connect</span><h2 class="section-title">Where to <span class="gradient-text">Find Us</span></h2></div>
-    <div class="community-grid">
-      <a href="#" class="community-card">
-        <span class="community-icon">💬</span>
-        <h3>Discord Server</h3>
-        <p>Our most active community space. Get real-time help, share projects, and connect with 500+ AICraft developers and users.</p>
-        <span class="community-link"><i class="fab fa-discord"></i> Join Discord →</span>
-      </a>
-      <a href="#" class="community-card">
-        <span class="community-icon">💼</span>
-        <h3>Slack Workspace</h3>
-        <p>For enterprise users and partners — a professional space for integrations, API discussions, and business use case collaboration.</p>
-        <span class="community-link"><i class="fab fa-slack"></i> Join Slack →</span>
-      </a>
-      <a href="#" class="community-card">
-        <span class="community-icon">🐙</span>
-        <h3>GitHub</h3>
-        <p>Explore open-source SDKs, contribute code, report bugs, and browse example integrations for all major languages.</p>
-        <span class="community-link"><i class="fab fa-github"></i> View GitHub →</span>
-      </a>
-      <a href="#" class="community-card">
-        <span class="community-icon">🐦</span>
-        <h3>X (Twitter)</h3>
-        <p>Follow us for product updates, AI insights, community spotlights, and announcements as they happen.</p>
-        <span class="community-link"><i class="fab fa-twitter"></i> Follow @AICraft →</span>
-      </a>
-      <a href="#" class="community-card">
-        <span class="community-icon">🔗</span>
-        <h3>LinkedIn</h3>
-        <p>Professional content, partnerships, career opportunities, and thought leadership from the AICraft team.</p>
-        <span class="community-link"><i class="fab fa-linkedin"></i> Follow on LinkedIn →</span>
-      </a>
-      <a href="#" class="community-card">
-        <span class="community-icon">📖</span>
-        <h3>Developer Forum</h3>
-        <p>Ask technical questions, share code snippets, and find answers from our team and experienced community members.</p>
-        <span class="community-link"><i class="fas fa-comments"></i> Visit Forum →</span>
-      </a>
-    </div>
-
-    <!-- INTRO -->
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;margin-bottom:60px;text-align:center;">
-      <div style="font-size:40px;margin-bottom:16px;">🤝</div>
-      <h3 style="font-size:1.5rem;font-weight:800;margin-bottom:10px;">Built by the Community, for the Community</h3>
-      <p style="color:var(--text-secondary);max-width:600px;margin:0 auto 24px;font-size:15px;line-height:1.7;">AICraft is more than a platform — it's a movement of builders, makers, and innovators using AI to solve real-world problems. Every tool submitted, every bug reported, and every idea shared makes AICraft better for everyone.</p>
-      <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;">
-        <div><div style="font-size:1.8rem;font-weight:800;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">500+</div><div style="color:var(--text-secondary);font-size:13px;">Discord Members</div></div>
-        <div><div style="font-size:1.8rem;font-weight:800;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50+</div><div style="color:var(--text-secondary);font-size:13px;">Tools Submitted</div></div>
-        <div><div style="font-size:1.8rem;font-weight:800;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">12</div><div style="color:var(--text-secondary);font-size:13px;">Countries</div></div>
-      </div>
-    </div>
-
-    <!-- HOW TO CONTRIBUTE -->
-    <div class="section-header"><span class="section-badge">Open Source</span><h2 class="section-title">How to <span class="gradient-text">Contribute</span></h2></div>
-    <div class="contrib-steps">
-      <div class="contrib-step">
-        <div class="step-num">1</div>
-        <h4>Fork the Repo</h4>
-        <p>Start by forking our SDK or documentation repo on GitHub to your personal account.</p>
-      </div>
-      <div class="contrib-step">
-        <div class="step-num">2</div>
-        <h4>Pick an Issue</h4>
-        <p>Browse open issues labeled <strong style="color:var(--primary);">good first issue</strong> or <strong style="color:var(--secondary);">help wanted</strong>.</p>
-      </div>
-      <div class="contrib-step">
-        <div class="step-num">3</div>
-        <h4>Make Your Changes</h4>
-        <p>Create a feature branch, write clean code, and add tests where applicable.</p>
-      </div>
-      <div class="contrib-step">
-        <div class="step-num">4</div>
-        <h4>Submit a PR</h4>
-        <p>Open a pull request with a clear description. Our team reviews all PRs within 48 hours.</p>
-      </div>
-    </div>
-
-    <!-- CONTRIBUTION GUIDELINES -->
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-top:40px;">
-      <h3 style="font-weight:700;margin-bottom:16px;">📋 Contribution Guidelines</h3>
-      <ul style="color:var(--text-secondary);font-size:14px;line-height:2;padding-left:20px;">
-        <li>Follow existing code style and naming conventions</li>
-        <li>Write meaningful commit messages (e.g., <code style="background:var(--bg-secondary);padding:1px 6px;border-radius:4px;">feat: add healthcare sector filter</code>)</li>
-        <li>Add tests for new features; don't break existing tests</li>
-        <li>Update documentation if you're changing behavior</li>
-        <li>Be respectful — we follow the <a href="#" style="color:var(--primary)">Contributor Covenant</a></li>
-      </ul>
-    </div>
-
+<main class="page-wrap">
+  <div class="feature-grid reveal">
+    <a href="#" class="feature-card" style="text-decoration:none;color:inherit;"><div class="icon">💬</div><h3>Discord</h3><p>Live chat, voice rooms, weekly tool demos. 5k+ members.</p></a>
+    <a href="#" class="feature-card" style="text-decoration:none;color:inherit;"><div class="icon">🐦</div><h3>X / Twitter</h3><p>Daily tool spotlights and community reposts.</p></a>
+    <a href="#" class="feature-card" style="text-decoration:none;color:inherit;"><div class="icon">📬</div><h3>Newsletter</h3><p>Weekly digest of the best new tools. Zero spam.</p></a>
+    <a href="#" class="feature-card" style="text-decoration:none;color:inherit;"><div class="icon">💼</div><h3>LinkedIn</h3><p>B2B networking and enterprise AI conversations.</p></a>
+    <a href="#" class="feature-card" style="text-decoration:none;color:inherit;"><div class="icon">📺</div><h3>YouTube</h3><p>Deep dives, interviews and tutorials.</p></a>
+    <a href="#" class="feature-card" style="text-decoration:none;color:inherit;"><div class="icon">🎙️</div><h3>Podcast</h3><p>The AI Tools Weekly — conversations with builders.</p></a>
   </div>
-</section>
 
-<!-- FOOTER -->
+  <section class="reveal" style="margin-top: var(--s-16); text-align:center;">
+    <div class="form-card" style="max-width: 520px; margin: 0 auto;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Join the newsletter</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--s-4);">One email a week. The best AI tools, curated.</p>
+      <form id="newsletterForm" style="display:flex; gap:12px;">
+        <input type="email" required placeholder="you@example.com" class="form-input" style="flex:1;" />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+      <div id="nMsg" class="form-msg success" hidden style="margin-top: 12px;"></div>
+    </div>
+  </section>
+</main>
+
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-brand"><div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div><p>Building AI automation tools for every sector.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a></div></div>
-    <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
-<script type="module">
-  import { getCurrentUser, logout } from './auth.js';
-
-  async function updateNavbar() {
-    const user = await getCurrentUser();
-    const navButtons = document.getElementById('navButtons');
-    if (user) {
-      navButtons.innerHTML = `
-        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
-        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
-      `;
-      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
-    }
-  }
-  updateNavbar();
-
-  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
-  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
+<script src="site.js" defer></script>
+<script>
+  document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const m = document.getElementById('nMsg');
+    m.textContent = "✓ Subscribed! Check your inbox to confirm.";
+    m.hidden = false;
+    e.target.reset();
+    window.AICraft?.toast?.('Subscribed', 'success');
+  });
 </script>
 </body>
 </html>

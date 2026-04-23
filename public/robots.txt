@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Block private areas
+Disallow: /dashboard.html
+Disallow: /admin.html
+Disallow: /verify.html
+Disallow: /reset-password.html
+
+# Block old backups
+Disallow: /*.old.html$
+Disallow: /*.old.css$
+
+Sitemap: https://aicraft.co/sitemap.xml

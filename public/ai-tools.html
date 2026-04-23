@@ -1,271 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Tools — AICraft Marketplace</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Explore AI Tools — AICraft</title>
+<meta name="description" content="Browse hundreds of curated AI tools across Healthcare, Finance, Education, Marketing, Manufacturing and more. Search, filter, favorite and review." />
+<meta name="theme-color" content="#0a0a0f" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Explore AI Tools — AICraft" />
+<meta property="og:description" content="Browse hundreds of curated AI tools across every industry." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://aicraft.app/ai-tools.html" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<!-- Navbar -->
+<nav class="navbar" data-navbar>
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
-      <span class="logo-icon">⚡</span>
+      <span class="logo-icon">✦</span>
       <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
     </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link active">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons" id="navButtons">
-      <a href="login.html" class="btn-outline">Sign In</a>
-      <a href="signup.html" class="btn-primary">Get Started</a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link active">Tools</a>
+      <a href="sectors.html" class="nav-link">Sectors</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="about.html" class="nav-link">About</a>
     </div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
   </div>
 </nav>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="page-hero-badge">🤖 Marketplace</div>
-  <h1>Discover <span class="gradient-text">AI Tools</span><br/>Built for Every Business</h1>
-  <p>From enterprise automation to personal productivity — explore our curated collection of 10 powerful AI tools.</p>
-</section>
+<!-- Page Hero -->
+<header class="page-hero">
+  <div class="container">
+    <span class="section-badge">🧰 Tool Directory</span>
+    <h1>Explore AI Tools</h1>
+    <p>Discover curated AI solutions across every sector. Search, filter, and favorite the tools you love.</p>
+  </div>
+</header>
 
-<!-- B2B TOOLS -->
-<section class="tools-page-section">
-  <div class="section-container">
-    <div class="section-header">
-      <span class="section-badge">Enterprise</span>
-      <h2 class="section-title"><span class="gradient-text">B2B</span> AI Tools</h2>
-      <p class="section-subtitle">Purpose-built automation tools for businesses, teams, and enterprises across industries.</p>
-    </div>
-    <div class="page-tools-grid">
+<!-- Tools Browser -->
+<section class="section">
+  <div class="container">
 
-      <div class="page-tool-card">
-        <div class="tool-card-icon">🤝</div>
-        <h3>AI Sales Automation</h3>
-        <p>Automate lead scoring, follow-up sequences, and CRM updates using intelligent AI agents that learn from your top performers and replicate their winning patterns.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2b">B2B</span>
-          <span class="tool-tag">Sales</span>
-          <span class="tool-tag">Finance</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Sales teams automating outreach pipelines & lead qualification.</p>
+    <!-- Search + Filters -->
+    <div class="search-row reveal">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="search" id="searchInput" placeholder="Search tools by name, category, or description…" autocomplete="off" />
       </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">📊</div>
-        <h3>Predictive Analytics Engine</h3>
-        <p>Transform raw business data into actionable forecasts. Predict revenue trends, customer churn, and market opportunities with enterprise-grade ML models.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2b">B2B</span>
-          <span class="tool-tag">Analytics</span>
-          <span class="tool-tag">Finance</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> CFOs & data teams forecasting quarterly performance.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">🧠</div>
-        <h3>AI CRM Assistant</h3>
-        <p>An intelligent layer on top of your CRM that automatically logs interactions, suggests next best actions, and surfaces high-value opportunities before they go cold.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2b">B2B</span>
-          <span class="tool-tag">CRM</span>
-          <span class="tool-tag">Marketing</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Account managers tracking complex multi-touch deals.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">📄</div>
-        <h3>Document Intelligence AI</h3>
-        <p>Extract, classify, and process information from contracts, invoices, and reports at scale. Reduce manual data entry by 90% with intelligent document parsing.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2b">B2B</span>
-          <span class="tool-tag">Legal</span>
-          <span class="tool-tag">Finance</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Legal & compliance teams processing large document volumes.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">🏭</div>
-        <h3>Supply Chain Optimization AI</h3>
-        <p>Minimize disruptions and reduce costs by predicting bottlenecks, optimizing inventory levels, and automating procurement decisions across your supply network.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2b">B2B</span>
-          <span class="tool-tag">Manufacturing</span>
-          <span class="tool-tag">Logistics</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Operations teams managing global supply chains.</p>
-      </div>
-
     </div>
 
-    <!-- B2C TOOLS -->
-    <div class="section-header" style="margin-top:40px;">
-      <span class="section-badge">Consumer</span>
-      <h2 class="section-title"><span class="gradient-text">B2C</span> AI Tools</h2>
-      <p class="section-subtitle">Smart AI tools designed for individuals — boosting personal productivity, health, and career growth.</p>
-    </div>
-    <div class="page-tools-grid">
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">💬</div>
-        <h3>AI Chat Assistant</h3>
-        <p>A conversational AI that answers questions, helps with research, drafts emails, and learns your preferences to become more helpful over time.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2c">B2C</span>
-          <span class="tool-tag">Productivity</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Students, freelancers & professionals needing instant AI assistance.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">💰</div>
-        <h3>Personal Finance AI</h3>
-        <p>Track spending, set budgets, and receive personalized financial advice. Connects to your accounts and provides real-time insights on where your money goes.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2c">B2C</span>
-          <span class="tool-tag">Finance</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Individuals managing personal budgets and savings goals.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">🏋️</div>
-        <h3>AI Fitness Coach</h3>
-        <p>Personalized workout plans, nutrition tracking, and adaptive coaching that adjusts based on your progress, goals, and recovery data.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2c">B2C</span>
-          <span class="tool-tag">Healthcare</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Fitness enthusiasts wanting a smart digital personal trainer.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">📝</div>
-        <h3>AI Resume Builder</h3>
-        <p>Craft ATS-optimized resumes in minutes. AI analyzes job descriptions, tailors your content, and formats professionally — increasing callback rates by 3x.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2c">B2C</span>
-          <span class="tool-tag">Career</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Job seekers applying to positions in competitive markets.</p>
-      </div>
-
-      <div class="page-tool-card">
-        <div class="tool-card-icon">✨</div>
-        <h3>Smart Recommendation Engine</h3>
-        <p>Discover content, products, and experiences perfectly matched to your tastes. Learns from behavior, not just past choices, for truly personalized suggestions.</p>
-        <div class="tool-meta">
-          <span class="tool-tag b2c">B2C</span>
-          <span class="tool-tag">E-Commerce</span>
-        </div>
-        <p style="margin-top:10px;font-size:12px;color:var(--text-muted);"><strong style="color:var(--text-secondary)">Use Case:</strong> Streaming, e-commerce & content platforms personalizing user experience.</p>
-      </div>
-
+    <div class="filter-bar reveal" id="sectorFilterBar">
+      <button class="filter-btn active" data-sector="all">All</button>
+      <!-- Sectors injected here -->
     </div>
 
-    <!-- CTA -->
-    <div style="text-align:center;padding:40px 0 0;">
-      <a href="pricing.html" class="btn-hero-primary" style="margin-right:12px;"><i class="fas fa-rocket"></i> Get Started Free</a>
-      <a href="api-docs.html" class="btn-hero-secondary"><i class="fas fa-code"></i> View API Docs</a>
+    <div class="filter-bar reveal" id="priceFilterBar">
+      <button class="filter-btn active" data-price="all">All Prices</button>
+      <button class="filter-btn" data-price="free">Free</button>
+      <button class="filter-btn" data-price="paid">Paid</button>
     </div>
+
+    <!-- Results meta -->
+    <div class="tool-meta reveal" id="resultsMeta" style="margin-bottom: 16px; justify-content: center;">
+      <span id="resultsCount">Loading tools…</span>
+    </div>
+
+    <!-- Grid -->
+    <div class="tools-grid" id="toolsGrid">
+      <!-- Skeletons while loading -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+
+    <!-- Pagination -->
+    <nav class="pagination" id="pagination" aria-label="Pagination" hidden></nav>
+
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- Footer -->
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
-      <div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div>
-      <p>Building AI automation tools for every sector. The future of work is automated.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-discord"></i></a>
-      </div>
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools across every industry.</p>
     </div>
     <div class="footer-links">
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <a href="ai-tools.html">AI Tools</a>
+      <div>
+        <h4>Product</h4>
+        <a href="ai-tools.html">Tools</a>
         <a href="sectors.html">Sectors</a>
         <a href="pricing.html">Pricing</a>
-        <a href="api-docs.html">API Docs</a>
+        <a href="api-docs.html">API</a>
       </div>
-      <div class="footer-col">
+      <div>
         <h4>Company</h4>
-        <a href="about.html">About Us</a>
-        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
         <a href="careers.html">Careers</a>
+        <a href="blog.html">Blog</a>
         <a href="press.html">Press</a>
       </div>
-      <div class="footer-col">
+      <div>
         <h4>Support</h4>
-        <a href="support.html">Documentation</a>
-        <a href="community.html">Community</a>
+        <a href="support.html">Help</a>
         <a href="contact.html">Contact</a>
         <a href="status.html">Status</a>
+        <a href="community.html">Community</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="privacy-policy.html">Privacy</a>
+        <a href="terms-of-service.html">Terms</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 AICraft. All rights reserved. Built with ❤️ and AI.</p>
-    <div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
+    <p>© <span data-year>2025</span> AICraft. Crafted with care.</p>
   </div>
 </footer>
 
-<script type="module">
-  import { getCurrentUser, logout } from './auth.js';
+<script src="site.js" defer></script>
+<script>
+(() => {
+  // Elements
+  const grid = document.getElementById('toolsGrid');
+  const searchInput = document.getElementById('searchInput');
+  const sectorBar = document.getElementById('sectorFilterBar');
+  const priceBar = document.getElementById('priceFilterBar');
+  const resultsCount = document.getElementById('resultsCount');
+  const pagination = document.getElementById('pagination');
 
-  // Update navbar based on auth state
-  async function updateNavbar() {
-    const user = await getCurrentUser();
-    const navButtons = document.getElementById('navButtons');
+  // State
+  let allTools = [];
+  let filtered = [];
+  let favoriteIds = new Set();
+  let page = 1;
+  const PER_PAGE = 12;
+  const state = { search: '', sector: 'all', price: 'all' };
 
-    if (user) {
-      // User is logged in - show Dashboard and Logout
-      navButtons.innerHTML = `
-        <a href="dashboard.html" class="btn-outline">
-          <i class="fas fa-undo" style="margin-right: 6px;"></i>
-          Back to Dashboard
-        </a>
-        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;">
-          <i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>
-          Logout
-        </button>
-      `;
+  // URL params (for deep-link: ai-tools.html?sector=Healthcare)
+  const params = new URLSearchParams(location.search);
+  if (params.get('sector')) state.sector = params.get('sector');
+  if (params.get('q')) { state.search = params.get('q'); searchInput.value = state.search; }
 
-      // Add logout click handler
-      document.getElementById('logoutBtn').addEventListener('click', async () => {
-        await logout();
+  // ---- Fetch sectors for the filter bar ----
+  async function loadSectors() {
+    try {
+      const res = await fetch('/api/sectors');
+      const data = await res.json();
+      const sectors = data.sectors || [];
+      sectors.forEach(s => {
+        const name = s.name || s;
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn' + (state.sector === name ? ' active' : '');
+        btn.dataset.sector = name;
+        btn.textContent = name;
+        sectorBar.appendChild(btn);
       });
+      // Mark initial "All" button inactive if sector deep-linked
+      if (state.sector !== 'all') {
+        sectorBar.querySelector('[data-sector="all"]').classList.remove('active');
+      }
+    } catch (e) {
+      console.warn('Sectors load failed', e);
     }
   }
 
-  updateNavbar();
+  // ---- Fetch tools ----
+  async function loadTools() {
+    try {
+      const res = await fetch('/api/tools?limit=500');
+      const data = await res.json();
+      allTools = data.tools || [];
+      applyFilters();
+    } catch (e) {
+      console.error(e);
+      grid.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><h3>Couldn't load tools</h3><p>Please refresh or try again later.</p></div>`;
+      resultsCount.textContent = '';
+    }
+  }
 
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  // ---- Fetch favorites (if logged in) ----
+  async function loadFavorites() {
+    const token = localStorage.getItem('aicraft_token');
+    if (!token) return;
+    try {
+      const res = await fetch('/api/favorites', { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) return;
+      const data = await res.json();
+      (data.favorites || []).forEach(f => favoriteIds.add(f.tool_id));
+      // Re-render to mark favorites
+      if (filtered.length) renderPage();
+    } catch (_) {}
+  }
+
+  // ---- Apply search + filter state ----
+  function applyFilters() {
+    const q = state.search.trim().toLowerCase();
+    filtered = allTools.filter(t => {
+      if (state.sector !== 'all' && (t.sector || '').toLowerCase() !== state.sector.toLowerCase()) return false;
+      if (state.price === 'free' && (t.price && t.price !== 'Free' && t.price !== 0 && t.price !== '0')) return false;
+      if (state.price === 'paid' && (!t.price || t.price === 'Free' || t.price === 0 || t.price === '0')) return false;
+      if (q) {
+        const hay = `${t.name || ''} ${t.description || ''} ${t.category || ''} ${t.sector || ''}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    page = 1;
+    renderPage();
+  }
+
+  // ---- Render current page ----
+  function renderPage() {
+    const total = filtered.length;
+    resultsCount.textContent = total === 0 ? 'No tools match your filters.' : `${total} tool${total === 1 ? '' : 's'} found`;
+
+    if (total === 0) {
+      grid.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔎</div><h3>No tools match</h3><p>Try clearing filters or a different search term.</p></div>`;
+      pagination.hidden = true;
+      return;
+    }
+
+    const pages = Math.ceil(total / PER_PAGE);
+    if (page > pages) page = pages;
+    const start = (page - 1) * PER_PAGE;
+    const slice = filtered.slice(start, start + PER_PAGE);
+
+    grid.innerHTML = slice.map(renderCard).join('');
+
+    // Pagination
+    if (pages <= 1) {
+      pagination.hidden = true;
+    } else {
+      pagination.hidden = false;
+      pagination.innerHTML = renderPagination(pages);
+    }
+  }
+
+  function renderCard(t) {
+    const priceRaw = (t.price || '').toString();
+    const isFree = !priceRaw || priceRaw.toLowerCase() === 'free' || priceRaw === '0' || priceRaw === '$0';
+    const priceClass = isFree ? 'price-free' : 'price-paid';
+    const priceLabel = isFree ? 'Free' : priceRaw;
+    const favorited = favoriteIds.has(t.id);
+    const imgHtml = t.image_url
+      ? `<img src="${escapeAttr(t.image_url)}" alt="${escapeAttr(t.name)}" loading="lazy" />`
+      : `<div class="tool-image-placeholder">🤖</div>`;
+    return `
+      <a href="tool-detail.html?id=${encodeURIComponent(t.id)}" class="tool-card reveal" data-id="${escapeAttr(t.id)}">
+        <div class="tool-card-image">
+          ${imgHtml}
+          ${t.sector ? `<span class="tool-sector-badge">${escapeHtml(t.sector)}</span>` : ''}
+        </div>
+        <div class="tool-card-body">
+          <div class="tool-category">${escapeHtml(t.category || 'AI Tool')}</div>
+          <div class="tool-name">${escapeHtml(t.name || 'Untitled')}</div>
+          <p class="tool-description">${escapeHtml(t.description || '')}</p>
+          <div class="tool-card-footer">
+            <span class="tool-price ${priceClass}">${escapeHtml(priceLabel)}</span>
+            <button class="favorite-btn ${favorited ? 'is-favorited' : ''}" data-fav="${escapeAttr(t.id)}" aria-label="Toggle favorite" type="button">♥</button>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  function renderPagination(pages) {
+    let html = `<button ${page === 1 ? 'disabled' : ''} data-page="prev">←</button>`;
+    const maxButtons = 7;
+    let start = Math.max(1, page - 3), end = Math.min(pages, start + maxButtons - 1);
+    if (end - start < maxButtons - 1) start = Math.max(1, end - maxButtons + 1);
+    for (let i = start; i <= end; i++) {
+      html += `<button class="${i === page ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    }
+    html += `<button ${page === pages ? 'disabled' : ''} data-page="next">→</button>`;
+    return html;
+  }
+
+  // ---- Helpers ----
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  // ---- Events ----
+  let searchTimer;
+  searchInput.addEventListener('input', e => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { state.search = e.target.value; applyFilters(); }, 200);
   });
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('mobile-open');
+
+  sectorBar.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-sector]');
+    if (!btn) return;
+    sectorBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.sector = btn.dataset.sector;
+    applyFilters();
   });
+
+  priceBar.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-price]');
+    if (!btn) return;
+    priceBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.price = btn.dataset.price;
+    applyFilters();
+  });
+
+  pagination.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-page]');
+    if (!btn || btn.disabled) return;
+    const pages = Math.ceil(filtered.length / PER_PAGE);
+    const v = btn.dataset.page;
+    if (v === 'prev') page = Math.max(1, page - 1);
+    else if (v === 'next') page = Math.min(pages, page + 1);
+    else page = parseInt(v, 10) || 1;
+    renderPage();
+    window.scrollTo({ top: document.querySelector('.section').offsetTop - 80, behavior: 'smooth' });
+  });
+
+  // Favorite button delegated
+  grid.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.favorite-btn');
+    if (!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    const toolId = btn.dataset.fav;
+    const token = localStorage.getItem('aicraft_token');
+    if (!token) {
+      window.AICraft?.toast?.('Sign in to save favorites', 'info');
+      setTimeout(() => location.href = 'login.html?next=' + encodeURIComponent(location.pathname + location.search), 800);
+      return;
+    }
+    const isFav = btn.classList.contains('is-favorited');
+    btn.classList.toggle('is-favorited');
+    try {
+      if (isFav) {
+        await fetch(`/api/favorites/${toolId}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+        favoriteIds.delete(toolId);
+        window.AICraft?.toast?.('Removed from favorites', 'info');
+      } else {
+        await fetch('/api/favorites', {
+          method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tool_id: toolId })
+        });
+        favoriteIds.add(toolId);
+        window.AICraft?.toast?.('Added to favorites', 'success');
+      }
+    } catch (err) {
+      btn.classList.toggle('is-favorited'); // rollback
+      window.AICraft?.toast?.('Something went wrong', 'error');
+    }
+  });
+
+  // ---- Init ----
+  loadSectors();
+  loadTools();
+  loadFavorites();
+})();
 </script>
 </body>
 </html>

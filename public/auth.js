@@ -35,6 +35,20 @@ async function getSupabaseClient() {
         autoRefreshToken: true,
       },
     })
+    // Sync the access token into localStorage under a stable key so the
+    // premium features (favorites, reviews, profile) can send it as a
+    // Bearer token to the Express backend.
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.access_token) localStorage.setItem('aicraft_token', session.access_token)
+    } catch (_) {}
+    supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.access_token) {
+        localStorage.setItem('aicraft_token', session.access_token)
+      } else {
+        localStorage.removeItem('aicraft_token')
+      }
+    })
   }
   return supabase
 }

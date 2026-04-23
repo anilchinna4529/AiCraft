@@ -1,229 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sectors — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sectors — AICraft</title>
+<meta name="description" content="Explore AI tools across every sector — from healthcare and finance to design and marketing." />
+<meta property="og:title" content="AICraft — Sectors" />
+<meta property="og:description" content="AI tools for every industry." />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
-    <a href="index.html" class="nav-logo">
-      <span class="logo-icon">⚡</span>
-      <span class="logo-text">AI<span class="logo-accent">Craft</span></span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link active">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons" id="navButtons">
-      <a href="login.html" class="btn-outline">Sign In</a>
-      <a href="signup.html" class="btn-primary">Get Started</a>
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="sectors.html" class="nav-link active">Sectors</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="about.html" class="nav-link">About</a>
     </div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
   </div>
 </nav>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="page-hero-badge">🏭 Industries</div>
-  <h1>AI for <span class="gradient-text">Every Sector</span></h1>
-  <p>From healthcare to agriculture — discover how AI automation is transforming 12 key industries around the world.</p>
-</section>
+<header class="page-hero">
+  <span class="section-badge">Industries</span>
+  <h1>AI for every sector</h1>
+  <p>Curated AI tools tailored to the unique needs of each industry. Pick a sector to jump right in.</p>
+</header>
 
-<!-- SECTORS GRID -->
-<section>
-  <div class="section-container">
-    <div class="sectors-page-grid">
+<main class="page-wrap">
+  <div id="sectorsGrid" class="feature-grid reveal"></div>
+</main>
 
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/6c63ff?text=Healthcare+AI" alt="Healthcare" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🏥</span>
-          <h3>Healthcare</h3>
-          <p>AI-powered diagnostic tools analyze medical images, predict patient deterioration, and automate clinical documentation — enabling doctors to spend more time on care.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/00d4ff?text=Finance+AI" alt="Finance" />
-        <div class="sector-card-body">
-          <span class="sector-icon">💰</span>
-          <h3>Finance</h3>
-          <p>From algorithmic trading to real-time fraud detection, AI transforms financial operations with speed and precision that human analysts cannot match at scale.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/ff6b6b?text=Retail+AI" alt="Retail" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🛒</span>
-          <h3>Retail & E-Commerce</h3>
-          <p>Personalized product recommendations, dynamic pricing, intelligent inventory management, and conversational shopping assistants drive higher revenue and loyalty.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/6c63ff?text=Education+AI" alt="Education" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🎓</span>
-          <h3>Education</h3>
-          <p>Adaptive learning platforms adjust content difficulty in real time, while AI tutors provide personalized feedback that helps every student learn at their own pace.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/00d4ff?text=Manufacturing+AI" alt="Manufacturing" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🏭</span>
-          <h3>Manufacturing</h3>
-          <p>Predictive maintenance models reduce unplanned downtime by up to 40%. Computer vision systems detect defects on production lines faster and more accurately than humans.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/ff6b6b?text=Logistics+AI" alt="Logistics" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🚚</span>
-          <h3>Logistics</h3>
-          <p>Route optimization algorithms, demand forecasting, and autonomous warehouse systems are reshaping how goods are stored, sorted, and delivered globally.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/6c63ff?text=Real+Estate+AI" alt="Real Estate" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🏠</span>
-          <h3>Real Estate</h3>
-          <p>AI valuation models predict property prices with 95%+ accuracy. Virtual tours, smart matching, and automated due diligence speed up transactions significantly.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/00d4ff?text=Marketing+AI" alt="Marketing" />
-        <div class="sector-card-body">
-          <span class="sector-icon">📢</span>
-          <h3>Marketing & Advertising</h3>
-          <p>AI-generated content, hyper-targeted ad campaigns, and real-time sentiment analysis help brands connect with audiences more meaningfully and cost-effectively.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/ff6b6b?text=HR+AI" alt="Human Resources" />
-        <div class="sector-card-body">
-          <span class="sector-icon">👥</span>
-          <h3>Human Resources</h3>
-          <p>Resume screening, culture-fit scoring, onboarding automation, and employee engagement analysis allow HR teams to focus on people rather than processes.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/6c63ff?text=Cybersecurity+AI" alt="Cybersecurity" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🔐</span>
-          <h3>Cybersecurity</h3>
-          <p>Behavioral AI detects anomalies and zero-day threats in milliseconds, while automated response systems neutralize attacks before human teams can even respond.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/00d4ff?text=Agriculture+AI" alt="Agriculture" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🌾</span>
-          <h3>Agriculture</h3>
-          <p>Drone-based crop monitoring, soil health prediction, and precision irrigation systems help farmers increase yields while using fewer resources and reducing waste.</p>
-        </div>
-      </div>
-
-      <div class="sector-page-card">
-        <img src="https://via.placeholder.com/400x160/0a0a0f/ff6b6b?text=Entertainment+AI" alt="Entertainment" />
-        <div class="sector-card-body">
-          <span class="sector-icon">🎬</span>
-          <h3>Entertainment</h3>
-          <p>AI powers content recommendations, script assistance, deepfake detection, and real-time translation — transforming how content is created, distributed, and consumed.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CTA -->
-    <div style="text-align:center;padding:60px 0 0;">
-      <a href="ai-tools.html" class="btn-hero-primary" style="margin-right:12px;"><i class="fas fa-tools"></i> Explore Tools by Sector</a>
-      <a href="contact.html" class="btn-hero-secondary"><i class="fas fa-envelope"></i> Talk to Our Team</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
-      <div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div>
-      <p>Building AI automation tools for every sector. The future of work is automated.</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a>
-      </div>
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
     </div>
     <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+      <div><h4>Product</h4><a href="ai-tools.html">Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a></div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>© 2026 AICraft. All rights reserved. Built with ❤️ and AI.</p>
-    <div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
-  </div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
+<script src="site.js" defer></script>
 <script type="module">
-  import { getCurrentUser, logout } from './auth.js';
-
-  // Update navbar based on auth state
-  async function updateNavbar() {
-    const user = await getCurrentUser();
-    const navButtons = document.getElementById('navButtons');
-
-    if (user) {
-      // User is logged in - show Dashboard and Logout
-      navButtons.innerHTML = `
-        <a href="dashboard.html" class="btn-outline">
-          <i class="fas fa-undo" style="margin-right: 6px;"></i>
-          Back to Dashboard
-        </a>
-        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;">
-          <i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>
-          Logout
-        </button>
-      `;
-
-      // Add logout click handler
-      document.getElementById('logoutBtn').addEventListener('click', async () => {
-        await logout();
-      });
+  const grid = document.getElementById('sectorsGrid');
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const iconFor = (name) => {
+    const m = { 'Healthcare':'🩺','Finance':'💳','Education':'🎓','Marketing':'📣','Design':'🎨',
+      'Software':'💻','Legal':'⚖️','Retail':'🛍️','Manufacturing':'🏭','Real Estate':'🏠',
+      'Agriculture':'🌾','Media':'🎬','Human Resources':'👥','Customer Support':'💬','Security':'🛡️','Research':'🔬' };
+    return m[name] || '✨';
+  };
+  async function load() {
+    try {
+      const res = await fetch('/api/sectors');
+      const data = await res.json();
+      const sectors = data.sectors || data.data || data || [];
+      if (!sectors.length) { grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;">No sectors yet.</p>'; return; }
+      grid.innerHTML = sectors.map(s => {
+        const name = s.name || s;
+        const count = s.tool_count ?? s.count ?? '';
+        return `
+        <a href="ai-tools.html?sector=${encodeURIComponent(name)}" class="feature-card reveal" style="text-decoration:none;color:inherit;">
+          <div class="icon">${iconFor(name)}</div>
+          <h3>${esc(name)}</h3>
+          <p>${count ? `${count} tools` : 'Explore tools in this sector'}</p>
+        </a>`;
+      }).join('');
+    } catch {
+      // Fallback — show a fixed set
+      const fallback = ['Healthcare','Finance','Education','Marketing','Design','Software','Legal','Retail','Manufacturing','Media','Human Resources','Customer Support'];
+      grid.innerHTML = fallback.map(n => `
+        <a href="ai-tools.html?sector=${encodeURIComponent(n)}" class="feature-card reveal" style="text-decoration:none;color:inherit;">
+          <div class="icon">${iconFor(n)}</div>
+          <h3>${esc(n)}</h3>
+          <p>Explore tools in this sector</p>
+        </a>`).join('');
     }
   }
-
-  updateNavbar();
-
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-  });
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('mobile-open');
-  });
+  load();
 </script>
 </body>
 </html>

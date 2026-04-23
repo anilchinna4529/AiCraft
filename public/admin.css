@@ -655,3 +655,22 @@ canvas {
     border-radius: 8px;
   }
 }
+
+
+/* ============================================
+   STATUS PILLS (admin moderation / approvals)
+   ============================================ */
+.status-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: rgba(124, 108, 255, 0.12);
+  color: var(--primary, #7c6cff);
+}
+.status-pill.status-approved { background: rgba(46, 213, 115, 0.15); color: #2ed573; }
+.status-pill.status-rejected { background: rgba(255, 71, 87, 0.15); color: #ff4757; }
+.status-pill.status-pending  { background: rgba(255, 171, 0, 0.18); color: #ffab00; }

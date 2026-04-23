@@ -1,174 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>System Status — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Status — AICraft</title>
+<meta name="description" content="Real-time status of AICraft services." />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
-    <a href="index.html" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons"><button class="btn-outline">Sign In</button><button class="btn-primary">Get Started</button></div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="api-docs.html" class="nav-link">API</a>
+      <a href="status.html" class="nav-link active">Status</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+    </div>
   </div>
 </nav>
 
-<section class="page-hero">
-  <div class="page-hero-badge">🟢 Status</div>
-  <h1>System <span class="gradient-text">Status</span></h1>
-  <p>Real-time status of AICraft's platform, APIs, and infrastructure. Last updated: <span id="lastUpdated"></span></p>
-</section>
-
-<section>
-  <div class="section-container">
-
-    <!-- OVERALL STATUS -->
-    <div class="status-overall operational">
-      <div class="status-big-icon">✅</div>
-      <div>
-        <h2>All Systems Operational</h2>
-        <p>All AICraft services are running normally. No incidents detected.</p>
-      </div>
-      <div style="margin-left:auto;text-align:right;">
-        <div style="font-size:13px;color:var(--text-muted);">Overall Uptime (30 days)</div>
-        <div style="font-size:1.8rem;font-weight:800;color:var(--success);">99.97%</div>
-      </div>
-    </div>
-
-    <!-- SERVICES -->
-    <div class="section-header"><span class="section-badge">Services</span><h2 class="section-title">Service <span class="gradient-text">Health</span></h2></div>
-    <div class="services-grid">
-      <div class="service-card">
-        <div><h4>API Gateway</h4><div class="service-uptime">99.99% uptime · 42ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>AI Text Generation</h4><div class="service-uptime">99.95% uptime · 380ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>Data Analysis Engine</h4><div class="service-uptime">99.96% uptime · 210ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>Chatbot Service</h4><div class="service-uptime">99.93% uptime · 290ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>Tools Marketplace</h4><div class="service-uptime">100% uptime · 85ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>Authentication (Auth)</h4><div class="service-uptime">100% uptime · 60ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>Database (Supabase)</h4><div class="service-uptime">99.98% uptime · 18ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>CDN & Static Assets</h4><div class="service-uptime">100% uptime · 12ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-      <div class="service-card">
-        <div><h4>Webhooks</h4><div class="service-uptime">99.90% uptime · 145ms avg</div></div>
-        <span class="service-status operational"><span class="status-indicator operational"></span>Operational</span>
-      </div>
-    </div>
-
-    <!-- UPTIME BAR -->
-    <div class="section-header"><span class="section-badge">History</span><h2 class="section-title">30-Day <span class="gradient-text">Uptime</span></h2></div>
-    <div style="margin-bottom:10px;display:flex;justify-content:space-between;color:var(--text-muted);font-size:12px;"><span>30 days ago</span><span>Today</span></div>
-    <div class="uptime-bar" id="uptimeBar"></div>
-    <div style="display:flex;gap:20px;margin-bottom:48px;font-size:13px;color:var(--text-secondary);">
-      <span><span class="status-indicator operational" style="display:inline-block;"></span>Operational</span>
-      <span><span class="status-indicator down" style="display:inline-block;"></span>Incident</span>
-    </div>
-
-    <!-- INCIDENT HISTORY -->
-    <div class="section-header"><span class="section-badge">Incidents</span><h2 class="section-title">Incident <span class="gradient-text">History</span></h2></div>
-    <div class="incident-list">
-
-      <div class="incident-item">
-        <div class="incident-date">February 28, 2026 — 14:32 IST</div>
-        <h4>Elevated API Latency — Text Generation Service</h4>
-        <p>Some users experienced increased response times (800ms–2s) from the AI Text Generation endpoint due to high traffic during a marketing campaign launch.</p>
-        <span class="incident-resolved">✅ Resolved in 47 minutes — Additional compute allocated</span>
-      </div>
-
-      <div class="incident-item">
-        <div class="incident-date">January 15, 2026 — 03:10 IST</div>
-        <h4>Scheduled Maintenance — Database Migration</h4>
-        <p>Planned 30-minute maintenance window for Supabase database schema migration. Read-only mode was active during this period. All write operations were queued and processed post-maintenance.</p>
-        <span class="incident-resolved">✅ Completed successfully — Zero data loss</span>
-      </div>
-
-      <div class="incident-item">
-        <div class="incident-date">December 22, 2026 — 11:05 IST</div>
-        <h4>Partial Outage — Webhook Delivery Delays</h4>
-        <p>Webhook event delivery was delayed by up to 15 minutes for approximately 12% of Enterprise users due to a queue processing bottleneck introduced in a deployment.</p>
-        <span class="incident-resolved">✅ Resolved in 2 hours — Deployment rolled back & redeployed</span>
-      </div>
-
-      <div style="text-align:center;padding:20px 0;color:var(--text-muted);font-size:14px;">
-        No incidents prior to December 2026. <a href="#" style="color:var(--primary);">View full history →</a>
-      </div>
-    </div>
-
-    <!-- MAINTENANCE -->
-    <div style="background:var(--bg-card);border:1px solid rgba(255,179,0,0.2);border-radius:var(--radius-lg);padding:28px;margin-top:20px;">
-      <h3 style="font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:10px;"><span style="color:var(--warning);">🔧</span> Upcoming Maintenance</h3>
-      <p style="color:var(--text-secondary);font-size:14px;margin-bottom:6px;"><strong style="color:var(--text-primary);">April 20, 2026 — 02:00–03:00 AM IST</strong></p>
-      <p style="color:var(--text-secondary);font-size:14px;">Scheduled infrastructure upgrade for improved API throughput. Read-only mode on the marketplace. No API downtime expected.</p>
-    </div>
-
+<header class="page-hero">
+  <span class="section-badge">System Status</span>
+  <h1 id="overallHeading">All systems operational</h1>
+  <p id="overallSub">Last checked: <span id="lastChecked">just now</span></p>
+  <div style="margin-top: var(--s-5);">
+    <span class="status-indicator"><span class="status-dot online" id="overallDot"></span><span id="overallLabel">All systems operational</span></span>
   </div>
-</section>
+</header>
 
-<!-- FOOTER -->
+<main class="page-wrap narrow">
+  <section class="reveal">
+    <h2 style="font-size: 1.25rem; margin-bottom: var(--s-4);">Services</h2>
+
+    <div class="service-row">
+      <div>
+        <div class="service-row-name">Website</div>
+        <div style="color: var(--text-muted); font-size: 0.85rem;">Marketing &amp; directory</div>
+      </div>
+      <span class="status-indicator"><span class="status-dot online"></span>Operational</span>
+    </div>
+
+    <div class="service-row">
+      <div>
+        <div class="service-row-name">API</div>
+        <div style="color: var(--text-muted); font-size: 0.85rem;">REST endpoints</div>
+      </div>
+      <span class="status-indicator" id="apiStatus"><span class="status-dot online"></span>Operational</span>
+    </div>
+
+    <div class="service-row">
+      <div>
+        <div class="service-row-name">Authentication</div>
+        <div style="color: var(--text-muted); font-size: 0.85rem;">Sign up, login, sessions</div>
+      </div>
+      <span class="status-indicator"><span class="status-dot online"></span>Operational</span>
+    </div>
+
+    <div class="service-row">
+      <div>
+        <div class="service-row-name">Database</div>
+        <div style="color: var(--text-muted); font-size: 0.85rem;">Supabase Postgres</div>
+      </div>
+      <span class="status-indicator"><span class="status-dot online"></span>Operational</span>
+    </div>
+
+    <div class="service-row">
+      <div>
+        <div class="service-row-name">Email delivery</div>
+        <div style="color: var(--text-muted); font-size: 0.85rem;">Transactional emails</div>
+      </div>
+      <span class="status-indicator"><span class="status-dot online"></span>Operational</span>
+    </div>
+  </section>
+
+  <section class="reveal" style="margin-top: var(--s-12);">
+    <h2 style="font-size: 1.25rem; margin-bottom: var(--s-4);">Recent incidents</h2>
+    <div class="dash-stat" style="text-align:center; color: var(--text-muted);">No incidents in the last 30 days. 🎉</div>
+  </section>
+</main>
+
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-brand"><div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div><p>Building AI automation tools for every sector.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a></div></div>
-    <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2026 AICraft. All rights reserved.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
+<script src="site.js" defer></script>
 <script>
-  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
-  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
-
-  // Set last updated time
-  document.getElementById('lastUpdated').textContent = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'}) + ' IST';
-
-  // Generate uptime bar (30 days, mostly green with 2 incident days)
-  const bar = document.getElementById('uptimeBar');
-  const incidentDays = [7, 20]; // day indexes with incidents
-  for (let i = 0; i < 30; i++) {
-    const seg = document.createElement('div');
-    seg.className = 'uptime-segment' + (incidentDays.includes(i) ? ' down' : '');
-    seg.title = incidentDays.includes(i) ? 'Incident' : 'Operational';
-    bar.appendChild(seg);
+  async function pingApi() {
+    const el = document.getElementById('apiStatus');
+    try {
+      const t0 = Date.now();
+      const res = await fetch('/api/sectors', { cache: 'no-store' });
+      const ms = Date.now() - t0;
+      if (res.ok) {
+        el.innerHTML = `<span class="status-dot online"></span>Operational (${ms}ms)`;
+      } else {
+        el.innerHTML = `<span class="status-dot degraded"></span>Degraded`;
+        document.getElementById('overallDot').className = 'status-dot degraded';
+        document.getElementById('overallLabel').textContent = 'Some systems degraded';
+        document.getElementById('overallHeading').textContent = 'Some systems degraded';
+      }
+    } catch {
+      el.innerHTML = `<span class="status-dot offline"></span>Offline`;
+      document.getElementById('overallDot').className = 'status-dot offline';
+      document.getElementById('overallLabel').textContent = 'Major outage';
+      document.getElementById('overallHeading').textContent = 'Major outage';
+    }
+    document.getElementById('lastChecked').textContent = new Date().toLocaleTimeString();
   }
+  pingApi();
+  setInterval(pingApi, 30000);
 </script>
 </body>
 </html>

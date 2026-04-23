@@ -1,140 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog — AICraft</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="pages.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog — AICraft</title>
+<meta name="description" content="Insights, tutorials and news from the AI tools world." />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="pages.css" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" data-navbar>
   <div class="nav-container">
-    <a href="index.html" class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="ai-tools.html" class="nav-link">Tools</a></li>
-      <li><a href="sectors.html" class="nav-link">Sectors</a></li>
-      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="blog.html" class="nav-link active">Blog</a></li>
-      <li><a href="contact.html" class="nav-link">Contact</a></li>
-    </ul>
-    <div class="nav-buttons" id="navButtons"><a href="login.html" class="btn-outline">Sign In</a><a href="signup.html" class="btn-primary">Get Started</a></div>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+    <button class="hamburger" data-nav-toggle aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" data-nav-menu>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="ai-tools.html" class="nav-link">Tools</a>
+      <a href="sectors.html" class="nav-link">Sectors</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="blog.html" class="nav-link active">Blog</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">☾</button>
+      <a href="login.html" class="btn btn-outline">Sign In</a>
+      <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
   </div>
 </nav>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="page-hero-badge">📝 Insights</div>
-  <h1>AICraft <span class="gradient-text">Blog</span></h1>
-  <p>Stay ahead with the latest insights, trends, and deep-dives on AI automation, business strategy, and the future of work.</p>
-</section>
+<header class="page-hero">
+  <span class="section-badge">Blog</span>
+  <h1>Insights &amp; stories</h1>
+  <p>What we're learning as we build AICraft — and what the community is building alongside us.</p>
+</header>
 
-<section>
-  <div class="section-container">
-    <div class="blog-grid">
-
-      <div class="blog-card">
-        <img src="https://via.placeholder.com/600x200/0d0d1a/6c63ff?text=AI+Trends+2026" alt="AI Trends 2026" />
-        <div class="blog-card-body">
-          <div class="blog-meta"><span class="blog-category">Trends</span><span class="blog-date">April 10, 2026</span></div>
-          <h3>AI Trends in 2026: What Every Business Needs to Know</h3>
-          <p>From agentic AI systems to multimodal models and real-time inference at the edge — here are the 7 AI trends reshaping industries in 2026 and how you can stay ahead.</p>
-          <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
+<main class="page-wrap">
+  <div class="blog-grid reveal">
+    <a href="#" class="blog-card">
+      <div class="blog-card-img">🚀</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">Launch · 5 min read</div>
+        <h3 class="blog-card-title">Introducing AICraft 2.0</h3>
+        <p class="blog-card-excerpt">A complete rebuild with premium design, better search, and a focus on real-world reviews.</p>
+        <div class="blog-card-footer">Read article →</div>
       </div>
-
-      <div class="blog-card">
-        <img src="https://via.placeholder.com/600x200/0d0d1a/00d4ff?text=AI+Transforming+Business" alt="AI Business" />
-        <div class="blog-card-body">
-          <div class="blog-meta"><span class="blog-category">Business</span><span class="blog-date">March 22, 2026</span></div>
-          <h3>How AI is Transforming Businesses Across Every Sector</h3>
-          <p>Real-world case studies from healthcare, finance, and manufacturing showing how AI automation cut costs by 40%, tripled throughput, and created entirely new revenue streams.</p>
-          <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-card-img">🧠</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">Guide · 8 min read</div>
+        <h3 class="blog-card-title">Picking the right AI tool for your team</h3>
+        <p class="blog-card-excerpt">A practical framework for evaluating AI tools beyond the marketing hype.</p>
+        <div class="blog-card-footer">Read article →</div>
       </div>
-
-      <div class="blog-card">
-        <img src="https://via.placeholder.com/600x200/0d0d1a/ff6b6b?text=Future+of+Automation" alt="Automation Future" />
-        <div class="blog-card-body">
-          <div class="blog-meta"><span class="blog-category">Automation</span><span class="blog-date">March 5, 2026</span></div>
-          <h3>The Future of Automation: Agents, Workflows & Beyond</h3>
-          <p>Intelligent agents are replacing static scripts. We explore how autonomous AI workflows are evolving from simple task automation to multi-step reasoning systems that handle entire business processes.</p>
-          <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-card-img">📊</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">Report · 6 min read</div>
+        <h3 class="blog-card-title">State of AI tools, Q1 2025</h3>
+        <p class="blog-card-excerpt">The categories growing fastest and where teams are finding real value.</p>
+        <div class="blog-card-footer">Read article →</div>
       </div>
-
-      <div class="blog-card">
-        <img src="https://via.placeholder.com/600x200/0d0d1a/00d68f?text=AI+for+Startups" alt="AI Startups" />
-        <div class="blog-card-body">
-          <div class="blog-meta"><span class="blog-category">Startups</span><span class="blog-date">February 18, 2026</span></div>
-          <h3>AI for Startups: Build Faster, Compete Smarter</h3>
-          <p>You don't need a team of ML engineers to leverage AI. This guide shows how early-stage startups can use AICraft's tools to automate operations, delight customers, and scale with a lean team.</p>
-          <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-card-img">🔐</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">Engineering · 10 min read</div>
+        <h3 class="blog-card-title">Shipping auth the right way</h3>
+        <p class="blog-card-excerpt">How we rebuilt login, signup and password reset with Supabase &amp; Resend.</p>
+        <div class="blog-card-footer">Read article →</div>
       </div>
-
-      <div class="blog-card">
-        <img src="https://via.placeholder.com/600x200/0d0d1a/ffb347?text=Ethical+AI" alt="Ethical AI" />
-        <div class="blog-card-body">
-          <div class="blog-meta"><span class="blog-category">Ethics</span><span class="blog-date">January 30, 2026</span></div>
-          <h3>Ethical AI Development: Building Responsibly at Scale</h3>
-          <p>As AI becomes embedded in critical decisions — hiring, lending, healthcare — building responsibly isn't optional. We share AICraft's framework for fairness, transparency, and accountability in AI systems.</p>
-          <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-card-img">🎨</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">Design · 7 min read</div>
+        <h3 class="blog-card-title">The design system behind AICraft</h3>
+        <p class="blog-card-excerpt">Tokens, surfaces, and how we kept the whole site coherent.</p>
+        <div class="blog-card-footer">Read article →</div>
       </div>
-
-    </div>
-
-    <!-- Newsletter -->
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:48px;text-align:center;margin-top:60px;">
-      <h3 style="font-size:1.5rem;font-weight:800;margin-bottom:10px;">Stay in the Loop</h3>
-      <p style="color:var(--text-secondary);margin-bottom:24px;">Get the latest AI insights delivered to your inbox every week.</p>
-      <div style="display:flex;gap:12px;max-width:440px;margin:0 auto;">
-        <input type="email" placeholder="your@email.com" style="flex:1;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-primary);font-size:14px;outline:none;font-family:var(--font);" />
-        <button class="btn-hero-primary" style="white-space:nowrap;"><i class="fas fa-paper-plane"></i> Subscribe</button>
+    </a>
+    <a href="#" class="blog-card">
+      <div class="blog-card-img">💡</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">Community · 4 min read</div>
+        <h3 class="blog-card-title">Your reviews, your voice</h3>
+        <p class="blog-card-excerpt">Why we built reviews first, and how we moderate.</p>
+        <div class="blog-card-footer">Read article →</div>
       </div>
-    </div>
+    </a>
   </div>
-</section>
+</main>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-brand"><div class="nav-logo"><span class="logo-icon">⚡</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></div><p>Building AI automation tools for every sector.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-discord"></i></a></div></div>
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo"><span class="logo-icon">✦</span><span class="logo-text">AI<span class="logo-accent">Craft</span></span></a>
+      <p class="footer-tagline">The premium directory for AI tools.</p>
+    </div>
     <div class="footer-links">
-      <div class="footer-col"><h4>Platform</h4><a href="ai-tools.html">AI Tools</a><a href="sectors.html">Sectors</a><a href="pricing.html">Pricing</a><a href="api-docs.html">API Docs</a></div>
-      <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="blog.html">Blog</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
-      <div class="footer-col"><h4>Support</h4><a href="support.html">Documentation</a><a href="community.html">Community</a><a href="contact.html">Contact</a><a href="status.html">Status</a></div>
+      <div><h4>Company</h4><a href="about.html">About</a><a href="careers.html">Careers</a><a href="press.html">Press</a></div>
+      <div><h4>Legal</h4><a href="privacy-policy.html">Privacy</a><a href="terms-of-service.html">Terms</a></div>
     </div>
   </div>
-  <div class="footer-bottom"><p>© 2025 AICraft. All rights reserved. Built with ❤️ and AI.</p><div class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div>
+  <div class="footer-bottom"><p>© <span data-year>2025</span> AICraft. Crafted with care.</p></div>
 </footer>
 
-<script type="module">
-  import { getCurrentUser, logout } from './auth.js';
-
-  async function updateNavbar() {
-    const user = await getCurrentUser();
-    const navButtons = document.getElementById('navButtons');
-    if (user) {
-      navButtons.innerHTML = `
-        <a href="dashboard.html" class="btn-outline"><i class="fas fa-undo" style="margin-right: 6px;"></i>Back to Dashboard</a>
-        <button id="logoutBtn" class="btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout</button>
-      `;
-      document.getElementById('logoutBtn').addEventListener('click', async () => { await logout(); });
-    }
-  }
-  updateNavbar();
-
-  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
-  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('mobile-open'); });
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>
