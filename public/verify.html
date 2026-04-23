@@ -85,8 +85,7 @@
 
 <script src="site.js" defer></script>
 <script type="module">
-  import { verifyOTP, resendOTP, maskEmail } from './auth.js';
-
+  // --- DOM refs (grab immediately so handlers always attach) ---
   const form = document.getElementById('verifyForm');
   const digits = document.querySelectorAll('.otp-digit');
   const errBox = document.getElementById('verifyErr');
@@ -95,18 +94,42 @@
   const resendTimer = document.getElementById('resendTimer');
   const submitBtn = document.getElementById('verifySubmit');
 
+  // --- Load auth lazily ---
+  let verifyOTP = null, resendOTP = null, maskEmailFn = null;
+  let authReady = false, authError = null;
+
+  (async () => {
+    try {
+      const auth = await import('./auth.js');
+      verifyOTP = auth.verifyOTP;
+      resendOTP = auth.resendOTP;
+      maskEmailFn = auth.maskEmail;
+      authReady = true;
+      // Update email display now that maskEmail is available
+      const email = sessionStorage.getItem('pending_email');
+      if (email && maskEmailFn) {
+        emailDisplay.textContent = `Check ${maskEmailFn(email)} for the code`;
+      }
+    } catch (e) {
+      console.error('❌ Failed to load auth module:', e);
+      authError = e.message || 'Authentication failed to load.';
+      errBox.textContent = '❌ ' + authError + ' Please refresh the page.';
+      errBox.hidden = false;
+    }
+  })();
+
+  // --- Email display (works even before auth loads) ---
   const pendingEmail = sessionStorage.getItem('pending_email');
   if (!pendingEmail) {
-    // Allow entry by URL param: verify.html?email=you@example.com
     const p = new URLSearchParams(location.search).get('email');
     if (p) {
       sessionStorage.setItem('pending_email', p);
-      emailDisplay.textContent = `Check ${maskEmail(p)} for the code`;
+      emailDisplay.textContent = `Check your inbox for the code`;
     } else {
       location.href = 'signup.html';
     }
   } else {
-    emailDisplay.textContent = `Check ${maskEmail(pendingEmail)} for the code`;
+    emailDisplay.textContent = `Check your inbox for the code`;
   }
 
   // OTP digit behavior
@@ -141,6 +164,11 @@
   let cooldown = 0;
   resendBtn.addEventListener('click', async () => {
     if (cooldown > 0) return;
+    if (!authReady || !resendOTP) {
+      errBox.textContent = '❌ ' + (authError || 'Still loading. Please wait a moment.');
+      errBox.hidden = false;
+      return;
+    }
     const email = sessionStorage.getItem('pending_email');
     if (!email) return;
     try {
@@ -181,6 +209,13 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errBox.hidden = true;
+
+    if (!authReady || !verifyOTP) {
+      errBox.textContent = '❌ ' + (authError || 'Authentication is still loading. Please wait a moment and try again.');
+      errBox.hidden = false;
+      return;
+    }
+
     const otp = Array.from(digits).map(d => d.value).join('');
     if (otp.length !== 6) {
       errBox.textContent = '❌ Please enter all 6 digits.';

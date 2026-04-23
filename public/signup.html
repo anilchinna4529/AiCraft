@@ -103,17 +103,33 @@
 
 <script src="site.js" defer></script>
 <script type="module">
-  import { signUp, redirectIfAuthed } from './auth.js';
-
-  redirectIfAuthed();
-
+  // --- DOM refs (grab immediately so form handler always attaches) ---
   const form = document.getElementById('signupForm');
   const errBox = document.getElementById('signupErr');
   const submitBtn = document.getElementById('signupSubmit');
   const passwordInput = document.getElementById('password');
   const pwStrength = document.getElementById('pwStrength');
 
-  // Password strength bar
+  // --- Load auth module lazily (handles CDN failure gracefully) ---
+  let signUp = null;
+  let authReady = false;
+  let authError = null;
+
+  (async () => {
+    try {
+      const auth = await import('./auth.js');
+      signUp = auth.signUp;
+      authReady = true;
+      // Non-blocking redirect check — if already logged in, go to dashboard.
+      auth.redirectIfAuthed().catch(() => {});
+    } catch (e) {
+      console.error('❌ Failed to load auth module:', e);
+      authError = e.message || 'Authentication failed to load.';
+      showErr(authError + ' Please refresh the page or try a different browser.');
+    }
+  })();
+
+  // --- Password strength bar ---
   passwordInput.addEventListener('input', () => {
     const p = passwordInput.value;
     let score = 0;
@@ -126,9 +142,16 @@
     pwStrength.style.background = score <= 1 ? 'var(--danger)' : score === 2 ? 'var(--warning)' : 'var(--success)';
   });
 
+  // --- Form handler (always attached — never reloads the page) ---
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errBox.hidden = true;
+
+    // Guard: auth module must be loaded.
+    if (!authReady || !signUp) {
+      showErr(authError || 'Authentication is still loading. Please wait a moment and try again.');
+      return;
+    }
 
     const fullName = document.getElementById('fullName').value.trim();
     const email = document.getElementById('email').value.trim().toLowerCase();
@@ -143,9 +166,7 @@
     submitBtn.disabled = true; submitBtn.textContent = 'Creating account…';
     try {
       await signUp(email, password, fullName);
-      // Persist email for verify.html
       sessionStorage.setItem('pending_email', email);
-      // Fire-and-forget welcome email (we have no token yet — skip until after verification)
       window.AICraft?.toast?.('Account created! Check your email for the code.', 'success');
       setTimeout(() => { window.location.href = 'verify.html'; }, 500);
     } catch (err) {
@@ -159,14 +180,14 @@
         msg = 'Too many signup attempts. Please wait a few minutes and try again.';
       } else if (raw.includes('already registered') || raw.includes('already exists') || raw.includes('user already')) {
         msg = 'An account with this email already exists. Try signing in instead.';
-      } else if (raw.includes('invalid email') || raw.includes('email address') && raw.includes('invalid')) {
+      } else if (raw.includes('invalid email') || (raw.includes('email address') && raw.includes('invalid'))) {
         msg = 'Please enter a valid email address.';
       } else if (raw.includes('password should be') || raw.includes('weak password') || raw.includes('password is too')) {
         msg = 'Password is too weak. Use at least 8 characters with a mix of letters, numbers and symbols.';
       } else if (raw.includes('signup is disabled') || raw.includes('signups not allowed')) {
         msg = 'Signups are currently disabled on this server. Contact support.';
-      } else if (raw.includes('supabase') || raw.includes('authentication is not configured')) {
-        msg = err.message; // surface config errors verbatim
+      } else if (raw.includes('could not load') || raw.includes('authentication is not configured')) {
+        msg = err.message;
       }
       showErr(msg);
     }

@@ -2,7 +2,31 @@
 // Browser-side Supabase client + auth helper functions
 // Uses anon key (public/publishable key) — safe for frontend
 
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+// Load Supabase SDK lazily with CDN fallback so auth.js always loads
+// even when the primary CDN is blocked (corporate firewalls, slow networks).
+let _createClient = null
+const CDN_PRIMARY  = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+const CDN_FALLBACK = 'https://esm.sh/@supabase/supabase-js@2'
+
+async function loadSupabaseSDK() {
+  if (_createClient) return _createClient
+  try {
+    const mod = await import(/* webpackIgnore: true */ CDN_PRIMARY)
+    _createClient = mod.createClient
+  } catch (e1) {
+    console.warn('⚠️ Primary Supabase CDN failed, trying fallback…', e1.message)
+    try {
+      const mod = await import(/* webpackIgnore: true */ CDN_FALLBACK)
+      _createClient = mod.createClient
+    } catch (e2) {
+      console.error('❌ Could not load Supabase SDK from any CDN:', e2)
+      throw new Error(
+        'Could not load the authentication library. Please check your internet connection and refresh the page.'
+      )
+    }
+  }
+  return _createClient
+}
 
 // Get config from backend API or use fallback
 let supabaseUrl = ''
@@ -37,15 +61,12 @@ let supabase = null
 async function getSupabaseClient() {
   if (!supabase) {
     await initSupabase()
+    const createClient = await loadSupabaseSDK()
     supabase = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        // Required for password-reset / email-confirmation links — Supabase
-        // puts the recovery token either in the URL hash (#access_token=…)
-        // or in a ?code=… query param (PKCE flow). Both need auto-detect.
         detectSessionInUrl: true,
-        flowType: 'pkce',
       },
     })
     // Sync the access token into localStorage under a stable key so the

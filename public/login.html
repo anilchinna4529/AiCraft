@@ -118,10 +118,7 @@
 
 <script src="site.js" defer></script>
 <script type="module">
-  import { signIn, resetPassword, redirectIfAuthed } from './auth.js';
-
-  redirectIfAuthed();
-
+  // --- DOM refs (grab immediately so handlers always attach) ---
   const form = document.getElementById('loginForm');
   const errBox = document.getElementById('loginErr');
   const submitBtn = document.getElementById('loginSubmit');
@@ -133,17 +130,33 @@
   const resetErr = document.getElementById('resetErr');
   const resetOk = document.getElementById('resetOk');
 
-  // ?verified=1 success banner
+  // --- Load auth module lazily (handles CDN failure gracefully) ---
+  let signIn = null, resetPasswordFn = null;
+  let authReady = false, authError = null;
+
+  (async () => {
+    try {
+      const auth = await import('./auth.js');
+      signIn = auth.signIn;
+      resetPasswordFn = auth.resetPassword;
+      authReady = true;
+      auth.redirectIfAuthed().catch(() => {});
+    } catch (e) {
+      console.error('❌ Failed to load auth module:', e);
+      authError = e.message || 'Authentication failed to load.';
+      errBox.textContent = '❌ ' + authError + ' Please refresh the page.';
+      errBox.hidden = false;
+    }
+  })();
+
+  // --- Banners ---
   const params = new URLSearchParams(location.search);
   if (params.get('verified') === '1') verifiedBanner.hidden = false;
-  // ?reset=1 — arrived from reset-password.html after a successful update.
   const resetBanner = document.getElementById('resetBanner');
   if (params.get('reset') === '1' && resetBanner) resetBanner.hidden = false;
-
-  // Support ?next=URL redirect after login
   const next = params.get('next') || '/dashboard.html';
 
-  // Forgot password modal handlers
+  // --- Forgot password modal ---
   forgotBtn.addEventListener('click', () => { forgotModal.style.display = 'flex'; });
   closeForgot.addEventListener('click', () => { forgotModal.style.display = 'none'; });
   forgotModal.addEventListener('click', (e) => { if (e.target === forgotModal) forgotModal.style.display = 'none'; });
@@ -151,6 +164,11 @@
   forgotForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     resetErr.hidden = true; resetOk.hidden = true;
+    if (!authReady || !resetPasswordFn) {
+      resetErr.textContent = '❌ ' + (authError || 'Authentication is still loading. Please wait a moment.');
+      resetErr.hidden = false;
+      return;
+    }
     const email = document.getElementById('resetEmail').value.trim().toLowerCase();
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
       resetErr.textContent = '❌ Please enter a valid email address.';
@@ -161,9 +179,7 @@
     const originalText = submitResetBtn.textContent;
     submitResetBtn.disabled = true; submitResetBtn.textContent = 'Sending…';
     try {
-      await resetPassword(email);
-      // Note: Supabase intentionally returns success even when the email isn't
-      // registered (to prevent user enumeration). The message reflects that.
+      await resetPasswordFn(email);
       resetOk.textContent = '✅ If an account exists for that email, a reset link is on its way.';
       resetOk.hidden = false;
       setTimeout(() => {
@@ -180,7 +196,7 @@
         msg = 'Too many reset attempts. Please wait a few minutes and try again.';
       } else if (raw.includes('email') && raw.includes('invalid')) {
         msg = 'Please enter a valid email address.';
-      } else if (raw.includes('supabase') || raw.includes('authentication is not configured')) {
+      } else if (raw.includes('could not load') || raw.includes('authentication is not configured')) {
         msg = err.message;
       }
       resetErr.textContent = '❌ ' + msg;
@@ -188,10 +204,17 @@
     }
   });
 
-  // Login submit
+  // --- Login submit ---
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errBox.hidden = true;
+
+    if (!authReady || !signIn) {
+      errBox.textContent = '❌ ' + (authError || 'Authentication is still loading. Please wait a moment and try again.');
+      errBox.hidden = false;
+      return;
+    }
+
     const email = document.getElementById('email').value.trim().toLowerCase();
     const password = document.getElementById('password').value;
 
